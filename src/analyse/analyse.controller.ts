@@ -1,9 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
+import { AnalyseService } from './analyse.service';
+import { Item } from './interfaces/analyse.interface';
 
 @Controller('analyse')
 export class AnalyseController {
+  constructor(private readonly analyseService: AnalyseService) {}
+
   @Get()
-  findAll(): string {
-    return 'This action returns all analyse';
+  async findAll(): Promise<Item[]> {
+    return this.analyseService.findAll();
   }
 }
