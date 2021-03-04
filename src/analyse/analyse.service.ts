@@ -12,7 +12,7 @@ const request = axios.create({ baseURL: URL });
 export class AnalyseService {
   private readonly items: Item[] = [{ title: 'ssssss' }];
 
-  async findAll(): Promise<Item[]> {
+  async fetchList(): Promise<Item[]> {
     try {
       const data = await request.get('/tjsj/sjjd/');
       const $ = cheerio.load(data.data);
@@ -23,8 +23,10 @@ export class AnalyseService {
         const desc = $(this).find('p.cont_p').text();
 
         const url = $(this).find('span a').attr('href');
+        const id = url.split('/')[1].replace('.html','')
         const createdAt = $(this).find('span font.cont_tit02').text();
         list.push({
+          id,
           title,
           createdAt,
           url,

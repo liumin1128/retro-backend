@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AnalyseService } from './analyse.service';
 import { Item } from './interfaces/analyse.interface';
 
@@ -8,6 +8,11 @@ export class AnalyseController {
 
   @Get()
   async findAll(): Promise<Item[]> {
-    return this.analyseService.findAll();
+    return this.analyseService.fetchList();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `This action returns a #${id} cat`;
   }
 }
