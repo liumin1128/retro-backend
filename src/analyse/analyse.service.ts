@@ -10,7 +10,7 @@ const request = axios.create({ baseURL: URL });
 
 @Injectable()
 export class AnalyseService {
-  private readonly items: Item[] = [{ title: 'ssssss' }];
+  private readonly items: Item[] = [];
 
   async fetchList(): Promise<Item[]> {
     try {
@@ -21,9 +21,8 @@ export class AnalyseService {
         const title = $(this).find('span a font').text();
         if (title.length === 0) return;
         const desc = $(this).find('p.cont_p').text();
-
         const url = $(this).find('span a').attr('href');
-        const id = url.split('/')[1].replace('.html','')
+        const id = url.split('/')[1].replace('.html', '');
         const createdAt = $(this).find('span font.cont_tit02').text();
         list.push({
           id,
@@ -34,7 +33,7 @@ export class AnalyseService {
         });
       }
       await $('ul.center_list_cont li').map(getVlue);
-      console.log("list: ", list);
+      console.log('list: ', list);
       return list;
     } catch (error) {
       console.log('error', error);
