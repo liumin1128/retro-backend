@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 // import { MongooseModule } from '@nestjs/mongoose';
-// import { ConfigModule } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
 // import { AnalyseService } from './analyse/analyse.service';
@@ -11,7 +11,7 @@ import { CatsModule } from './cats/cats.module';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot(),
+    ConfigModule.forRoot(),
     // MongooseModule.forRoot('mongodb://react:123456@localhost:27017/reacts'),
     CatsModule,
     // AnalyseModule,
