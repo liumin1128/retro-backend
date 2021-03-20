@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Cat {
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: true })
   age: number;
 
   @Prop()
