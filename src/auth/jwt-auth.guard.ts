@@ -1,8 +1,8 @@
-import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '../guards/common';
-
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { SetMetadata } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Injectable, ExecutionContext } from '@nestjs/common';
+import { IS_PUBLIC_KEY } from './constants';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -21,3 +21,5 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 }
+
+export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
