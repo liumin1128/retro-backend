@@ -10,6 +10,7 @@ import { CatsModule } from './cats/cats.module';
 // import { AnalyseModule } from './analyse/analyse.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { OauthModule } from './oauth/oauth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module';
     // MongooseModule.forRoot('mongodb://react:123456@localhost:27017/reacts'),
     CatsModule,
     UsersModule,
+    OauthModule,
     // AnalyseModule,
   ],
   controllers: [
