@@ -11,7 +11,7 @@ import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { GithubModule } from './oauth/github/github.module';
-// import { OAuthModule } from './oauth/oauth.module';
+import { OAuthModule } from './oauth/oauth.module';
 // import { DatabaseModule } from './database/database.module';
 // import { OAuthModule } from './database/oauth/oauth.module';
 // import { OAuthService } from './database/oauth/oauth.service';
@@ -24,8 +24,8 @@ import { GithubModule } from './oauth/github/github.module';
     // CatsModule,
     UsersModule,
 
-    GithubModule,
-    // OAuthModule,
+    // GithubModule,
+    OAuthModule,
     // AnalyseModule,
     // DatabaseModule,
   ],

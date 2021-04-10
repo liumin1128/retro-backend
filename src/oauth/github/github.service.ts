@@ -1,8 +1,5 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { map } from 'rxjs/operators';
-import { Model } from 'mongoose';
-// import { OAuthService } from '../../database/oauth/oauth.service';
-// import { CreateOAuthDto } from '../../database/oauth/dto/create.dto';
 
 const github = {
   client_id: '4b922c0f2d2d554dc42d',
@@ -12,9 +9,7 @@ const github = {
 
 @Injectable()
 export class GithubService {
-  constructor(
-    private readonly httpService: HttpService, // private readonly oauthService: OAuthService,
-  ) {}
+  constructor(private readonly httpService: HttpService) {}
 
   getOAuthUrl(): string {
     const dataStr = new Date().valueOf();
@@ -27,13 +22,17 @@ export class GithubService {
     return url;
   }
 
-  // 文档地址
-  // https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
-
   // 返回值示例
   // {"access_token":"e72e16c7e42f292c6912e7710c838347ae178b4a",
   // "scope":"repo,gist",
   // "token_type":"bearer"}
+
+  //   错误返回
+  //   {
+  //     error: 'bad_verification_code',
+  //     error_description: 'The code passed is incorrect or expired.',
+  //     error_uri: 'https://docs.github.com/apps/managing-oauth-apps/troubleshooting-oauth-app-access-token-request-errors/#bad-verification-code'
+  //   }
   getAccessToken(code: string): Promise<Record<string, string>> {
     const url = 'https://github.com/login/oauth/access_token';
 
@@ -54,13 +53,6 @@ export class GithubService {
       })
       .pipe(map((response) => response.data))
       .toPromise();
-
-    //   错误返回
-    //   {
-    //     error: 'bad_verification_code',
-    //     error_description: 'The code passed is incorrect or expired.',
-    //     error_uri: 'https://docs.github.com/apps/managing-oauth-apps/troubleshooting-oauth-app-access-token-request-errors/#bad-verification-code'
-    //   }
   }
 
   // 返回值示例
@@ -116,8 +108,4 @@ export class GithubService {
       .pipe(map((response) => response.data))
       .toPromise();
   }
-
-  // create(userInfo: CreateOAuthDto): Promise<any> {
-  //   return this.oauthService.create(userInfo);
-  // }
 }
