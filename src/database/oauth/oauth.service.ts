@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateOAuthDto } from './dto/create.dto';
+import {
+  CreateOAuthDto,
+  FindOneOAuthDto,
+  UpdateUserOAuthDto,
+} from './dto/create.dto';
 import { OAuth, OAuthDocument } from './schemas/oauth.schema';
 
 @Injectable()
@@ -10,12 +14,20 @@ export class OAuthService {
     @InjectModel(OAuth.name) private readonly oauthModel: Model<OAuthDocument>,
   ) {}
 
-  async create(createOAuthDto: CreateOAuthDto): Promise<OAuth> {
+  async create(createOAuthDto: CreateOAuthDto): Promise<OAuthDocument> {
     const createdOAuth = new this.oauthModel(createOAuthDto);
     return createdOAuth.save();
   }
 
-  async findAll(): Promise<OAuth[]> {
+  async findOne(findOneOAuthDto: FindOneOAuthDto): Promise<OAuthDocument> {
+    return this.oauthModel.findOne(findOneOAuthDto);
+  }
+
+  async update(updateUserOAuthDto: UpdateUserOAuthDto): Promise<OAuthDocument> {
+    return this.oauthModel.findOne(updateUserOAuthDto);
+  }
+
+  async findAll(): Promise<OAuthDocument[]> {
     return this.oauthModel.find().exec();
   }
 }
