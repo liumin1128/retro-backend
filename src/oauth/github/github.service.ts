@@ -1,5 +1,8 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { map } from 'rxjs/operators';
+import { Model } from 'mongoose';
+// import { OAuthService } from '../../database/oauth/oauth.service';
+// import { CreateOAuthDto } from '../../database/oauth/dto/create.dto';
 
 const github = {
   client_id: '4b922c0f2d2d554dc42d',
@@ -9,14 +12,18 @@ const github = {
 
 @Injectable()
 export class GithubService {
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService, // private readonly oauthService: OAuthService,
+  ) {}
 
-  getOauthUrl(): string {
+  getOAuthUrl(): string {
     const dataStr = new Date().valueOf();
     let url = 'https://github.com/login/oauth/authorize';
     url += `?client_id=${github.client_id}`;
     url += `&scope=${github.scope}`;
     url += `&state=${dataStr}`;
+    console.log('url');
+    console.log(url);
     return url;
   }
 
@@ -57,37 +64,51 @@ export class GithubService {
   }
 
   // 返回值示例
-  //   {
-  //     "login": "Diamondtest",
-  //     "id": 28478049,
-  //     "avatar_url": "https://avatars0.githubusercontent.com/u/28478049?v=3",
-  //     "gravatar_id": "",
-  //     "url": "https://api.github.com/users/Diamondtest",
-  //     "html_url": "https://github.com/Diamondtest",
-  //     "followers_url": "https://api.github.com/users/Diamondtest/followers",
-  //     "following_url": "https://api.github.com/users/Diamondtest/following{/other_user}",
-  //     "gists_url": "https://api.github.com/users/Diamondtest/gists{/gist_id}",
-  //     "starred_url": "https://api.github.com/users/Diamondtest/starred{/owner}{/repo}",
-  //     "subscriptions_url": "https://api.github.com/users/Diamondtest/subscriptions",
-  //     "organizations_url": "https://api.github.com/users/Diamondtest/orgs",
-  //     "repos_url": "https://api.github.com/users/Diamondtest/repos",
-  //     "events_url": "https://api.github.com/users/Diamondtest/events{/privacy}",
-  //     "received_events_url": "https://api.github.com/users/Diamondtest/received_events",
-  //     "type": "User",
-  //     "site_admin": false,
-  //     "name": null,
-  //     "company": null,
-  //     "blog": "",
-  //     "location": null,
-  //     "email": null,
-  //     "hireable": null,
-  //     "bio": null,
-  //     "public_repos": 0,
-  //     "public_gists": 0,
-  //     "followers": 0,
-  //     "following": 0,
-  //     "created_at": "2017-05-06T08:08:09Z",
-  //     "updated_at": "2017-05-06T08:16:22Z"
+  // {
+  //   login: 'liumin1128',
+  //   id: 12379461,
+  //   node_id: 'MDQ6VXNlcjEyMzc5NDYx',
+  //   avatar_url: 'https://avatars.githubusercontent.com/u/12379461?v=4',
+  //   gravatar_id: '',
+  //   url: 'https://api.github.com/users/liumin1128',
+  //   html_url: 'https://github.com/liumin1128',
+  //   followers_url: 'https://api.github.com/users/liumin1128/followers',
+  //   following_url: 'https://api.github.com/users/liumin1128/following{/other_user}',
+  //   gists_url: 'https://api.github.com/users/liumin1128/gists{/gist_id}',
+  //   starred_url: 'https://api.github.com/users/liumin1128/starred{/owner}{/repo}',
+  //   subscriptions_url: 'https://api.github.com/users/liumin1128/subscriptions',
+  //   organizations_url: 'https://api.github.com/users/liumin1128/orgs',
+  //   repos_url: 'https://api.github.com/users/liumin1128/repos',
+  //   events_url: 'https://api.github.com/users/liumin1128/events{/privacy}',
+  //   received_events_url: 'https://api.github.com/users/liumin1128/received_events',
+  //   type: 'User',
+  //   site_admin: false,
+  //   name: '本王今年八岁',
+  //   company: '首席前端大祭司@singaporeair',
+  //   blog: 'http://liumin.me',
+  //   location: 'beijing',
+  //   email: '970568830@qq.com',
+  //   hireable: true,
+  //   bio: '二次元fans，舞蹈区fans',
+  //   twitter_username: null,
+  //   public_repos: 95,
+  //   public_gists: 1,
+  //   followers: 51,
+  //   following: 7,
+  //   created_at: '2015-05-10T08:48:43Z',
+  //   updated_at: '2021-04-10T09:45:18Z',
+  //   private_gists: 2,
+  //   total_private_repos: 3,
+  //   owned_private_repos: 3,
+  //   disk_usage: 371655,
+  //   collaborators: 0,
+  //   two_factor_authentication: false,
+  //   plan: {
+  //     name: 'pro',
+  //     space: 976562499,
+  //     collaborators: 0,
+  //     private_repos: 9999
+  //   }
   // }
   getUserInfo(access_token: string): Promise<any> {
     return this.httpService
@@ -95,4 +116,8 @@ export class GithubService {
       .pipe(map((response) => response.data))
       .toPromise();
   }
+
+  // create(userInfo: CreateOAuthDto): Promise<any> {
+  //   return this.oauthService.create(userInfo);
+  // }
 }

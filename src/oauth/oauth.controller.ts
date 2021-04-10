@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('oauth')
-export class OauthController {
+export class OAuthController {
   @Get()
   findAll(): string {
     return 'This action returns all cats';

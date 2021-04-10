@@ -1,17 +1,21 @@
-import { Controller, Get, Query, Redirect, Res } from '@nestjs/common';
+import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { GithubService } from './github.service';
+import { OAuthService } from '../../database/oauth/oauth.service';
 
-@Controller('oauth/github')
+@Controller('/oauth/github')
 export class GithubController {
-  constructor(private readonly githubService: GithubService) {}
+  constructor(
+    private readonly githubService: GithubService,
+    private readonly oauthService: OAuthService,
+  ) {}
 
   @Get()
   @Redirect()
   login(): { url: string; statusCode: number } {
-    return { url: this.githubService.getOauthUrl(), statusCode: 301 };
+    return { url: this.githubService.getOAuthUrl(), statusCode: 301 };
   }
 
-  @Get('callback')
+  @Get('/callback')
   async callback(@Query('code') code: string): Promise<string> {
     try {
       const {
@@ -27,6 +31,11 @@ export class GithubController {
       const userInfo = await this.githubService.getUserInfo(access_token);
 
       console.log(userInfo);
+
+      this.oauthService.create({
+        platform: 'github',
+        data: userInfo,
+      });
 
       return 'ok';
     } catch (error) {
