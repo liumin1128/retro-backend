@@ -1,10 +1,10 @@
 import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { GithubService } from './github.service';
-import { OAuthService } from '../../database/oauth/oauth.service';
-import { UserService } from '../../database/user/user.service';
-import { QiniuService } from '../../utils/qiniu/qiniu.service';
-import { UserDocument } from '../../database/user/schemas/user.schema';
-import { OAuthDocument } from '../../database/oauth/schemas/oauth.schema';
+import { OAuthService } from '@/database/oauth/oauth.service';
+import { UserService } from '@/database/user/user.service';
+import { QiniuService } from '@/utils/qiniu/qiniu.service';
+import { UserDocument } from '@/database/user/schemas/user.schema';
+import { OAuthDocument } from '@/database/oauth/schemas/oauth.schema';
 
 @Controller('/oauth/github')
 export class GithubController {
