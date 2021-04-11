@@ -30,4 +30,8 @@ export class OAuthService {
   async findAll(): Promise<OAuthDocument[]> {
     return this.oauthModel.find().exec();
   }
+
+  async updateOne(...args: any[]): Promise<any> {
+    return this.oauthModel.updateOne(...args);
+  }
 }

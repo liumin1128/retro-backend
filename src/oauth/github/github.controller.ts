@@ -2,6 +2,7 @@ import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { GithubService } from './github.service';
 import { OAuthService } from '../../database/oauth/oauth.service';
 import { UserService } from '../../database/user/user.service';
+import { QiniuService } from '../../utils/qiniu/qiniu.service';
 import { UserDocument } from '../../database/user/schemas/user.schema';
 import { OAuthDocument } from '../../database/oauth/schemas/oauth.schema';
 
@@ -11,6 +12,7 @@ export class GithubController {
     private readonly githubService: GithubService,
     private readonly oauthService: OAuthService,
     private readonly userService: UserService,
+    private readonly qiniuService: QiniuService,
   ) {}
 
   @Get()
@@ -67,14 +69,15 @@ export class GithubController {
 
       if (needCreateNewUser) {
         const { avatar_url, name, login } = userInfo;
-        // const avatarUrl = await fetchToQiniu(avatar_url);
+        const avatarUrl = await this.qiniuService.fetchToQiniu(avatar_url);
         user = await this.userService.create({
           username: login,
-          avatarUrl: avatar_url,
+          avatarUrl: avatarUrl,
           nickname: name || login,
         });
         // 由于创建了新用户，需要保存新的用户信息
-        await oauth.update({ user });
+        await this.oauthService.updateOne({ _id: oauth._id }, { user });
+        // await oauth.update({ user });
       }
 
       console.log('user');

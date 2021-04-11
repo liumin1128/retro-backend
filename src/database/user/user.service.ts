@@ -16,10 +16,14 @@ export class UserService {
   }
 
   async findById(_id: string): Promise<UserDocument> {
-    return this.findById(_id);
+    return this.userModel.findById(_id);
   }
 
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().exec();
+  }
+
+  async updateOne(...args: any[]): Promise<any> {
+    return this.userModel.updateOne(...args);
   }
 }
