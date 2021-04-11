@@ -5,6 +5,7 @@ import { UserService } from '@/database/user/user.service';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
 import { UserDocument } from '@/database/user/schemas/user.schema';
 import { OAuthDocument } from '@/database/oauth/schemas/oauth.schema';
+import { AuthService } from '@/auth/auth.service';
 
 @Controller('/oauth/github')
 export class GithubController {
@@ -13,6 +14,7 @@ export class GithubController {
     private readonly oauthService: OAuthService,
     private readonly userService: UserService,
     private readonly qiniuService: QiniuService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get()
@@ -22,7 +24,10 @@ export class GithubController {
   }
 
   @Get('/callback')
-  async callback(@Query('code') code: string): Promise<string> {
+  @Redirect()
+  async callback(
+    @Query('code') code: string,
+  ): Promise<{ url: string; statusCode: number }> {
     try {
       const {
         error,
@@ -30,9 +35,9 @@ export class GithubController {
         access_token,
       } = await this.githubService.getAccessToken(code);
 
-      if (error !== undefined) {
-        return error_description;
-      }
+      // if (error !== undefined) {
+      //   return { url: error_description};
+      // }
 
       const userInfo = await this.githubService.getUserInfo(access_token);
 
@@ -83,7 +88,17 @@ export class GithubController {
       console.log('user');
       console.log(user);
 
-      return 'ok';
+      const token = await this.authService.login(user);
+
+      console.log('token');
+      console.log(token);
+
+      // 重定向页面到用户登录页，并返回token
+
+      return {
+        url: `${process.env.DOMAIN}:${process.env.PORT}/login/oauth?token=${token}`,
+        statusCode: 301,
+      };
     } catch (error) {
       console.log(error);
       return error.message;
