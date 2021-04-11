@@ -57,6 +57,10 @@ export class GithubController {
           data: userInfo,
         });
       } else {
+        // await this.oauthService.updateOne(
+        //   { _id: oauth._id },
+        //   { data: userInfo },
+        // );
         // update
       }
 
@@ -80,21 +84,15 @@ export class GithubController {
           avatarUrl: avatarUrl,
           nickname: name || login,
         });
+
         // 由于创建了新用户，需要保存新的用户信息
         await this.oauthService.updateOne({ _id: oauth._id }, { user });
         // await oauth.update({ user });
       }
 
-      console.log('user');
-      console.log(user);
-
       const token = await this.authService.login(user);
 
-      console.log('token');
-      console.log(token);
-
       // 重定向页面到用户登录页，并返回token
-
       return {
         url: `${process.env.DOMAIN}:${process.env.PORT}/login/oauth?token=${token}`,
         statusCode: 301,
@@ -103,14 +101,5 @@ export class GithubController {
       console.log(error);
       return error.message;
     }
-
-    //     .subscribe(
-    //   (response) => {
-    //     console.log(response.data);
-    //     res.body = 'xxx';
-    //     return 'xxxx';
-    //   },
-    //   (error) => console.log(error),
-    // );
   }
 }

@@ -1,21 +1,19 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 
-const github = {
-  client_id: '4b922c0f2d2d554dc42d',
-  client_secret: '81da3ef6142f4893612396916908c575597a345a',
-  scope: ['user'],
-};
-
 @Injectable()
 export class GithubService {
+  private client_id = process.env.OAUTH_GITHUB_CLIENT_ID;
+  private client_secret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
+  private scope = ['user'];
+
   constructor(private readonly httpService: HttpService) {}
 
   getOAuthUrl(): string {
     const dataStr = new Date().valueOf();
     let url = 'https://github.com/login/oauth/authorize';
-    url += `?client_id=${github.client_id}`;
-    url += `&scope=${github.scope}`;
+    url += `?client_id=${this.client_id}`;
+    url += `&scope=${this.scope}`;
     url += `&state=${dataStr}`;
     console.log('url');
     console.log(url);
@@ -37,8 +35,8 @@ export class GithubService {
     const url = 'https://github.com/login/oauth/access_token';
 
     const params = {
-      client_id: github.client_id,
-      client_secret: github.client_secret,
+      client_id: this.client_id,
+      client_secret: this.client_secret,
       code,
     };
 
