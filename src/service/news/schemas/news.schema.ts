@@ -2,9 +2,27 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
 @Schema()
+export class Origin {
+  @Prop()
+  name: string;
+
+  @Prop()
+  code: string;
+
+  @Prop()
+  url: string;
+
+  @Prop()
+  sourceData: mongoose.Schema.Types.Map;
+}
+
+@Schema()
 export class News {
   @Prop()
   title: string;
+
+  @Prop()
+  cover: string;
 
   @Prop()
   json: string;
@@ -13,25 +31,13 @@ export class News {
   html: string;
 
   @Prop()
-  appName: string;
-
-  @Prop()
-  appCode: string;
+  content: string;
 
   @Prop()
   catLabel1: string;
 
   @Prop()
   catLabel2: string;
-
-  @Prop()
-  url: string;
-
-  @Prop()
-  cover: string;
-
-  @Prop()
-  content: string;
 
   @Prop()
   showHtml: boolean;
@@ -42,8 +48,8 @@ export class News {
   @Prop({ type: Array })
   photos: string[];
 
-  @Prop()
-  sourceData: mongoose.Schema.Types.Map;
+  @Prop({ type: Origin })
+  origin: mongoose.Schema.Types.Map;
 }
 
 export const NewsSchema = SchemaFactory.createForClass(News);

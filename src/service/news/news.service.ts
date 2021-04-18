@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IDataService } from '@/utils/idata/idata.service';
+import { IDataService, OriginNews } from '@/utils/idata/idata.service';
 import { CreateNewsDto } from './dto/create.dto';
 import { News, NewsDocument } from './schemas/news.schema';
+import { formatNews } from './news.utils';
 
 @Injectable()
 export class NewsService {
@@ -35,9 +36,8 @@ export class NewsService {
               return;
             }
 
-            const news = await this.idataService.formatNews(i);
-            console.log('news');
-            console.log(news);
+            const origin_news = await this.idataService.formatOriginNews(i);
+            const news = formatNews(origin_news);
             await this.newsModel.create(news);
             console.log('已写入：', i.title);
           } catch (error) {

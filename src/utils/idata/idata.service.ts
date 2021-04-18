@@ -7,7 +7,7 @@ interface getNewsListParams {
   keyword: string;
 }
 
-interface OriginNews {
+export interface OriginNews {
   cover: string;
   photos: string[];
   publishDate: number; //1574234748 发布时间
@@ -160,7 +160,7 @@ export class IDataService {
     throw data;
   }
 
-  async formatNews(originNews: OriginNews): Promise<OriginNews> {
+  async formatOriginNews(originNews: OriginNews): Promise<OriginNews> {
     const i = format(originNews);
 
     // 抓图片
