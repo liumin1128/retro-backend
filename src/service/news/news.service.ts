@@ -18,6 +18,16 @@ export class NewsService {
     return createdNews.save();
   }
 
+  async findAll(): Promise<NewsDocument[]> {
+    const data = await this.newsModel.find();
+    return data;
+  }
+
+  async findOneById(id: string): Promise<NewsDocument> {
+    const data = await this.newsModel.findById(id);
+    return data;
+  }
+
   async getNewsFromIData(): Promise<NewsDocument> {
     try {
       const data = await this.idataService.getNewList({ keyword: 'APPLE' });

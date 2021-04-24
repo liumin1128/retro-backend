@@ -1,0 +1,29 @@
+type Query {
+  newsList: [News]
+  news(id: ID!): News
+}
+
+type Mutation {
+  createNews(createNewsInput: CreateNewsInput): News
+}
+
+type Subscription {
+  newsCreated: News
+}
+
+type Owner {
+  id: Int!
+  name: String!
+  age: Int
+  news: [News!]
+}
+
+type News {
+  _id: String
+  title: String
+}
+
+input CreateNewsInput {
+  name: String
+  age: Int
+}

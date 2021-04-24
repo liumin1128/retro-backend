@@ -6,8 +6,13 @@ import { NewsService } from './news.service';
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
+  @Get('idata')
+  async getNewsFromIData(): Promise<any> {
+    return this.newsService.getNewsFromIData();
+  }
+
   @Get()
   async findAll(): Promise<any> {
-    return this.newsService.getNewsFromIData();
+    return this.newsService.findAll();
   }
 }
