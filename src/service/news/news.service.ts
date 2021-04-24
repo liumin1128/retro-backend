@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IDataService, OriginNews } from '@/utils/idata/idata.service';
+import { IDataService } from '@/utils/idata/idata.service';
 import { CreateNewsDto } from './dto/create.dto';
 import { News, NewsDocument } from './schemas/news.schema';
 import { formatNews } from './news.utils';

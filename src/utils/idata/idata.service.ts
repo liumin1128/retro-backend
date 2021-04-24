@@ -18,7 +18,7 @@ export interface OriginNews {
   spamLabel: string; // null 文本审核标签
   copyDate: number; // 1574237926 数据处理的时间
   commentCount: number; // 99 评论数
-  sentimentDist: object; // {...} content的情感分布
+  sentimentDist: Record<string, unknown>; // {...} content的情感分布
   posterScreenName: string; // 菱镜头 发布者名称
   url: string; // http://toutiao.com/group/6761286761273360907/ url
   catLabel1: string; // 体育 一级分类标签
@@ -38,7 +38,7 @@ export interface OriginNews {
   imageUrls: string[]; //[...] 图片链接列表
   topkeyword: string[]; // [...] 文章内容top关键词
   appCode: string; //toutiao.com app代码
-  sentimentDistTitle: object; // {...} title的情感分布列表
+  sentimentDistTitle: Record<string, unknown>; // {...} title的情感分布列表
   entities: string[]; // [...] 命名实体
   total: number; // 4949865 总和
   dataType: string; //idata 数据类型

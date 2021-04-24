@@ -30,13 +30,13 @@ export class GithubController {
   ): Promise<{ url: string; statusCode: number }> {
     try {
       const {
-        error,
-        error_description,
+        // error,
+        // error_description,
         access_token,
       } = await this.githubService.getAccessToken(code);
 
       // if (error !== undefined) {
-      //   return { url: error_description};
+      //   return { url: error_description };
       // }
 
       const userInfo = await this.githubService.getUserInfo(access_token);

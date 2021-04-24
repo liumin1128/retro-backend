@@ -1,10 +1,8 @@
-import { IsNotEmpty } from 'class-validator';
-
 interface Origin {
   name: string;
   code: string;
   url: string;
-  sourceData: Object;
+  sourceData: Record<string, unknown>;
 }
 
 export class CreateNewsDto {

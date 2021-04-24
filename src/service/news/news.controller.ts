@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { NewsService } from './news.service';
 // import { Cat } from './interfaces/cat.interface';
 
