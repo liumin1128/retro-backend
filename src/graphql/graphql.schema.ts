@@ -12,6 +12,11 @@ export class CreateNewsInput {
     age?: number;
 }
 
+export class CreateUserInput {
+    name?: string;
+    age?: number;
+}
+
 export class Author {
     id: number;
     firstName?: string;
@@ -31,10 +36,16 @@ export abstract class IQuery {
     abstract newsList(): News[] | Promise<News[]>;
 
     abstract news(id: string): News | Promise<News>;
+
+    abstract usersList(): User[] | Promise<User[]>;
+
+    abstract user(id: string): User | Promise<User>;
 }
 
 export abstract class IMutation {
     abstract createNews(createNewsInput?: CreateNewsInput): News | Promise<News>;
+
+    abstract createUser(createUserInput?: CreateUserInput): User | Promise<User>;
 }
 
 export abstract class ISubscription {
@@ -51,4 +62,9 @@ export class Owner {
 export class News {
     _id?: string;
     title?: string;
+}
+
+export class User {
+    _id?: string;
+    nickname?: string;
 }

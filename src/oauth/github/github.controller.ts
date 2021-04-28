@@ -1,9 +1,9 @@
 import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { GithubService } from './github.service';
 import { OAuthService } from '@/database/oauth/oauth.service';
-import { UserService } from '@/database/user/user.service';
+import { UsersService } from '@/service/users/users.service';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
-import { UserDocument } from '@/database/user/schemas/user.schema';
+import { UserDocument } from '@/service/users/schemas/users.schema';
 import { OAuthDocument } from '@/database/oauth/schemas/oauth.schema';
 import { AuthService } from '@/auth/auth.service';
 
@@ -12,7 +12,7 @@ export class GithubController {
   constructor(
     private readonly githubService: GithubService,
     private readonly oauthService: OAuthService,
-    private readonly userService: UserService,
+    private readonly userService: UsersService,
     private readonly qiniuService: QiniuService,
     private readonly authService: AuthService,
   ) {}

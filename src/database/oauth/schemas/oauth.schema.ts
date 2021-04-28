@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { UserDocument } from '../../user/schemas/user.schema';
+import { UserDocument } from '@/service/users/schemas/users.schema';
 
 @Schema({ timestamps: true })
 export class OAuth {
