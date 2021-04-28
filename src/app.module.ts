@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@/auth/auth.module';
 import { UsersModule } from '@/users/users.module';
-import { OAuthModule } from '@/oauth/oauth.module';
+import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
 import { AppController } from '@/app.controller';
 
@@ -24,7 +24,7 @@ import { AppController } from '@/app.controller';
     }),
     AuthModule,
     UsersModule,
-    OAuthModule,
+    OAuthIndexModule,
     NewsModule,
   ],
   controllers: [AppController],

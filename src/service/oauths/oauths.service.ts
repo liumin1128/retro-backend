@@ -6,10 +6,10 @@ import {
   FindOneOAuthDto,
   UpdateUserOAuthDto,
 } from './dto/create.dto';
-import { OAuth, OAuthDocument } from './schemas/oauth.schema';
+import { OAuth, OAuthDocument } from './schemas/oauths.schema';
 
 @Injectable()
-export class OAuthService {
+export class OAuthsService {
   constructor(
     @InjectModel(OAuth.name) private readonly oauthModel: Model<OAuthDocument>,
   ) {}

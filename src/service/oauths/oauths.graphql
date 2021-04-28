@@ -1,0 +1,18 @@
+type Query {
+  oauthsList: [OAuth]
+  oauth(id: ID!): OAuth
+}
+
+type Mutation {
+  createOAuth(createOAuthInput: CreateOAuthInput): OAuth
+}
+
+type OAuth {
+  _id: String
+  nickname: String
+}
+
+input CreateOAuthInput {
+  name: String
+  age: Int
+}
