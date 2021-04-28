@@ -13,7 +13,7 @@ export class Origin {
   url: string;
 
   @Prop()
-  sourceData: mongoose.Schema.Types.Map;
+  data: mongoose.Schema.Types.Map;
 }
 
 @Schema()

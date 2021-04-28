@@ -38,7 +38,10 @@ export class NewsService {
           console.log(i);
           try {
             const doc = await this.newsModel.findOne({
-              $or: [{ 'sourceData.id': i.id }, { 'sourceData.title': i.title }],
+              $or: [
+                { 'origin.data.id': i.id },
+                { 'origin.data.title': i.title },
+              ],
             });
 
             if (doc) {

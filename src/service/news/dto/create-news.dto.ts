@@ -2,7 +2,7 @@ interface Origin {
   name: string;
   code: string;
   url: string;
-  sourceData: unknown;
+  data: unknown;
 }
 
 export class CreateNewsDto {

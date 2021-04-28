@@ -13,7 +13,7 @@ export function formatNews(data: OriginNews): CreateNewsDto {
       name: data.appName,
       code: data.appCode,
       url: data.url,
-      sourceData: data,
+      data: data,
     },
   };
 }
