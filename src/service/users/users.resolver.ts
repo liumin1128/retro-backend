@@ -21,8 +21,8 @@ export class UsersResolver {
   }
 
   // @Query('user')
-  // async findOneById(id: string): Promise<User> {
-  //   return this.usersService.findOneById(id);
+  // async findById(id: string): Promise<User> {
+  //   return this.usersService.findById(id);
   // }
 
   @Mutation('createUser')

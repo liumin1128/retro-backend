@@ -23,7 +23,7 @@ export class NewsService {
     return data;
   }
 
-  async findOneById(id: string): Promise<NewsDocument> {
+  async findById(id: string): Promise<NewsDocument> {
     const data = await this.newsModel.findById(id);
     return data;
   }

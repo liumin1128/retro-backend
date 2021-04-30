@@ -12,12 +12,15 @@ export class CommentsService {
   ) {}
 
   async create(createCommentDto: CreateCommentDto): Promise<CommentDocument> {
-    const createdComments = new this.commentsModel(createCommentDto);
-    return createdComments.save();
+    const createdComment = new this.commentsModel(createCommentDto);
+    return createdComment.save();
   }
 
   async findAll(): Promise<CommentDocument[]> {
-    const data = await this.commentsModel.find();
-    return data;
+    return this.commentsModel.find();
+  }
+
+  async findById(id: string): Promise<CommentDocument> {
+    return this.commentsModel.findById(id);
   }
 }

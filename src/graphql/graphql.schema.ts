@@ -7,6 +7,11 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum CommentObjectUnionModel {
+    News = "News",
+    Comment = "Comment"
+}
+
 export class CreateNewsInput {
     name?: string;
     age?: number;
@@ -14,6 +19,8 @@ export class CreateNewsInput {
 
 export class CreateCommentInput {
     content?: string;
+    object: string;
+    objectModel: CommentObjectUnionModel;
 }
 
 export class CreateUserInput {
@@ -90,6 +97,7 @@ export class News {
 export class Comment {
     _id?: string;
     content?: string;
+    object: CommentObjectUnion;
 }
 
 export class User {
@@ -101,3 +109,5 @@ export class OAuth {
     _id?: string;
     nickname?: string;
 }
+
+export type CommentObjectUnion = News | Comment;

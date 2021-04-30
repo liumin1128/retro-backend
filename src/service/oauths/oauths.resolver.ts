@@ -21,8 +21,8 @@ export class OAuthsResolver {
   }
 
   // @Query('oauth')
-  // async findOneById(id: string): Promise<OAuth> {
-  //   return this.oauthsService.findOneById(id);
+  // async findById(id: string): Promise<OAuth> {
+  //   return this.oauthsService.findById(id);
   // }
 
   @Mutation('createOAuth')
