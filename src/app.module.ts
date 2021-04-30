@@ -6,6 +6,7 @@ import { AuthModule } from '@/auth/auth.module';
 import { UsersModule } from '@/users/users.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
+import { CommentsModule } from '@/service/comments/comments.module';
 import { AppController } from '@/app.controller';
 
 @Module({
@@ -26,6 +27,7 @@ import { AppController } from '@/app.controller';
     UsersModule,
     OAuthIndexModule,
     NewsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [],

@@ -12,6 +12,10 @@ export class CreateNewsInput {
     age?: number;
 }
 
+export class CreateCommentInput {
+    content?: string;
+}
+
 export class CreateUserInput {
     name?: string;
     age?: number;
@@ -42,6 +46,10 @@ export abstract class IQuery {
 
     abstract news(id: string): News | Promise<News>;
 
+    abstract commentsList(): Comment[] | Promise<Comment[]>;
+
+    abstract comment(id: string): Comment | Promise<Comment>;
+
     abstract usersList(): User[] | Promise<User[]>;
 
     abstract user(id: string): User | Promise<User>;
@@ -54,6 +62,8 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createNews(createNewsInput?: CreateNewsInput): News | Promise<News>;
 
+    abstract createComment(createCommentInput?: CreateCommentInput): Comment | Promise<Comment>;
+
     abstract createUser(createUserInput?: CreateUserInput): User | Promise<User>;
 
     abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
@@ -61,6 +71,8 @@ export abstract class IMutation {
 
 export abstract class ISubscription {
     abstract newsCreated(): News | Promise<News>;
+
+    abstract commentCreated(): Comment | Promise<Comment>;
 }
 
 export class Owner {
@@ -73,6 +85,11 @@ export class Owner {
 export class News {
     _id?: string;
     title?: string;
+}
+
+export class Comment {
+    _id?: string;
+    content?: string;
 }
 
 export class User {
