@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
+import * as mongooseDelete from 'mongoose-delete';
+import * as mongooseAutopopulate from 'mongoose-autopopulate';
 
 @Schema({ timestamps: true })
 export class Comment {
@@ -7,6 +10,13 @@ export class Comment {
   content: string;
 }
 
-export const CommentSchema = SchemaFactory.createForClass(Comment);
+const CommentSchema = SchemaFactory.createForClass(Comment);
 
-export type CommentDocument = Comment & mongoose.Document;
+// https://stackoverflow.com/questions/49387454/mongoose-plugins-nestjs
+CommentSchema.plugin(mongoosePaginate);
+CommentSchema.plugin(mongooseDelete);
+CommentSchema.plugin(mongooseAutopopulate);
+
+type CommentDocument = Comment & mongoose.Document;
+
+export { CommentSchema, CommentDocument };
