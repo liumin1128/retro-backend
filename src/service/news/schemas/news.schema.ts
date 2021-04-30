@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Origin {
   @Prop()
   name: string;
@@ -16,7 +16,7 @@ export class Origin {
   data: mongoose.Schema.Types.Map;
 }
 
-@Schema()
+@Schema({ timestamps: true })
 export class News {
   @Prop()
   title: string;
