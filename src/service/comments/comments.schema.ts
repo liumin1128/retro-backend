@@ -17,10 +17,11 @@ export class Comment {
     type: mongoose.Schema.Types.ObjectId,
     refPath: 'objectModel',
     autopopulate: true,
+    required: true,
   })
   object: mongoose.Types.ObjectId | unknown;
 
-  @Prop()
+  @Prop({ type: String, required: true, enum: ['News', 'Comment'] })
   objectModel: string;
 }
 
