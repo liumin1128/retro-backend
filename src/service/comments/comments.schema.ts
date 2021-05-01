@@ -16,7 +16,7 @@ export class Comment {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     refPath: 'objectModel',
-    // autopopulate: true,
+    autopopulate: true,
   })
   object: mongoose.Types.ObjectId | unknown;
 
