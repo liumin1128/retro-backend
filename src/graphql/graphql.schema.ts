@@ -33,6 +33,12 @@ export class CreateOAuthInput {
     age?: number;
 }
 
+export interface Document {
+    _id?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
 export class Author {
     id: number;
     firstName?: string;
@@ -94,8 +100,10 @@ export class News {
     title?: string;
 }
 
-export class Comment {
+export class Comment implements Document {
     _id?: string;
+    createdAt?: string;
+    updatedAt?: string;
     content?: string;
     object: CommentObjectUnion;
 }

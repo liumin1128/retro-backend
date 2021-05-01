@@ -11,8 +11,16 @@ type Subscription {
   commentCreated: Comment
 }
 
-type Comment {
+interface Document {
   _id: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Comment implements Document {
+  _id: String
+  createdAt: String
+  updatedAt: String
   content: String
   object: CommentObjectUnion!
 }
