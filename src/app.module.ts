@@ -28,7 +28,6 @@ import { GraphqlModule } from '@/graphql/graphql.module';
         upper: UpperCaseDirective,
       },
     }),
-    // GraphqlPluginsModule,
     GraphqlModule,
     AuthModule,
     UsersModule,
