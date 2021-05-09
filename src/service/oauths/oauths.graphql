@@ -7,7 +7,7 @@ type Mutation {
   createOAuth(createOAuthInput: CreateOAuthInput): OAuth
 }
 
-type OAuth {
+type OAuth @auth(requires: ADMIN) {
   _id: ID
   nickname: String
 }

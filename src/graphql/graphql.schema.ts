@@ -7,6 +7,13 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum Role {
+    ADMIN = "ADMIN",
+    REVIEWER = "REVIEWER",
+    USER = "USER",
+    UNKNOWN = "UNKNOWN"
+}
+
 export enum CommentObjectUnionModel {
     News = "News",
     Comment = "Comment"

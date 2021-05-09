@@ -9,6 +9,7 @@ import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
 import { AppController } from '@/app.controller';
 import { UpperCaseDirective } from '@/graphql/directives/upper-case.directive';
+import { AuthDirective } from '@/graphql/directives/auth.directive';
 import { GraphqlModule } from '@/graphql/graphql.module';
 
 @Module({
@@ -26,6 +27,7 @@ import { GraphqlModule } from '@/graphql/graphql.module';
       },
       schemaDirectives: {
         upper: UpperCaseDirective,
+        auth: AuthDirective,
       },
     }),
     GraphqlModule,
