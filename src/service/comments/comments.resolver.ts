@@ -27,7 +27,6 @@ export class CommentsResolver {
   @Query('commentsList')
   // @UseGuards(CommentsGuard)
   async getComments(): Promise<Comment[]> {
-    console.log('xxxx');
     return this.commentsService.findAll();
   }
 

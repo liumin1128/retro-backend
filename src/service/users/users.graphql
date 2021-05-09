@@ -1,6 +1,6 @@
 type Query {
   usersList: [User]
-  user(id: ID!): User
+  user(id: String!): User
 }
 
 type Mutation {

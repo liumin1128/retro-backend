@@ -34,7 +34,7 @@ export class CreateOAuthInput {
 }
 
 export interface Document {
-    _id?: string;
+    _id: string;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -96,12 +96,12 @@ export class Owner {
 }
 
 export class News {
-    _id?: string;
+    _id: string;
     title?: string;
 }
 
 export class Comment implements Document {
-    _id?: string;
+    _id: string;
     createdAt?: string;
     updatedAt?: string;
     content?: string;

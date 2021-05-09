@@ -8,6 +8,8 @@ import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
 import { AppController } from '@/app.controller';
+import { UpperCaseDirective } from '@/graphql/directives/upper-case.directive';
+import { GraphqlModule } from '@/graphql/graphql.module';
 
 @Module({
   imports: [
@@ -22,7 +24,12 @@ import { AppController } from '@/app.controller';
         path: './src/graphql/graphql.schema.ts',
         outputAs: 'class',
       },
+      schemaDirectives: {
+        upper: UpperCaseDirective,
+      },
     }),
+    // GraphqlPluginsModule,
+    GraphqlModule,
     AuthModule,
     UsersModule,
     OAuthIndexModule,

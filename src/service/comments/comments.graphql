@@ -11,14 +11,8 @@ type Subscription {
   commentCreated: Comment
 }
 
-interface Document {
-  _id: String
-  createdAt: String
-  updatedAt: String
-}
-
 type Comment implements Document {
-  _id: String
+  _id: ID! @upper
   createdAt: String
   updatedAt: String
   content: String
@@ -32,7 +26,7 @@ input CreateCommentInput {
 }
 
 # input CreateCommentObjectInput {
-#   _id: String!
+#   _id: ID!
 #   model: CommentObjectUnionModel!
 # }
 

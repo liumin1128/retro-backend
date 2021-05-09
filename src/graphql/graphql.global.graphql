@@ -1,0 +1,5 @@
+interface Document {
+  _id: ID!
+  createdAt: String
+  updatedAt: String
+}

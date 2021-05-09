@@ -8,7 +8,7 @@ type Mutation {
 }
 
 type OAuth {
-  _id: String
+  _id: ID
   nickname: String
 }
 
