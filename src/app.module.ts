@@ -15,12 +15,14 @@ import { GraphqlModule } from '@/graphql/graphql.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
     MongooseModule.forRoot('mongodb://react:123456@localhost:27017/react'),
+
     GraphQLModule.forRoot({
       debug: true,
       playground: true,
       typePaths: ['./**/*.graphql'],
-      // installSubscriptionHandlers: true,
+      // autoSchemaFile: true,
       definitions: {
         path: './src/graphql/graphql.schema.ts',
         outputAs: 'class',
@@ -29,7 +31,9 @@ import { GraphqlModule } from '@/graphql/graphql.module';
         upper: UpperCaseDirective,
         auth: AuthDirective,
       },
+      context: ({ req }) => ({ headers: req.headers }),
     }),
+
     GraphqlModule,
     AuthModule,
     UsersModule,

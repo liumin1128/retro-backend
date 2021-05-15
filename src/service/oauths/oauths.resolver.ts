@@ -1,8 +1,16 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 // import { OAuths } from '@/graphql/graphql.schema';
-// import { OAuthsGuard } from './oauths.guard';
+import { GqlAuthGuard, CurrentUser } from '@/service/auth/jwt-auth.guard';
 import { OAuthDocument as OAuth } from './schemas/oauths.schema';
 import { OAuthsService } from './oauths.service';
 import { CreateOAuthDto } from './dto/create.dto';
@@ -14,8 +22,8 @@ export class OAuthsResolver {
   constructor(private readonly oauthsService: OAuthsService) {}
 
   @Query('oauthsList')
-  // @UseGuards(OAuthsGuard)
-  async getOAuths(): Promise<OAuth[]> {
+  @UseGuards(GqlAuthGuard)
+  async getOAuths(@CurrentUser() user): Promise<OAuth[]> {
     return this.oauthsService.findAll();
   }
 

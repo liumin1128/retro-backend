@@ -1,7 +1,13 @@
 import { Reflector } from '@nestjs/core';
-import { SetMetadata } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Injectable, ExecutionContext } from '@nestjs/common';
+import {
+  SetMetadata,
+  Injectable,
+  ExecutionContext,
+  createParamDecorator,
+} from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
+
 import { IS_PUBLIC_KEY } from './constants';
 
 @Injectable()
@@ -20,5 +26,20 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   //   return super.canActivate(context);
   // }
 }
+
+@Injectable()
+export class GqlAuthGuard extends AuthGuard('jwt') {
+  getRequest(context: ExecutionContext) {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req;
+  }
+}
+
+export const CurrentUser = createParamDecorator(
+  (_, context: ExecutionContext) => {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req.user;
+  },
+);
 
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
