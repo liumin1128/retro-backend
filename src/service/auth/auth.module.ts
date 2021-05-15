@@ -6,7 +6,7 @@ import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 // import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
+import { UsersModule } from '../../users/users.module';
 import { jwtConstants } from './constants';
 
 @Module({

@@ -5,7 +5,7 @@ import { UsersService } from '@/service/users/users.service';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
 import { UserDocument } from '@/service/users/schemas/users.schema';
 import { OAuthDocument } from '@/service/oauths/schemas/oauths.schema';
-import { AuthService } from '@/auth/auth.service';
+import { AuthService } from '@/service/auth/auth.service';
 
 @Controller('/oauth/github')
 export class GithubController {
