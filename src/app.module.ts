@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@/service/auth/auth.module';
-import { UsersModule } from '@/users/users.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
@@ -36,7 +35,6 @@ import { GraphqlModule } from '@/graphql/graphql.module';
 
     GraphqlModule,
     AuthModule,
-    UsersModule,
     OAuthIndexModule,
     NewsModule,
     CommentsModule,
