@@ -123,6 +123,7 @@ export class User {
 export class OAuth {
     _id?: string;
     nickname?: string;
+    platform?: string;
 }
 
 export type CommentObjectUnion = News | Comment;

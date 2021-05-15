@@ -9,7 +9,7 @@ type Mutation {
 
 type OAuth @auth(requires: ADMIN) {
   _id: ID
-  nickname: String
+  platform: String @upper
 }
 
 input CreateOAuthInput {
