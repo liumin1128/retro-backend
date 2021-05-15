@@ -31,7 +31,7 @@ import { GraphqlModule } from '@/graphql/graphql.module';
         upper: UpperCaseDirective,
         auth: AuthDirective,
       },
-      context: ({ req }) => ({ headers: req.headers }),
+      // context: ({ req }) => ({ headers: req.headers }),
     }),
 
     GraphqlModule,

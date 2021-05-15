@@ -10,6 +10,8 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 
 import { IS_PUBLIC_KEY } from './constants';
 
+import { SignUserPayload } from './auth.service';
+
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   // constructor(private reflector: Reflector) {
@@ -36,7 +38,7 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
 }
 
 export const CurrentUser = createParamDecorator(
-  (_, context: ExecutionContext) => {
+  (_, context: ExecutionContext): SignUserPayload => {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req.user;
   },

@@ -10,7 +10,8 @@ import {
 import { UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 // import { OAuths } from '@/graphql/graphql.schema';
-import { GqlAuthGuard, CurrentUser } from '@/service/auth/jwt-auth.guard';
+import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
+import { SignUserPayload } from '@/service/auth/auth.service';
 import { OAuthDocument as OAuth } from './schemas/oauths.schema';
 import { OAuthsService } from './oauths.service';
 import { CreateOAuthDto } from './dto/create.dto';
@@ -23,7 +24,9 @@ export class OAuthsResolver {
 
   @Query('oauthsList')
   @UseGuards(GqlAuthGuard)
-  async getOAuths(@CurrentUser() user): Promise<OAuth[]> {
+  async getOAuths(@CurrentUser() user: SignUserPayload): Promise<OAuth[]> {
+    console.log('user');
+    console.log(user);
     return this.oauthsService.findAll();
   }
 
