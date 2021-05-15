@@ -16,7 +16,6 @@ export class NewsResolver {
   @Query('newsList')
   // @UseGuards(NewsGuard)
   async getNews(): Promise<News[]> {
-    console.log('xxxx');
     return this.newsService.findAll();
   }
 

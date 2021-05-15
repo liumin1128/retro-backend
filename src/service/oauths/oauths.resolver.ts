@@ -16,7 +16,6 @@ export class OAuthsResolver {
   @Query('oauthsList')
   // @UseGuards(OAuthsGuard)
   async getOAuths(): Promise<OAuth[]> {
-    console.log('xxxx');
     return this.oauthsService.findAll();
   }
 

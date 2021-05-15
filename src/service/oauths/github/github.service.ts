@@ -15,8 +15,6 @@ export class GithubService {
     url += `?client_id=${this.client_id}`;
     url += `&scope=${this.scope}`;
     url += `&state=${dataStr}`;
-    console.log('url');
-    console.log(url);
     return url;
   }
 

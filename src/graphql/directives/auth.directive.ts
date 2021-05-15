@@ -7,13 +7,11 @@ import { defaultFieldResolver, GraphQLField } from 'graphql';
 
 export class AuthDirective extends SchemaDirectiveVisitor {
   visitObject(type) {
-    console.log('AuthDirective visitObject');
     this.ensureFieldsWrapped(type);
     type._requiredAuthRole = this.args.requires;
   }
 
   visitFieldDefinition(field, details) {
-    console.log('AuthDirective visitFieldDefinition');
     this.ensureFieldsWrapped(details.objectType);
     field._requiredAuthRole = this.args.requires;
   }
@@ -40,8 +38,6 @@ export class AuthDirective extends SchemaDirectiveVisitor {
 
         const context = args[2];
 
-        console.log('args');
-        console.log(args);
         // const user = await getUser(context.headers.authToken);
         // if (!user.hasRole(requiredRole)) {
         //   throw new Error('not authorized');

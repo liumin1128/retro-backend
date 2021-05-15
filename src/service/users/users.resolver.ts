@@ -16,7 +16,6 @@ export class UsersResolver {
   @Query('usersList')
   // @UseGuards(UsersGuard)
   async getUsers(): Promise<User[]> {
-    console.log('xxxx');
     return this.usersService.findAll();
   }
 

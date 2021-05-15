@@ -149,13 +149,9 @@ export class IDataService {
       .pipe(map((response) => response.data))
       .toPromise();
 
-    console.log(data.data.length);
-
     if (data.retcode === '000000') {
       return data;
     }
-
-    console.log(data.data.length);
 
     throw data;
   }
