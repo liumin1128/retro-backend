@@ -33,11 +33,18 @@ export class CreateCommentInput {
 export class CreateUserInput {
     name?: string;
     age?: number;
+    phoneNumber?: number;
+    password?: string;
 }
 
 export class CreateOAuthInput {
     name?: string;
     age?: number;
+}
+
+export class RegisterUserInput {
+    phoneNumber?: string;
+    password?: string;
 }
 
 export interface Document {
@@ -87,6 +94,8 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: CreateUserInput): User | Promise<User>;
 
     abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
+
+    abstract register(input?: RegisterUserInput): User | Promise<User>;
 }
 
 export abstract class ISubscription {
