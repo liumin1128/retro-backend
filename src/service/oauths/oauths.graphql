@@ -8,7 +8,7 @@ type Mutation {
 }
 
 type OAuth @auth(requires: ADMIN) {
-  _id: ID
+  _id: ID!
   platform: String @upper
 }
 

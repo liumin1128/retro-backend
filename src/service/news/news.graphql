@@ -1,6 +1,6 @@
 type Query {
   newsList: [News]
-  news(id: String!): News
+  news(id: ID!): News
 }
 
 type Mutation {
@@ -12,7 +12,7 @@ type Subscription {
 }
 
 type News {
-  _id: String!
+  _id: ID!
   title: String
 }
 

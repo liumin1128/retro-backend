@@ -34,8 +34,6 @@ export class NewsService {
 
       await Promise.all(
         data.data.map(async (i) => {
-          console.log('i');
-          console.log(i);
           try {
             const doc = await this.newsModel.findOne({
               $or: [

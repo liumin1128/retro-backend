@@ -9,7 +9,7 @@ type Mutation {
 }
 
 type User {
-  _id: String
+  _id: ID!
   nickname: String
 }
 
