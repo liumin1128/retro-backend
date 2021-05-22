@@ -94,7 +94,7 @@ export class GithubController {
 
       // 重定向页面到用户登录页，并返回token
       return {
-        url: `${process.env.DOMAIN}:${process.env.PORT}/login/oauth?token=${token}`,
+        url: `${process.env.FRONT_DOMAIN}:${process.env.FRONT_PORT}/login/oauth?token=${token}`,
         statusCode: 301,
       };
     } catch (error) {
