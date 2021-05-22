@@ -20,8 +20,8 @@ export class NewsResolver {
   }
 
   @Query('news')
-  async findById(id: string): Promise<News> {
-    return this.newsService.findById(id);
+  async findById(@Args('_id') _id: string): Promise<News> {
+    return this.newsService.findById(_id);
   }
 
   @Mutation('createNews')

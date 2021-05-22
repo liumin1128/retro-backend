@@ -1,6 +1,6 @@
 type Query {
   newsList: [News]
-  news(id: ID!): News
+  news(_id: ID!): News
 }
 
 type Mutation {
@@ -14,6 +14,8 @@ type Subscription {
 type News {
   _id: ID!
   title: String
+  cover: String
+  html: String
 }
 
 input CreateNewsInput {

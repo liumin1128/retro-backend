@@ -20,7 +20,7 @@ export class CommentsService {
     return this.commentsModel.find();
   }
 
-  async findById(id: string): Promise<CommentDocument> {
-    return this.commentsModel.findById(id);
+  async findById(_id: string): Promise<CommentDocument> {
+    return this.commentsModel.findById(_id);
   }
 }

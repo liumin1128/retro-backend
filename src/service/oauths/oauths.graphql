@@ -1,6 +1,6 @@
 type Query {
   oauthsList: [OAuth]
-  oauth(id: ID!): OAuth
+  oauth(_id: ID!): OAuth
 }
 
 type Mutation {

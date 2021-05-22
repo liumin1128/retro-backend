@@ -1,6 +1,6 @@
 type Query {
   commentsList: [Comment]
-  comment(id: ID!): Comment
+  comment(_id: ID!): Comment
 }
 
 type Mutation {

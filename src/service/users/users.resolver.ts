@@ -29,7 +29,7 @@ export class UsersResolver {
   }
 
   // @Query('user')
-  // async findById(id: string): Promise<User> {
+  // async findById(_id: string): Promise<User> {
   //   return this.usersService.findById(id);
   // }
 

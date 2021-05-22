@@ -31,7 +31,7 @@ export class OAuthsResolver {
   }
 
   // @Query('oauth')
-  // async findById(id: string): Promise<OAuth> {
+  // async findById(_id: string): Promise<OAuth> {
   //   return this.oauthsService.findById(id);
   // }
 

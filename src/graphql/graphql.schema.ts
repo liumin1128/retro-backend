@@ -54,19 +54,19 @@ export interface Document {
 export abstract class IQuery {
     abstract commentsList(): Comment[] | Promise<Comment[]>;
 
-    abstract comment(id: string): Comment | Promise<Comment>;
+    abstract comment(_id: string): Comment | Promise<Comment>;
 
     abstract newsList(): News[] | Promise<News[]>;
 
-    abstract news(id: string): News | Promise<News>;
+    abstract news(_id: string): News | Promise<News>;
 
     abstract oauthsList(): OAuth[] | Promise<OAuth[]>;
 
-    abstract oauth(id: string): OAuth | Promise<OAuth>;
+    abstract oauth(_id: string): OAuth | Promise<OAuth>;
 
     abstract usersList(): User[] | Promise<User[]>;
 
-    abstract user(id: string): User | Promise<User>;
+    abstract user(_id: string): User | Promise<User>;
 }
 
 export abstract class IMutation {
@@ -98,6 +98,8 @@ export class Comment implements Document {
 export class News {
     _id: string;
     title?: string;
+    cover?: string;
+    html?: string;
 }
 
 export class OAuth {
