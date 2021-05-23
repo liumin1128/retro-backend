@@ -25,6 +25,10 @@ export class CreateCommentInput {
     objectModel: CommentObjectUnionModel;
 }
 
+export class CreateDynamicInput {
+    content?: string;
+}
+
 export class CreateNewsInput {
     name?: string;
     age?: number;
@@ -56,6 +60,10 @@ export abstract class IQuery {
 
     abstract comment(_id: string): Comment | Promise<Comment>;
 
+    abstract dynamicsList(): Dynamic[] | Promise<Dynamic[]>;
+
+    abstract dynamic(_id: string): Dynamic | Promise<Dynamic>;
+
     abstract newsList(): News[] | Promise<News[]>;
 
     abstract news(_id: string): News | Promise<News>;
@@ -72,6 +80,8 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createComment(createCommentInput?: CreateCommentInput): Comment | Promise<Comment>;
 
+    abstract createDynamic(input?: CreateDynamicInput): Dynamic | Promise<Dynamic>;
+
     abstract createNews(createNewsInput?: CreateNewsInput): News | Promise<News>;
 
     abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
@@ -84,6 +94,8 @@ export abstract class IMutation {
 export abstract class ISubscription {
     abstract commentCreated(): Comment | Promise<Comment>;
 
+    abstract dynamicCreated(): Dynamic | Promise<Dynamic>;
+
     abstract newsCreated(): News | Promise<News>;
 }
 
@@ -93,6 +105,13 @@ export class Comment implements Document {
     updatedAt?: string;
     content?: string;
     object: CommentObjectUnion;
+}
+
+export class Dynamic implements Document {
+    _id: string;
+    createdAt?: string;
+    updatedAt?: string;
+    content?: string;
 }
 
 export class News {

@@ -1,0 +1,23 @@
+type Query {
+  dynamicsList: [Dynamic]
+  dynamic(_id: ID!): Dynamic
+}
+
+type Mutation {
+  createDynamic(input: CreateDynamicInput): Dynamic
+}
+
+type Subscription {
+  dynamicCreated: Dynamic
+}
+
+type Dynamic implements Document {
+  _id: ID!
+  createdAt: String
+  updatedAt: String
+  content: String
+}
+
+input CreateDynamicInput {
+  content: String
+}
