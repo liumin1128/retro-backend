@@ -1,5 +1,5 @@
 type Query {
-  oauthsList: [OAuth]
+  oauths: [OAuth]
   oauth(_id: ID!): OAuth
 }
 

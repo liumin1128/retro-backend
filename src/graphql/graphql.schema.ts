@@ -75,6 +75,14 @@ export abstract class IQuery {
     abstract usersList(): User[] | Promise<User[]>;
 
     abstract user(_id: string): User | Promise<User>;
+
+    abstract comments(): Comment[] | Promise<Comment[]>;
+
+    abstract dynamics(): Dynamic[] | Promise<Dynamic[]>;
+
+    abstract oauths(): OAuth[] | Promise<OAuth[]>;
+
+    abstract users(): User[] | Promise<User[]>;
 }
 
 export abstract class IMutation {

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { IDataModule } from '@/utils/idata/idata.module';
 import { CommentsService } from './comments.service';
 import {
   CommentsResolver,
@@ -12,7 +11,6 @@ import { CommentsController } from './comments.controller';
 
 @Module({
   imports: [
-    IDataModule,
     NewsModule,
     MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
   ],

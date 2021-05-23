@@ -1,5 +1,5 @@
 type Query {
-  dynamicsList: [Dynamic]
+  dynamics: [Dynamic]
   dynamic(_id: ID!): Dynamic
 }
 

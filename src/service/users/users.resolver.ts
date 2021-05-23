@@ -13,7 +13,7 @@ const pubSub = new PubSub();
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query('usersList')
+  @Query('users')
   // @UseGuards(UsersGuard)
   async getUsers(): Promise<User[]> {
     return this.usersService.findAll();

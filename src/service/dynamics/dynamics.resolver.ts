@@ -23,8 +23,7 @@ const pubSub = new PubSub();
 export class DynamicsResolver {
   constructor(private readonly dynamicsService: DynamicsService) {}
 
-  @Query('dynamicsList')
-  // @UseGuards(DynamicsGuard)
+  @Query('dynamics')
   async getDynamics(): Promise<Dynamic[]> {
     return this.dynamicsService.findAll();
   }

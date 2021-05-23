@@ -1,5 +1,5 @@
 type Query {
-  usersList: [User]
+  users: [User]
   user(_id: String!): User
 }
 

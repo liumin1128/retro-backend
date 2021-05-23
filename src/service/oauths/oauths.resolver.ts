@@ -22,7 +22,7 @@ const pubSub = new PubSub();
 export class OAuthsResolver {
   constructor(private readonly oauthsService: OAuthsService) {}
 
-  @Query('oauthsList')
+  @Query('oauths')
   @UseGuards(GqlAuthGuard)
   async getOAuths(@CurrentUser() user: SignUserPayload): Promise<OAuth[]> {
     console.log('user');
