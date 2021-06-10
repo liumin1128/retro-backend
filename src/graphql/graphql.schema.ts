@@ -56,11 +56,11 @@ export interface Document {
 }
 
 export abstract class IQuery {
-    abstract commentsList(): Comment[] | Promise<Comment[]>;
+    abstract comments(): Comment[] | Promise<Comment[]>;
 
     abstract comment(_id: string): Comment | Promise<Comment>;
 
-    abstract dynamicsList(): Dynamic[] | Promise<Dynamic[]>;
+    abstract dynamics(): Dynamic[] | Promise<Dynamic[]>;
 
     abstract dynamic(_id: string): Dynamic | Promise<Dynamic>;
 
@@ -68,21 +68,13 @@ export abstract class IQuery {
 
     abstract news(_id: string): News | Promise<News>;
 
-    abstract oauthsList(): OAuth[] | Promise<OAuth[]>;
+    abstract oauths(): OAuth[] | Promise<OAuth[]>;
 
     abstract oauth(_id: string): OAuth | Promise<OAuth>;
 
-    abstract usersList(): User[] | Promise<User[]>;
+    abstract users(): User[] | Promise<User[]>;
 
     abstract user(_id: string): User | Promise<User>;
-
-    abstract comments(): Comment[] | Promise<Comment[]>;
-
-    abstract dynamics(): Dynamic[] | Promise<Dynamic[]>;
-
-    abstract oauths(): OAuth[] | Promise<OAuth[]>;
-
-    abstract users(): User[] | Promise<User[]>;
 }
 
 export abstract class IMutation {

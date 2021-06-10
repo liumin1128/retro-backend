@@ -1,18 +1,9 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import {
-  Args,
-  Mutation,
-  Query,
-  Resolver,
-  Subscription,
-  ResolveField,
-} from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
-// import { Dynamics } from '@/graphql/graphql.schema';
-// import { DynamicsGuard } from './dynamics.guard';
 import { DynamicDocument as Dynamic } from './dynamics.schema';
 import { DynamicsService } from './dynamics.service';
 import { CreateDynamicDto } from './dynamics.dto';
