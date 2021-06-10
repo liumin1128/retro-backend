@@ -16,13 +16,12 @@ export class NewsResolver {
   @Query('newsList')
   // @UseGuards(NewsGuard)
   async getNews(): Promise<News[]> {
-    console.log('xxxx');
     return this.newsService.findAll();
   }
 
   @Query('news')
-  async findById(id: string): Promise<News> {
-    return this.newsService.findById(id);
+  async findById(@Args('_id') _id: string): Promise<News> {
+    return this.newsService.findById(_id);
   }
 
   @Mutation('createNews')

@@ -24,10 +24,9 @@ export class CommentsResolver {
     private readonly newsService: NewsService,
   ) {}
 
-  @Query('commentsList')
+  @Query('comments')
   // @UseGuards(CommentsGuard)
   async getComments(): Promise<Comment[]> {
-    console.log('xxxx');
     return this.commentsService.findAll();
   }
 

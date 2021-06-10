@@ -1,15 +1,15 @@
 type Query {
-  oauthsList: [OAuth]
-  oauth(id: ID!): OAuth
+  oauths: [OAuth]
+  oauth(_id: ID!): OAuth
 }
 
 type Mutation {
   createOAuth(createOAuthInput: CreateOAuthInput): OAuth
 }
 
-type OAuth {
-  _id: String
-  nickname: String
+type OAuth @auth(requires: ADMIN) {
+  _id: ID!
+  platform: String @upper
 }
 
 input CreateOAuthInput {

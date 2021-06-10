@@ -1,8 +1,17 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 // import { OAuths } from '@/graphql/graphql.schema';
-// import { OAuthsGuard } from './oauths.guard';
+import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
+import { SignUserPayload } from '@/service/auth/auth.service';
 import { OAuthDocument as OAuth } from './schemas/oauths.schema';
 import { OAuthsService } from './oauths.service';
 import { CreateOAuthDto } from './dto/create.dto';
@@ -13,15 +22,16 @@ const pubSub = new PubSub();
 export class OAuthsResolver {
   constructor(private readonly oauthsService: OAuthsService) {}
 
-  @Query('oauthsList')
-  // @UseGuards(OAuthsGuard)
-  async getOAuths(): Promise<OAuth[]> {
-    console.log('xxxx');
+  @Query('oauths')
+  @UseGuards(GqlAuthGuard)
+  async getOAuths(@CurrentUser() user: SignUserPayload): Promise<OAuth[]> {
+    console.log('user');
+    console.log(user);
     return this.oauthsService.findAll();
   }
 
   // @Query('oauth')
-  // async findById(id: string): Promise<OAuth> {
+  // async findById(_id: string): Promise<OAuth> {
   //   return this.oauthsService.findById(id);
   // }
 

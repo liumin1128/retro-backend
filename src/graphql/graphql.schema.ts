@@ -7,14 +7,16 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum Role {
+    ADMIN = "ADMIN",
+    REVIEWER = "REVIEWER",
+    USER = "USER",
+    UNKNOWN = "UNKNOWN"
+}
+
 export enum CommentObjectUnionModel {
     News = "News",
     Comment = "Comment"
-}
-
-export class CreateNewsInput {
-    name?: string;
-    age?: number;
 }
 
 export class CreateCommentInput {
@@ -23,7 +25,11 @@ export class CreateCommentInput {
     objectModel: CommentObjectUnionModel;
 }
 
-export class CreateUserInput {
+export class CreateDynamicInput {
+    content?: string;
+}
+
+export class CreateNewsInput {
     name?: string;
     age?: number;
 }
@@ -33,88 +39,95 @@ export class CreateOAuthInput {
     age?: number;
 }
 
+export class CreateUserInput {
+    phoneNumber?: number;
+    password?: string;
+}
+
+export class RegisterUserInput {
+    phoneNumber?: string;
+    password?: string;
+}
+
 export interface Document {
-    _id?: string;
+    _id: string;
     createdAt?: string;
     updatedAt?: string;
 }
 
-export class Author {
-    id: number;
-    firstName?: string;
-    lastName?: string;
-    posts?: Post[];
-}
-
-export class Post {
-    id: number;
-    title: string;
-    votes?: number;
-}
-
 export abstract class IQuery {
-    abstract author(id: number): Author | Promise<Author>;
+    abstract comments(): Comment[] | Promise<Comment[]>;
+
+    abstract comment(_id: string): Comment | Promise<Comment>;
+
+    abstract dynamics(): Dynamic[] | Promise<Dynamic[]>;
+
+    abstract dynamic(_id: string): Dynamic | Promise<Dynamic>;
 
     abstract newsList(): News[] | Promise<News[]>;
 
-    abstract news(id: string): News | Promise<News>;
+    abstract news(_id: string): News | Promise<News>;
 
-    abstract commentsList(): Comment[] | Promise<Comment[]>;
+    abstract oauths(): OAuth[] | Promise<OAuth[]>;
 
-    abstract comment(id: string): Comment | Promise<Comment>;
+    abstract oauth(_id: string): OAuth | Promise<OAuth>;
 
-    abstract usersList(): User[] | Promise<User[]>;
+    abstract users(): User[] | Promise<User[]>;
 
-    abstract user(id: string): User | Promise<User>;
-
-    abstract oauthsList(): OAuth[] | Promise<OAuth[]>;
-
-    abstract oauth(id: string): OAuth | Promise<OAuth>;
+    abstract user(_id: string): User | Promise<User>;
 }
 
 export abstract class IMutation {
+    abstract createComment(createCommentInput?: CreateCommentInput): Comment | Promise<Comment>;
+
+    abstract createDynamic(input?: CreateDynamicInput): Dynamic | Promise<Dynamic>;
+
     abstract createNews(createNewsInput?: CreateNewsInput): News | Promise<News>;
 
-    abstract createComment(createCommentInput?: CreateCommentInput): Comment | Promise<Comment>;
+    abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
 
     abstract createUser(createUserInput?: CreateUserInput): User | Promise<User>;
 
-    abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
+    abstract register(input?: RegisterUserInput): User | Promise<User>;
 }
 
 export abstract class ISubscription {
-    abstract newsCreated(): News | Promise<News>;
-
     abstract commentCreated(): Comment | Promise<Comment>;
-}
 
-export class Owner {
-    id: number;
-    name: string;
-    age?: number;
-    news?: News[];
-}
+    abstract dynamicCreated(): Dynamic | Promise<Dynamic>;
 
-export class News {
-    _id?: string;
-    title?: string;
+    abstract newsCreated(): News | Promise<News>;
 }
 
 export class Comment implements Document {
-    _id?: string;
+    _id: string;
     createdAt?: string;
     updatedAt?: string;
     content?: string;
     object: CommentObjectUnion;
 }
 
-export class User {
-    _id?: string;
-    nickname?: string;
+export class Dynamic implements Document {
+    _id: string;
+    createdAt?: string;
+    updatedAt?: string;
+    content?: string;
+}
+
+export class News {
+    _id: string;
+    title?: string;
+    cover?: string;
+    html?: string;
 }
 
 export class OAuth {
-    _id?: string;
+    _id: string;
+    platform?: string;
+}
+
+export class User {
+    _id: string;
     nickname?: string;
 }
 

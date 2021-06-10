@@ -1,18 +1,24 @@
 type Query {
-  usersList: [User]
-  user(id: ID!): User
+  users: [User]
+  user(_id: String!): User
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput): User
+  register(input: RegisterUserInput): User
 }
 
 type User {
-  _id: String
+  _id: ID!
   nickname: String
 }
 
 input CreateUserInput {
-  name: String
-  age: Int
+  phoneNumber: Int
+  password: String
+}
+
+input RegisterUserInput {
+  phoneNumber: String
+  password: String
 }

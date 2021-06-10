@@ -3,7 +3,7 @@ import { GithubController } from './github.controller';
 import { GithubService } from './github.service';
 import { OAuthModule } from '@/service/oauths/oauths.module';
 import { UserModule } from '@/service/users/users.module';
-import { AuthModule } from '@/auth/auth.module';
+import { AuthModule } from '@/service/auth/auth.module';
 import { QiniuModule } from '@/utils/qiniu/qiniu.module';
 
 @Module({

@@ -1,6 +1,6 @@
 type Query {
   newsList: [News]
-  news(id: ID!): News
+  news(_id: ID!): News
 }
 
 type Mutation {
@@ -11,16 +11,11 @@ type Subscription {
   newsCreated: News
 }
 
-type Owner {
-  id: Int!
-  name: String!
-  age: Int
-  news: [News!]
-}
-
 type News {
-  _id: String
+  _id: ID!
   title: String
+  cover: String
+  html: String
 }
 
 input CreateNewsInput {

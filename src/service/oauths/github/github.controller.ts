@@ -5,7 +5,7 @@ import { UsersService } from '@/service/users/users.service';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
 import { UserDocument } from '@/service/users/schemas/users.schema';
 import { OAuthDocument } from '@/service/oauths/schemas/oauths.schema';
-import { AuthService } from '@/auth/auth.service';
+import { AuthService } from '@/service/auth/auth.service';
 
 @Controller('/oauth/github')
 export class GithubController {
@@ -94,7 +94,7 @@ export class GithubController {
 
       // 重定向页面到用户登录页，并返回token
       return {
-        url: `${process.env.DOMAIN}:${process.env.PORT}/login/oauth?token=${token}`,
+        url: `${process.env.FRONT_DOMAIN}:${process.env.FRONT_PORT}/login/oauth?token=${token}`,
         statusCode: 301,
       };
     } catch (error) {

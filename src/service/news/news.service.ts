@@ -23,8 +23,8 @@ export class NewsService {
     return data;
   }
 
-  async findById(id: string): Promise<NewsDocument> {
-    const data = await this.newsModel.findById(id);
+  async findById(_id: string): Promise<NewsDocument> {
+    const data = await this.newsModel.findById(_id);
     return data;
   }
 
@@ -34,8 +34,6 @@ export class NewsService {
 
       await Promise.all(
         data.data.map(async (i) => {
-          console.log('i');
-          console.log(i);
           try {
             const doc = await this.newsModel.findOne({
               $or: [
