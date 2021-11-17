@@ -9,8 +9,6 @@ import { CommentsModule } from '@/service/comments/comments.module';
 
 import { DynamicsModule } from '@/service/dynamics/dynamics.module';
 import { AppController } from '@/app.controller';
-import { UpperCaseDirective } from '@/graphql/directives/upper-case.directive';
-import { AuthDirective } from '@/graphql/directives/auth.directive';
 import { GraphqlModule } from '@/graphql/graphql.module';
 
 @Module({
@@ -28,10 +26,10 @@ import { GraphqlModule } from '@/graphql/graphql.module';
         path: './src/graphql/graphql.schema.ts',
         outputAs: 'class',
       },
-      schemaDirectives: {
-        upper: UpperCaseDirective,
-        auth: AuthDirective,
-      },
+      // schemaDirectives: {
+      //   upper: UpperCaseDirective,
+      //   auth: AuthDirective,
+      // },
       // context: ({ req }) => ({ headers: req.headers }),
     }),
 

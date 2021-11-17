@@ -15,7 +15,7 @@ export class AnalyseService {
   async fetchList(): Promise<Item[]> {
     try {
       const data = await request.get('/tjsj/sjjd/');
-      const $ = cheerio.load(data.data);
+      const $ = cheerio.load(data.data as string);
       const list: Item[] = [];
       function getVlue() {
         const title = $(this).find('span a font').text();

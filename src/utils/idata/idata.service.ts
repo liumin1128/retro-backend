@@ -1,4 +1,5 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 import { stringify } from 'query-string';
 import { map } from 'rxjs/operators';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';

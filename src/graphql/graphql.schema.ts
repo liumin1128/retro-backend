@@ -1,6 +1,6 @@
 
 /*
- * ------------------------------------------------------
+ * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
  * -------------------------------------------------------
  */
@@ -20,115 +20,116 @@ export enum CommentObjectUnionModel {
 }
 
 export class CreateCommentInput {
-    content?: string;
+    content?: Nullable<string>;
     object: string;
     objectModel: CommentObjectUnionModel;
 }
 
 export class CreateDynamicInput {
-    content?: string;
+    content?: Nullable<string>;
 }
 
 export class CreateNewsInput {
-    name?: string;
-    age?: number;
+    name?: Nullable<string>;
+    age?: Nullable<number>;
 }
 
 export class CreateOAuthInput {
-    name?: string;
-    age?: number;
+    name?: Nullable<string>;
+    age?: Nullable<number>;
 }
 
 export class CreateUserInput {
-    phoneNumber?: number;
-    password?: string;
+    phoneNumber?: Nullable<number>;
+    password?: Nullable<string>;
 }
 
 export class RegisterUserInput {
-    phoneNumber?: string;
-    password?: string;
+    phoneNumber?: Nullable<string>;
+    password?: Nullable<string>;
 }
 
 export interface Document {
     _id: string;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
 }
 
 export abstract class IQuery {
-    abstract comments(): Comment[] | Promise<Comment[]>;
+    abstract comments(): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
 
-    abstract comment(_id: string): Comment | Promise<Comment>;
+    abstract comment(_id: string): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract dynamics(): Dynamic[] | Promise<Dynamic[]>;
+    abstract dynamics(): Nullable<Nullable<Dynamic>[]> | Promise<Nullable<Nullable<Dynamic>[]>>;
 
-    abstract dynamic(_id: string): Dynamic | Promise<Dynamic>;
+    abstract dynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract newsList(): News[] | Promise<News[]>;
+    abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
 
-    abstract news(_id: string): News | Promise<News>;
+    abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
 
-    abstract oauths(): OAuth[] | Promise<OAuth[]>;
+    abstract oauths(): Nullable<Nullable<OAuth>[]> | Promise<Nullable<Nullable<OAuth>[]>>;
 
-    abstract oauth(_id: string): OAuth | Promise<OAuth>;
+    abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract users(): User[] | Promise<User[]>;
+    abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
-    abstract user(_id: string): User | Promise<User>;
+    abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
-    abstract createComment(createCommentInput?: CreateCommentInput): Comment | Promise<Comment>;
+    abstract createComment(createCommentInput?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract createDynamic(input?: CreateDynamicInput): Dynamic | Promise<Dynamic>;
+    abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract createNews(createNewsInput?: CreateNewsInput): News | Promise<News>;
+    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
 
-    abstract createOAuth(createOAuthInput?: CreateOAuthInput): OAuth | Promise<OAuth>;
+    abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract createUser(createUserInput?: CreateUserInput): User | Promise<User>;
+    abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract register(input?: RegisterUserInput): User | Promise<User>;
+    abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class ISubscription {
-    abstract commentCreated(): Comment | Promise<Comment>;
+    abstract commentCreated(): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract dynamicCreated(): Dynamic | Promise<Dynamic>;
+    abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract newsCreated(): News | Promise<News>;
+    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 }
 
 export class Comment implements Document {
     _id: string;
-    createdAt?: string;
-    updatedAt?: string;
-    content?: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
     object: CommentObjectUnion;
 }
 
 export class Dynamic implements Document {
     _id: string;
-    createdAt?: string;
-    updatedAt?: string;
-    content?: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
 }
 
 export class News {
     _id: string;
-    title?: string;
-    cover?: string;
-    html?: string;
+    title?: Nullable<string>;
+    cover?: Nullable<string>;
+    html?: Nullable<string>;
 }
 
 export class OAuth {
     _id: string;
-    platform?: string;
+    platform?: Nullable<string>;
 }
 
 export class User {
     _id: string;
-    nickname?: string;
+    nickname?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment;
+type Nullable<T> = T | null;
