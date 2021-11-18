@@ -6,8 +6,8 @@ import { AuthModule } from '@/service/auth/auth.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
-
 import { DynamicsModule } from '@/service/dynamics/dynamics.module';
+import { RetrosModule } from '@/service/retros/retros.module';
 import { AppController } from '@/app.controller';
 import { GraphqlModule } from '@/graphql/graphql.module';
 
@@ -32,13 +32,13 @@ import { GraphqlModule } from '@/graphql/graphql.module';
       // },
       // context: ({ req }) => ({ headers: req.headers }),
     }),
-
     GraphqlModule,
     AuthModule,
     OAuthIndexModule,
     NewsModule,
     CommentsModule,
     DynamicsModule,
+    RetrosModule,
   ],
   controllers: [AppController],
   providers: [],

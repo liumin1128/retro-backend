@@ -1,0 +1,23 @@
+type Query {
+  retros: [Retro]
+  retro(_id: ID!): Retro
+}
+
+type Mutation {
+  createRetro(input: CreateRetroInput): Retro
+}
+
+type Subscription {
+  retroCreated: Retro
+}
+
+type Retro implements Document {
+  _id: ID!
+  createdAt: String
+  updatedAt: String
+  content: String
+}
+
+input CreateRetroInput {
+  content: String
+}
