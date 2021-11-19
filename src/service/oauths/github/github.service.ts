@@ -100,8 +100,14 @@ export class GithubService {
   //   }
   // }
   getUserInfo(access_token: string): Promise<any> {
+    const headers = {
+      'Content-Type': 'application/json',
+      accept: 'application/json',
+      Authorization: 'token ' + access_token,
+    };
+
     return this.httpService
-      .get(`https://api.github.com/user?access_token=${access_token}`)
+      .get(`https://api.github.com/user`, { headers })
       .pipe(map((response) => response.data))
       .toPromise();
   }
