@@ -21,16 +21,14 @@ import { GraphqlModule } from '@/graphql/graphql.module';
       debug: true,
       playground: true,
       typePaths: ['./**/*.graphql'],
-      // autoSchemaFile: true,
       definitions: {
         path: './src/graphql/graphql.schema.ts',
         outputAs: 'class',
       },
-      // schemaDirectives: {
-      //   upper: UpperCaseDirective,
-      //   auth: AuthDirective,
-      // },
-      // context: ({ req }) => ({ headers: req.headers }),
+      subscriptions: {
+        'graphql-ws': true,
+        'subscriptions-transport-ws': true,
+      },
     }),
     GraphqlModule,
     AuthModule,
