@@ -8,6 +8,7 @@ import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
 import { DynamicsModule } from '@/service/dynamics/dynamics.module';
 import { RetrosModule } from '@/service/retros/retros.module';
+import { RetroMessagesModule } from '@/service/retroMessages/module';
 import { AppController } from '@/app.controller';
 import { GraphqlModule } from '@/graphql/graphql.module';
 
@@ -37,6 +38,7 @@ import { GraphqlModule } from '@/graphql/graphql.module';
     CommentsModule,
     DynamicsModule,
     RetrosModule,
+    RetroMessagesModule,
   ],
   controllers: [AppController],
   providers: [],

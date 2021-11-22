@@ -1,0 +1,23 @@
+type Query {
+  retroMessages: [RetroMessage]
+  retroMessage(_id: ID!): RetroMessage
+}
+
+type Mutation {
+  createRetroMessage(input: CreateRetroMessageInput): RetroMessage
+}
+
+type Subscription {
+  retroMessageCreated: RetroMessage
+}
+
+type RetroMessage implements Document {
+  _id: ID!
+  createdAt: String
+  updatedAt: String
+  content: String
+}
+
+input CreateRetroMessageInput {
+  content: String
+}

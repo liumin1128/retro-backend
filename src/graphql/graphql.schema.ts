@@ -53,6 +53,10 @@ export class RegisterUserInput {
     password?: Nullable<string>;
 }
 
+export class CreateRetroMessageInput {
+    content?: Nullable<string>;
+}
+
 export interface Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -83,6 +87,10 @@ export abstract class IQuery {
     abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract retroMessages(): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+
+    abstract retroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 }
 
 export abstract class IMutation {
@@ -99,6 +107,8 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 }
 
 export abstract class ISubscription {
@@ -109,6 +119,8 @@ export abstract class ISubscription {
     abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
+
+    abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 }
 
 export class Comment implements Document {
@@ -148,6 +160,13 @@ export class Retro implements Document {
 export class User {
     _id: string;
     nickname?: Nullable<string>;
+}
+
+export class RetroMessage implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment;
