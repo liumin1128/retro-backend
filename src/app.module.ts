@@ -8,7 +8,7 @@ import { NewsModule } from '@/service/news/news.module';
 import { CommentsModule } from '@/service/comments/comments.module';
 import { DynamicsModule } from '@/service/dynamics/dynamics.module';
 import { RetrosModule } from '@/service/retros/retros.module';
-import { RetroMessagesModule } from '@/service/retroMessages/module';
+import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { AppController } from '@/app.controller';
 import { GraphqlModule } from '@/graphql/graphql.module';
 
