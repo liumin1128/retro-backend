@@ -3,6 +3,7 @@ type Query {
   user(_id: String!): User
 }
 
+
 type Mutation {
   createUser(createUserInput: CreateUserInput): User
   register(input: RegisterUserInput): User
