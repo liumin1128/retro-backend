@@ -59,8 +59,39 @@ export class RetroMessagesResolver {
     return updatedRetroMessage;
   }
 
+  @Mutation('deleteRetroMessage')
+  @UseGuards(GqlAuthGuard)
+  async delete(
+    @Args('_id') _id: string,
+    @CurrentUser() user: SignUserPayload,
+  ): Promise<RetroMessage> {
+    // 不进行用户校验，任何人都可以修改retro message
+    // const obj = await this.retroMessagesService.findById(_id);
+    // if(obj.user._id !== user._id) {
+    //   return
+    // }
+
+    const deletedRetroMessaged = await this.retroMessagesService.delete(_id);
+
+    pubSub.publish('retroMessageDeleted', {
+      retroMessageDeleted: deletedRetroMessaged,
+    });
+
+    return deletedRetroMessaged;
+  }
+
   @Subscription('retroMessageCreated')
   retroMessageCreated() {
     return pubSub.asyncIterator('retroMessageCreated');
+  }
+
+  @Subscription('retroMessageUpdated')
+  retroMessageUpdated() {
+    return pubSub.asyncIterator('retroMessageUpdated');
+  }
+
+  @Subscription('retroMessageDeleted')
+  retroMessageDeleted() {
+    return pubSub.asyncIterator('retroMessageDeleted');
   }
 }

@@ -42,4 +42,10 @@ export class RetroMessagesService {
   async findById(_id: string): Promise<RetroMessageDocument> {
     return this.retroMessagesModel.findById(_id);
   }
+
+  async delete(_id: string): Promise<RetroMessageDocument> {
+    const obj = await this.retroMessagesModel.findById(_id);
+    await this.retroMessagesModel.deleteOne({ _id });
+    return obj;
+  }
 }
