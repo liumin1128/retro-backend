@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
   createRetroMessage(input: CreateRetroMessageInput): RetroMessage
+  updateRetroMessage(_id: ID, input: UpdateRetroMessageInput): RetroMessage
 }
 
 type Subscription {
@@ -16,8 +17,19 @@ type RetroMessage implements Document {
   createdAt: String
   updatedAt: String
   content: String
+  status: String
+}
+
+enum RetroMessageStatus {
+  NORMAL,
+  CLOSED,
 }
 
 input CreateRetroMessageInput {
   content: String
+}
+
+input UpdateRetroMessageInput {
+  content: String
+  status: RetroMessageStatus
 }

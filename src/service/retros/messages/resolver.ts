@@ -6,7 +6,7 @@ import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { RetroMessageDocument as RetroMessage } from './schema';
 import { RetroMessagesService } from './service';
-import { CreateRetroMessageDto } from './dto';
+import { CreateRetroMessageDto, UpdateRetroMessageDto } from './dto';
 
 const pubSub = new PubSub();
 
@@ -33,6 +33,30 @@ export class RetroMessagesResolver {
       retroMessageCreated: createdRetroMessage,
     });
     return createdRetroMessage;
+  }
+
+  @Mutation('updateRetroMessage')
+  @UseGuards(GqlAuthGuard)
+  async update(
+    @Args('_id') _id: string,
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') args: UpdateRetroMessageDto,
+  ): Promise<RetroMessage> {
+    // 不进行用户校验，任何人都可以修改retro message
+    // const obj = await this.retroMessagesService.findById(_id);
+    // if(obj.user._id !== user._id) {
+    //   return
+    // }
+
+    const updatedRetroMessage = await this.retroMessagesService.update(_id, {
+      ...args,
+    });
+
+    pubSub.publish('retroMessageUpdated', {
+      retroMessageUpdated: updatedRetroMessage,
+    });
+
+    return updatedRetroMessage;
   }
 
   @Subscription('retroMessageCreated')

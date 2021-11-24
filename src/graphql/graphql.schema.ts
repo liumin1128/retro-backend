@@ -19,6 +19,11 @@ export enum CommentObjectUnionModel {
     Comment = "Comment"
 }
 
+export enum RetroMessageStatus {
+    NORMAL = "NORMAL",
+    CLOSED = "CLOSED"
+}
+
 export class CreateCommentInput {
     content?: Nullable<string>;
     object: string;
@@ -43,6 +48,15 @@ export class CreateRetroInput {
     content?: Nullable<string>;
 }
 
+export class CreateRetroMessageInput {
+    content?: Nullable<string>;
+}
+
+export class UpdateRetroMessageInput {
+    content?: Nullable<string>;
+    status?: Nullable<RetroMessageStatus>;
+}
+
 export class CreateUserInput {
     phoneNumber?: Nullable<number>;
     password?: Nullable<string>;
@@ -51,10 +65,6 @@ export class CreateUserInput {
 export class RegisterUserInput {
     phoneNumber?: Nullable<string>;
     password?: Nullable<string>;
-}
-
-export class CreateRetroMessageInput {
-    content?: Nullable<string>;
 }
 
 export interface Document {
@@ -84,13 +94,13 @@ export abstract class IQuery {
 
     abstract retro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
-    abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-
-    abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
-
     abstract retroMessages(): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract retroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
@@ -104,11 +114,13 @@ export abstract class IMutation {
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 }
 
 export abstract class ISubscription {
@@ -157,16 +169,17 @@ export class Retro implements Document {
     content?: Nullable<string>;
 }
 
-export class User {
-    _id: string;
-    nickname?: Nullable<string>;
-}
-
 export class RetroMessage implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
+    status?: Nullable<string>;
+}
+
+export class User {
+    _id: string;
+    nickname?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment;

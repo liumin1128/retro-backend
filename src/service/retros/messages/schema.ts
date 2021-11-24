@@ -4,14 +4,24 @@ import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
 // import * as mongooseAutopopulate from 'mongoose-autopopulate';
 import { UserDocument } from '@/service/users/schemas/users.schema';
+import { RetroDocument } from '@/service/retros/retros.schema';
 
 @Schema({ timestamps: true })
 export class RetroMessage {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: UserDocument;
 
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Retro' })
+  retro: RetroDocument;
+
   @Prop()
   content: string;
+
+  @Prop({ enum: ['NORMAL', 'CLOSED'], default: 'NORMAL' })
+  status: string;
+
+  @Prop()
+  like: number;
 
   @Prop()
   pictures: string[];
