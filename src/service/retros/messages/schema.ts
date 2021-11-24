@@ -31,7 +31,7 @@ const RetroMessageSchema = SchemaFactory.createForClass(RetroMessage);
 
 // https://stackoverflow.com/questions/49387454/mongoose-plugins-nestjs
 RetroMessageSchema.plugin(mongoosePaginate);
-RetroMessageSchema.plugin(mongooseDelete);
+RetroMessageSchema.plugin(mongooseDelete, { overrideMethods: true });
 // RetroMessageSchema.plugin(mongooseAutopopulate);
 
 type RetroMessageDocument = RetroMessage & mongoose.Document;
