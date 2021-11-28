@@ -71,3 +71,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+### vercel 部署
+https://segmentfault.com/a/1190000040873756?utm_source=tag-newest
