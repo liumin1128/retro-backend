@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@/service/auth/auth.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
@@ -14,9 +14,17 @@ import { GraphqlModule } from '@/graphql/graphql.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
 
-    MongooseModule.forRoot('mongodb://react:123456@localhost:27017/react'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('MONGODB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
 
     GraphQLModule.forRoot({
       debug: true,

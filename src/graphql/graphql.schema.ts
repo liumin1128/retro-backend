@@ -44,10 +44,6 @@ export class CreateOAuthInput {
     age?: Nullable<number>;
 }
 
-export class CreateRetroInput {
-    content?: Nullable<string>;
-}
-
 export class CreateRetroMessageInput {
     content?: Nullable<string>;
 }
@@ -55,6 +51,10 @@ export class CreateRetroMessageInput {
 export class UpdateRetroMessageInput {
     content?: Nullable<string>;
     status?: Nullable<RetroMessageStatus>;
+}
+
+export class CreateRetroInput {
+    content?: Nullable<string>;
 }
 
 export class CreateUserInput {
@@ -90,13 +90,13 @@ export abstract class IQuery {
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract retros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
-
-    abstract retro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
-
     abstract retroMessages(): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract retroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract retros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
+
+    abstract retro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
     abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
@@ -112,13 +112,13 @@ export abstract class IMutation {
 
     abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
-
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract deleteRetroMessage(_id?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
@@ -132,13 +132,13 @@ export abstract class ISubscription {
 
     abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 
-    abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
-
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroMessageUpdated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroMessageDeleted(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 }
 
 export class Comment implements Document {
@@ -168,19 +168,19 @@ export class OAuth {
     platform?: Nullable<string>;
 }
 
-export class Retro implements Document {
-    _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
-    content?: Nullable<string>;
-}
-
 export class RetroMessage implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
     status?: Nullable<string>;
+}
+
+export class Retro implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
 }
 
 export class User {
