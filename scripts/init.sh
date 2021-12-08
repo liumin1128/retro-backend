@@ -1,17 +1,17 @@
 # echo '>>> stop all container'
-# docker stop $(docker ps -a -q) 
+# podman stop $(podman ps -a -q) 
 
 # echo '>>> remove all container'
-# docker rm $(docker ps -a -q) 
+# podman rm $(podman ps -a -q) 
 
 echo '>>> create mongo container'
-docker run -itd --name mongo -p 27017:27017 mongo --auth
+podman run -itd --name mongo -p 27017:27017 mongo --auth
 
 echo '>>> create redis container'
-docker run -itd --name redis -p 6379:6379 redis
+podman run -itd --name redis -p 6379:6379 redis
 
 echo '>>> start mongo container'
-docker start mongo 
+podman start mongo 
 
 echo '>>> wait 3 second'
 sleep 1
@@ -23,7 +23,7 @@ echo '>>> wait 1 second'
 sleep 1
 
 echo '>>> init mongo'
-docker exec -i mongo mongo admin <<EOF
+podman exec -i mongo mongo admin <<EOF
 use admin
 db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
 db.auth('admin', '123456')
@@ -34,6 +34,6 @@ exit;
 EOF
 
 # echo '>>> stop mongo'
-# docker stop mongo
+# podman stop mongo
 
 echo '>>> init done'
