@@ -1,4 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
+import { UserDocument } from '@/service/users/schemas/users.schema';
 
 export class CreateOAuthDto {
   @IsNotEmpty()
@@ -9,6 +10,9 @@ export class CreateOAuthDto {
 
   @IsNotEmpty()
   readonly data: any;
+
+  @IsNotEmpty()
+  readonly user: UserDocument;
 }
 
 export class FindOneOAuthDto {
