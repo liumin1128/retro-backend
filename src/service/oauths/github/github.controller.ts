@@ -69,6 +69,9 @@ export class GithubController {
 
       const token = await this.authService.login({ _id: oauth.user._id });
 
+      console.log('token');
+      console.log(token);
+
       // 重定向页面到用户登录页，并返回token
       return {
         url: `${process.env.FRONT_DOMAIN}:${process.env.FRONT_PORT}/#/login/oauth?token=${token}`,

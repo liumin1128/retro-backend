@@ -114,3 +114,6 @@ openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 # 一键ssh免密登录
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@8.131.92.84
+
+[github](https://react.mobi/api/oauth/github)
+[wechat](https://react.mobi/api/oauth/wechat)
