@@ -64,6 +64,8 @@ export class WechatController {
         const uuid: string = openid;
 
         const avatarUrl = await this.qiniuService.fetchToQiniu(headimgurl);
+        console.log('avatarUrl');
+        console.log(avatarUrl);
 
         user = await this.userService.create({
           username: uuid,
@@ -81,8 +83,21 @@ export class WechatController {
 
       const token = await this.authService.login({ _id: oauth.user._id });
 
+      let url = '';
+
+      url += process.env.FRONT_DOMAIN;
+      if (process.env.FRONT_PORT) {
+        url += ':';
+        url += process.env.FRONT_PORT;
+      }
+
+      url += `/#/login/oauth?token=${token}`;
+
+      console.log('url');
+      console.log(url);
+
       return {
-        url: `${process.env.FRONT_DOMAIN}:${process.env.FRONT_PORT}/#/login/oauth?token=${token}`,
+        url: url,
         statusCode: 301,
       };
     } catch (error) {
