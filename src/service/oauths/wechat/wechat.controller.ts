@@ -1,6 +1,6 @@
 import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import {
-  WchatService,
+  WechatService,
   GetUserInfoResponse,
   GetAccessTokenResponse,
 } from '@/service/oauths/wechat/wechat.service';
@@ -12,9 +12,9 @@ import { OAuthDocument } from '@/service/oauths/schemas/oauths.schema';
 import { AuthService } from '@/service/auth/auth.service';
 
 @Controller('/oauth/wechat')
-export class WchatController {
+export class WechatController {
   constructor(
-    private readonly wechatService: WchatService,
+    private readonly wechatService: WechatService,
     private readonly oauthService: OAuthsService,
     private readonly userService: UsersService,
     private readonly qiniuService: QiniuService,

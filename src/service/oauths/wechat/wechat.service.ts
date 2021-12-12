@@ -25,7 +25,7 @@ export interface GetUserInfoResponse {
 }
 
 @Injectable()
-export class WchatService {
+export class WechatService {
   private appid = process.env.OAUTH_WECHAT_APPID;
   private secret = process.env.OAUTH_WECHAT_SECRET;
   private redirect_uri = process.env.OAUTH_WECHAT_REDIRECT_URI;
