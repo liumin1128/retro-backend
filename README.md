@@ -117,3 +117,12 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@8.131.92.84
 
 [github](https://react.mobi/api/oauth/github)
 [wechat](https://react.mobi/api/oauth/wechat)
+
+
+# 安装SSL证书
+
+acme.sh --issue --dns -d react.mobi -d *.react.mobi --yes-I-know-dns-manual-mode-enough-go-ahead-please
+
+acme.sh --renew -d react.mobi -d *.react.mobi --yes-I-know-dns-manual-mode-enough-go-ahead-please
+
+acme.sh --install-cert -d react.mobi --key-file /etc/nginx/ssl/key.pem --fullchain-file /etc/nginx/ssl/cert.pem
