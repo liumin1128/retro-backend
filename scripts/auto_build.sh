@@ -1,4 +1,4 @@
-PRO_DIR="../api.react.mobi"
+PRO_DIR="~/api.react.mobi"
 
 # echo "进入项目目录"
 PATH_OLD=`pwd`
@@ -16,7 +16,7 @@ node -v
 echo "正在从git同步代码"
 git fetch --all
 git reset --hard origin/master
-git pull
+git pull --rebase
 
 # echo "安装依赖"
 # yarn
