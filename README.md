@@ -74,3 +74,40 @@ Nest is [MIT licensed](LICENSE).
 
 ### vercel 部署
 https://segmentfault.com/a/1190000040873756?utm_source=tag-newest
+
+
+# 实时监听日志
+tail -f 
+
+# 一键更新nginx
+podman stop mynginx
+podman rm mynginx  
+podman run \
+--name mynginx \
+--privileged=true \
+-v /root:/root \
+-v /etc/nginx:/etc/nginx \
+-p 80:80 \
+-p 443:443 \
+-d nginx
+podman logs mynginx  
+
+# ngixn 转发的路径问题
+https://www.cnblogs.com/wjoyxt/p/11949943.html
+
+# docker nginx访问宿主机
+ifconfig，查看容器ip，那个地址可以访问宿主机
+
+# nginx config
+
+[https://www.digitalocean.com/community/tools/nginx?global.app.lang=zhCN](https://www.digitalocean.com/community/tools/nginx?domains.0.server.domain=react.mobi&domains.0.server.path=%2Froot%2Fretro&domains.0.server.documentRoot=%2Fdist&domains.0.https.certType=custom&domains.0.https.sslCertificate=%2Fetc%2Fnginx%2Fssl%2Fcert.pem&domains.0.https.sslCertificateKey=%2Fetc%2Fnginx%2Fssl%2Fkey.pem&domains.0.php.php=false&domains.0.reverseProxy.reverseProxy=true&domains.0.reverseProxy.path=%2Fapi&domains.0.reverseProxy.proxyPass=http%3A%2F%2F127.0.0.1%3A3101&domains.0.routing.index=index.html&domains.0.routing.fallbackPhp=false&domains.0.routing.fallbackPhpPath=&domains.0.logging.accessLog=true&domains.0.logging.errorLog=true&global.https.letsEncryptCertRoot=%2Fetc%2Fnginx%2Fssl%2F&global.nginx.user=nginx&global.nginx.pid=%2Fvar%2Frun%2Fnginx.pid&global.docker.dockerfile=true&global.app.lang=zhCN)
+
+mkdir /etc/nginx
+
+mkdir /etc/nginx/ssl
+
+acme.sh --install-cert -d react.mobi \
+--key-file       /etc/nginx/ssl/key.pem  \
+--fullchain-file /etc/nginx/ssl/cert.pem
+
+openssl dhparam -out /etc/nginx/dhparam.pem 2048
