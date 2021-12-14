@@ -20,6 +20,9 @@ export class RetroMessage {
   @Prop({ enum: ['NORMAL', 'CLOSED'], default: 'NORMAL' })
   status: string;
 
+  @Prop({ enum: ['HAPPY', 'WONDERRING', 'UNHAPPY', 'TODO'], default: 'HAPPY' })
+  type: string;
+
   @Prop()
   like: number;
 

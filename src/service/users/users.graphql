@@ -12,6 +12,7 @@ type Mutation {
 type User {
   _id: ID!
   nickname: String
+  avatarUrl: String
 }
 
 input CreateUserInput {

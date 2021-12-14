@@ -20,7 +20,9 @@ type RetroMessage implements Document {
   createdAt: String
   updatedAt: String
   content: String
-  status: String
+  status: RetroMessageStatus
+  type: RetroMessageType
+  user: User
 }
 
 enum RetroMessageStatus {
@@ -28,11 +30,20 @@ enum RetroMessageStatus {
   CLOSED,
 }
 
+enum RetroMessageType {
+  HAPPY,
+  WONDERRING,
+  UNHAPPY,
+  TODO,
+}
+
 input CreateRetroMessageInput {
   content: String
+  type: RetroMessageType
 }
 
 input UpdateRetroMessageInput {
   content: String
   status: RetroMessageStatus
+  type: RetroMessageType
 }

@@ -23,11 +23,11 @@ export class RetroMessagesResolver {
   @UseGuards(GqlAuthGuard)
   async create(
     @CurrentUser() user: SignUserPayload,
-    @Args('input') args: CreateRetroMessageDto,
+    @Args('input') input: CreateRetroMessageDto,
   ): Promise<RetroMessage> {
     const createdRetroMessage = await this.retroMessagesService.create({
       user,
-      ...args,
+      ...input,
     });
     pubSub.publish('retroMessageCreated', {
       retroMessageCreated: createdRetroMessage,

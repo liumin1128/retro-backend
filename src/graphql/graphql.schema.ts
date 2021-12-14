@@ -24,6 +24,13 @@ export enum RetroMessageStatus {
     CLOSED = "CLOSED"
 }
 
+export enum RetroMessageType {
+    HAPPY = "HAPPY",
+    WONDERRING = "WONDERRING",
+    UNHAPPY = "UNHAPPY",
+    TODO = "TODO"
+}
+
 export class CreateCommentInput {
     content?: Nullable<string>;
     object: string;
@@ -46,11 +53,13 @@ export class CreateOAuthInput {
 
 export class CreateRetroMessageInput {
     content?: Nullable<string>;
+    type?: Nullable<RetroMessageType>;
 }
 
 export class UpdateRetroMessageInput {
     content?: Nullable<string>;
     status?: Nullable<RetroMessageStatus>;
+    type?: Nullable<RetroMessageType>;
 }
 
 export class CreateRetroInput {
@@ -173,7 +182,9 @@ export class RetroMessage implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
-    status?: Nullable<string>;
+    status?: Nullable<RetroMessageStatus>;
+    type?: Nullable<RetroMessageType>;
+    user?: Nullable<User>;
 }
 
 export class Retro implements Document {
@@ -186,6 +197,7 @@ export class Retro implements Document {
 export class User {
     _id: string;
     nickname?: Nullable<string>;
+    avatarUrl?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment;
