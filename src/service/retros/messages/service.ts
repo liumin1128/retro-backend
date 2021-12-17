@@ -35,6 +35,17 @@ export class RetroMessagesService {
     return obj;
   }
 
+  async like(_id: string, count: number): Promise<RetroMessageDocument> {
+    const obj = await this.retroMessagesModel.findByIdAndUpdate(
+      _id,
+      {
+        like: count,
+      },
+      { new: true },
+    );
+    return obj;
+  }
+
   async findAll(): Promise<RetroMessageDocument[]> {
     return this.retroMessagesModel.find().populate('user');
   }

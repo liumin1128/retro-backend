@@ -80,6 +80,21 @@ export class RetroMessagesResolver {
     return deletedRetroMessaged;
   }
 
+  @Mutation('likeRetroMessage')
+  @UseGuards(GqlAuthGuard)
+  async like(
+    @Args('_id') _id: string,
+    @Args('count') count: number,
+    @CurrentUser() user: SignUserPayload,
+  ): Promise<RetroMessage> {
+    const likedRetroMessaged = await this.retroMessagesService.like(_id, count);
+    pubSub.publish('retroMessageDeleted', {
+      likedRetroMessaged: likedRetroMessaged,
+    });
+    console.log(likedRetroMessaged);
+    return likedRetroMessaged;
+  }
+
   @Subscription('retroMessageCreated')
   retroMessageCreated() {
     return pubSub.asyncIterator('retroMessageCreated');

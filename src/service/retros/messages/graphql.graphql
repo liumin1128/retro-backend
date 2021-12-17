@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   createRetroMessage(input: CreateRetroMessageInput): RetroMessage
   updateRetroMessage(_id: ID, input: UpdateRetroMessageInput): RetroMessage
+  likeRetroMessage(_id: ID, count: Int): RetroMessage
   deleteRetroMessage(_id: ID): RetroMessage
 }
 
@@ -13,6 +14,7 @@ type Subscription {
   retroMessageCreated: RetroMessage
   retroMessageUpdated: RetroMessage
   retroMessageDeleted: RetroMessage
+  retroMessageLiked: RetroMessage
 }
 
 type RetroMessage implements Document {
@@ -23,6 +25,7 @@ type RetroMessage implements Document {
   status: RetroMessageStatus
   type: RetroMessageType
   user: User
+  like: Int
 }
 
 enum RetroMessageStatus {
