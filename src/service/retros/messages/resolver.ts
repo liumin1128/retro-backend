@@ -87,12 +87,11 @@ export class RetroMessagesResolver {
     @Args('count') count: number,
     @CurrentUser() user: SignUserPayload,
   ): Promise<RetroMessage> {
-    const likedRetroMessaged = await this.retroMessagesService.like(_id, count);
-    pubSub.publish('retroMessageDeleted', {
-      likedRetroMessaged: likedRetroMessaged,
+    const likedRetroMessage = await this.retroMessagesService.like(_id, count);
+    pubSub.publish('retroMessageLiked', {
+      retroMessageLiked: likedRetroMessage,
     });
-    console.log(likedRetroMessaged);
-    return likedRetroMessaged;
+    return likedRetroMessage;
   }
 
   @Subscription('retroMessageCreated')
@@ -108,5 +107,10 @@ export class RetroMessagesResolver {
   @Subscription('retroMessageDeleted')
   retroMessageDeleted() {
     return pubSub.asyncIterator('retroMessageDeleted');
+  }
+
+  @Subscription('retroMessageLiked')
+  retroMessageLiked() {
+    return pubSub.asyncIterator('retroMessageLiked');
   }
 }

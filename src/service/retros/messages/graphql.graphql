@@ -29,15 +29,15 @@ type RetroMessage implements Document {
 }
 
 enum RetroMessageStatus {
-  NORMAL,
-  CLOSED,
+  NORMAL
+  CLOSED
 }
 
 enum RetroMessageType {
-  HAPPY,
-  WONDERRING,
-  UNHAPPY,
-  TODO,
+  HAPPY
+  WONDERRING
+  UNHAPPY
+  TODO
 }
 
 input CreateRetroMessageInput {
