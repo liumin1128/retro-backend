@@ -59,7 +59,8 @@ export class RetroMessagesService {
   }
 
   async delete(_id: string): Promise<RetroMessageDocument> {
-    const obj = await this.retroMessagesModel.findById(_id);
+    const obj = await this.retroMessagesModel.findById(_id).populate('user');
+    if (!obj) return;
     await this.retroMessagesModel.deleteOne({ _id });
     return obj;
   }
