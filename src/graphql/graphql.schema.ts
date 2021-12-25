@@ -21,7 +21,8 @@ export enum CommentObjectUnionModel {
 
 export enum RetroMessageStatus {
     NORMAL = "NORMAL",
-    CLOSED = "CLOSED"
+    CLOSED = "CLOSED",
+    FOCUSED = "FOCUSED"
 }
 
 export enum RetroMessageType {

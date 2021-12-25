@@ -17,7 +17,7 @@ export class RetroMessage {
   @Prop()
   content: string;
 
-  @Prop({ enum: ['NORMAL', 'CLOSED'], default: 'NORMAL' })
+  @Prop({ enum: ['NORMAL', 'CLOSED', 'FOCUSED'], default: 'NORMAL' })
   status: string;
 
   @Prop({ enum: ['HAPPY', 'WONDERRING', 'UNHAPPY', 'TODO'], default: 'HAPPY' })
