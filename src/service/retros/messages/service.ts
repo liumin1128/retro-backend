@@ -17,7 +17,9 @@ export class RetroMessagesService {
     const createdRetroMessage = new this.retroMessagesModel(
       createRetroMessageDto,
     );
-    return createdRetroMessage.save();
+    await createdRetroMessage.save();
+    await createdRetroMessage.populate('user');
+    return createdRetroMessage;
   }
 
   async update(
