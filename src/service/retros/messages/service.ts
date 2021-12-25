@@ -24,25 +24,29 @@ export class RetroMessagesService {
     _id: string,
     updateRetroMessageDto: UpdateRetroMessageDto,
   ): Promise<RetroMessageDocument> {
-    const obj = await this.retroMessagesModel.findByIdAndUpdate(
-      _id,
-      {
-        content: updateRetroMessageDto.content,
-        status: updateRetroMessageDto.status,
-      },
-      { new: true },
-    );
+    const obj = await this.retroMessagesModel
+      .findByIdAndUpdate(
+        _id,
+        {
+          content: updateRetroMessageDto.content,
+          status: updateRetroMessageDto.status,
+        },
+        { new: true },
+      )
+      .populate('user');
     return obj;
   }
 
   async like(_id: string, count: number): Promise<RetroMessageDocument> {
-    const obj = await this.retroMessagesModel.findByIdAndUpdate(
-      _id,
-      {
-        like: count,
-      },
-      { new: true },
-    );
+    const obj = await this.retroMessagesModel
+      .findByIdAndUpdate(
+        _id,
+        {
+          $inc: { like: count },
+        },
+        { new: true },
+      )
+      .populate('user');
     return obj;
   }
 
