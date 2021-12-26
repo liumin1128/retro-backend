@@ -42,8 +42,9 @@ enum RetroMessageType {
 }
 
 input CreateRetroMessageInput {
-  content: String
-  type: RetroMessageType
+  retro: ID!
+  content: String!
+  type: RetroMessageType!
 }
 
 input UpdateRetroMessageInput {

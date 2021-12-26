@@ -53,8 +53,9 @@ export class CreateOAuthInput {
 }
 
 export class CreateRetroMessageInput {
-    content?: Nullable<string>;
-    type?: Nullable<RetroMessageType>;
+    retro: string;
+    content: string;
+    type: RetroMessageType;
 }
 
 export class UpdateRetroMessageInput {

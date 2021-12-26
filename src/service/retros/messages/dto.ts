@@ -1,5 +1,6 @@
 export class CreateRetroMessageDto {
   readonly user: string;
+  readonly retro: string;
   readonly content: string;
   readonly type: string;
 }
