@@ -13,14 +13,16 @@ export class RetrosService {
 
   async create(createRetroDto: CreateRetroDto): Promise<RetroDocument> {
     const createdRetro = new this.retrosModel(createRetroDto);
-    return createdRetro.save();
+    await createdRetro.save();
+    await createdRetro.populate('user');
+    return createdRetro;
   }
 
   async findAll(): Promise<RetroDocument[]> {
-    return this.retrosModel.find();
+    return this.retrosModel.find().populate('user');
   }
 
   async findById(_id: string): Promise<RetroDocument> {
-    return this.retrosModel.findById(_id);
+    return this.retrosModel.findById(_id).populate('user');
   }
 }

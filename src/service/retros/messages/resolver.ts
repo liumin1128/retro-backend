@@ -15,8 +15,10 @@ export class RetroMessagesResolver {
   constructor(private readonly retroMessagesService: RetroMessagesService) {}
 
   @Query('retroMessages')
-  async getRetroMessages(): Promise<RetroMessage[]> {
-    return this.retroMessagesService.findAll();
+  async getRetroMessages(
+    @Args('retro') retro: string,
+  ): Promise<RetroMessage[]> {
+    return this.retroMessagesService.findAll({ retro });
   }
 
   @Mutation('createRetroMessage')

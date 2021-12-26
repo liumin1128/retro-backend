@@ -52,8 +52,8 @@ export class RetroMessagesService {
     return obj;
   }
 
-  async findAll(): Promise<RetroMessageDocument[]> {
-    return this.retroMessagesModel.find().populate('user');
+  async findAll(query): Promise<RetroMessageDocument[]> {
+    return this.retroMessagesModel.find(query).populate('user');
   }
 
   async findById(_id: string): Promise<RetroMessageDocument> {

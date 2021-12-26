@@ -16,8 +16,13 @@ type Retro implements Document {
   createdAt: String
   updatedAt: String
   content: String
+  title: String
+  date: String
+  user: User
 }
 
 input CreateRetroInput {
   content: String
+  title: String
+  date: String
 }

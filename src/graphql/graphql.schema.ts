@@ -65,6 +65,8 @@ export class UpdateRetroMessageInput {
 
 export class CreateRetroInput {
     content?: Nullable<string>;
+    title?: Nullable<string>;
+    date?: Nullable<string>;
 }
 
 export class CreateUserInput {
@@ -100,7 +102,7 @@ export abstract class IQuery {
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract retroMessages(): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+    abstract retroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract retroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -198,6 +200,9 @@ export class Retro implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
+    title?: Nullable<string>;
+    date?: Nullable<string>;
+    user?: Nullable<User>;
 }
 
 export class User {

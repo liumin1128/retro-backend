@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
+
 import { RetroMessagesService } from './service';
 
 @Controller('retroMessages')
@@ -6,7 +7,7 @@ export class RetroMessagesController {
   constructor(private readonly retroMessagesService: RetroMessagesService) {}
 
   @Get()
-  async findAll(): Promise<any> {
-    return this.retroMessagesService.findAll();
+  async findAll(@Query('retro') retro: string): Promise<any> {
+    return this.retroMessagesService.findAll(retro);
   }
 }

@@ -1,5 +1,5 @@
 type Query {
-  retroMessages: [RetroMessage]
+  retroMessages(retro: ID): [RetroMessage]
   retroMessage(_id: ID!): RetroMessage
 }
 

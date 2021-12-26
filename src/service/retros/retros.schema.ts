@@ -14,6 +14,12 @@ export class Retro {
   content: string;
 
   @Prop()
+  date: string;
+
+  @Prop()
+  title: string;
+
+  @Prop()
   pictures: string[];
 }
 
