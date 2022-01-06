@@ -1,9 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
 
-export default class CreateUserDto {
+export default class RegisterUserDto {
   @IsNotEmpty()
-  readonly username: string;
-  readonly nickname?: string;
+  readonly phoneNumber: string;
+  readonly password: string;
+  readonly nickname: string;
   readonly avatarUrl?: string;
   readonly sex?: number;
   readonly sign?: number;

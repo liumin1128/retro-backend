@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto } from './dto/create.dto';
+import pick from 'lodash/pick';
+import { md5Encode } from '@/utils/crypto';
+import CreateUserDto from './dto/create.dto';
+import LoginUserDto from './dto/login.dto';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -10,9 +13,15 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserDocument> {
-    const createdUser = new this.userModel(createUserDto);
+  async create(createUserParams: CreateUserDto): Promise<UserDocument> {
+    const createdUser = new this.userModel(createUserParams);
     return createdUser.save();
+  }
+
+  async login(loginUserParams: LoginUserDto): Promise<UserDocument> {
+    const query: User = pick(loginUserParams, ['username']);
+    const user = await this.userModel.findOne(query);
+    return user;
   }
 
   async findById(_id: string): Promise<UserDocument> {

@@ -80,6 +80,12 @@ export class RegisterUserInput {
     password?: Nullable<string>;
 }
 
+export class LoginUserInput {
+    phoneNumber?: Nullable<string>;
+    username?: Nullable<string>;
+    password?: Nullable<string>;
+}
+
 export interface Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -138,6 +144,8 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract login(input?: Nullable<LoginUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class ISubscription {
