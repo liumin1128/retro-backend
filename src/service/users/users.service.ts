@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import pick from 'lodash/pick';
+import { pick } from 'lodash/object';
 import { md5Encode } from '@/utils/crypto';
 import CreateUserDto from './dto/create.dto';
 import LoginUserDto from './dto/login.dto';
@@ -21,7 +21,18 @@ export class UsersService {
   async login(loginUserParams: LoginUserDto): Promise<UserDocument> {
     const query: User = pick(loginUserParams, ['username']);
     const user = await this.userModel.findOne(query);
-    return user;
+
+    if (user) {
+      const pwMd5 = md5Encode(loginUserParams.password);
+      if (`${pwMd5}` === user.password) {
+        // const token = await this.authService.login({ _id: user._id });
+        // console.log('token');
+        // console.log(token);
+        return user;
+      }
+    }
+
+    throw new HttpException('BAD_REQUEST', HttpStatus.BAD_REQUEST);
   }
 
   async findById(_id: string): Promise<UserDocument> {

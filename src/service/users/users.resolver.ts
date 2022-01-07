@@ -19,6 +19,11 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
+  @Query('login')
+  async login(@Args('input') args: LoginUserDto): Promise<User> {
+    return this.usersService.login(args);
+  }
+
   @Mutation('register')
   async register(@Args('input') args: RegisterUserDto): Promise<User> {
     const params = {
@@ -26,23 +31,6 @@ export class UsersResolver {
     };
     const createdUsers = await this.usersService.create(params);
     return createdUsers;
-  }
-
-  @Mutation('login')
-  async login(@Args('input') args: LoginUserDto): Promise<User> {
-    console.log('args');
-    console.log(args);
-    const user = await this.usersService.login(args);
-    if (user) {
-      const pwMd5 = md5Encode(args.password);
-      if (`${pwMd5}` === user.password) {
-        // const token = await this.authService.login({ _id: user._id });
-        // console.log('token');
-        // console.log(token);
-        return user;
-      }
-    }
-    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Mutation('createUser')

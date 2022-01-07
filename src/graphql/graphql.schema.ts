@@ -120,6 +120,8 @@ export abstract class IQuery {
     abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract login(input?: Nullable<LoginUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
@@ -144,8 +146,6 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract login(input?: Nullable<LoginUserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class ISubscription {

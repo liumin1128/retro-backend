@@ -1,13 +1,13 @@
 type Query {
   users: [User]
   user(_id: String!): User
+  login(input: LoginUserInput): User
 }
 
 
 type Mutation {
   createUser(createUserInput: CreateUserInput): User
   register(input: RegisterUserInput): User
-  login(input: LoginUserInput): User
 }
 
 type User {

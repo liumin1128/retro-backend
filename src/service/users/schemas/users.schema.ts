@@ -3,6 +3,9 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class User {
+  @Prop({ unique: true })
+  username: string;
+
   @Prop()
   nickname: string;
 
