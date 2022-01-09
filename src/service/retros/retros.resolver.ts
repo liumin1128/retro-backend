@@ -1,4 +1,3 @@
-// import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
@@ -13,6 +12,11 @@ const pubSub = new PubSub();
 @Resolver('Retros')
 export class RetrosResolver {
   constructor(private readonly retrosService: RetrosService) {}
+
+  @Query('retro')
+  async retro(@Args('_id') _id: string): Promise<Retro> {
+    return this.retrosService.findById(_id);
+  }
 
   @Query('retros')
   async getRetros(): Promise<Retro[]> {
