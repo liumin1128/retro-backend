@@ -1,6 +1,6 @@
 type Query {
-  retros: [Retro]
-  retro(_id: ID!): Retro
+  findRetros: [Retro]
+  findRetro(_id: ID!): Retro
 }
 
 type Mutation {

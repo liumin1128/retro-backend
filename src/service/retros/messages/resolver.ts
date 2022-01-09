@@ -16,8 +16,13 @@ const pubSub = new PubSub();
 export class RetroMessagesResolver {
   constructor(private readonly retroMessagesService: RetroMessagesService) {}
 
-  @Query('retroMessages')
-  async getRetroMessages(
+  @Query('findRetroMessage')
+  async findRetroMessage(@Args('_id') _id: string): Promise<RetroMessage> {
+    return this.retroMessagesService.findById(_id);
+  }
+
+  @Query('findRetroMessages')
+  async findRetroMessages(
     @Args('retro') retro: string,
   ): Promise<RetroMessage[]> {
     return this.retroMessagesService.findAll({ retro });

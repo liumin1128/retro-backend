@@ -13,13 +13,13 @@ const pubSub = new PubSub();
 export class RetrosResolver {
   constructor(private readonly retrosService: RetrosService) {}
 
-  @Query('retro')
-  async retro(@Args('_id') _id: string): Promise<Retro> {
+  @Query('findRetro')
+  async findRetro(@Args('_id') _id: string): Promise<Retro> {
     return this.retrosService.findById(_id);
   }
 
-  @Query('retros')
-  async getRetros(): Promise<Retro[]> {
+  @Query('findRetros')
+  async findRetros(): Promise<Retro[]> {
     return this.retrosService.findAll();
   }
 

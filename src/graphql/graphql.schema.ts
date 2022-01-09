@@ -130,6 +130,14 @@ export abstract class IQuery {
     abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
     abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
+
+    abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+
+    abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract findRetros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
+
+    abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 }
 
 export abstract class IMutation {
