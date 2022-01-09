@@ -76,8 +76,16 @@ export class CreateUserInput {
 }
 
 export class RegisterUserInput {
+    password: string;
+    username: string;
+    nickname?: Nullable<string>;
     phoneNumber?: Nullable<string>;
-    password?: Nullable<string>;
+    avatarUrl?: Nullable<string>;
+    sex?: Nullable<number>;
+    sign?: Nullable<string>;
+    birthday?: Nullable<string>;
+    position?: Nullable<string>;
+    company?: Nullable<string>;
 }
 
 export class LoginUserInput {
@@ -216,8 +224,15 @@ export class Retro implements Document {
 
 export class User {
     _id: string;
+    username?: Nullable<string>;
     nickname?: Nullable<string>;
+    phoneNumber?: Nullable<string>;
     avatarUrl?: Nullable<string>;
+    sex?: Nullable<number>;
+    sign?: Nullable<string>;
+    birthday?: Nullable<string>;
+    position?: Nullable<string>;
+    company?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment;

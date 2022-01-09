@@ -5,6 +5,7 @@ import { pick } from 'lodash/object';
 import { md5Encode } from '@/utils/crypto';
 import CreateUserDto from './dto/create.dto';
 import LoginUserDto from './dto/login.dto';
+import RegisterUserDto from './dto/register.dto';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -33,6 +34,24 @@ export class UsersService {
     }
 
     throw new HttpException('BAD_REQUEST', HttpStatus.BAD_REQUEST);
+  }
+
+  async register(params: RegisterUserDto): Promise<UserDocument> {
+    const query: User = pick(params, ['username']);
+    const user = await this.userModel.findOne(query);
+
+    if (user) {
+      throw new HttpException('BAD_REQUEST', HttpStatus.BAD_REQUEST);
+    }
+
+    const encodedPassword = md5Encode(params.password);
+
+    const createdUser = new this.userModel({
+      ...params,
+      password: encodedPassword,
+    });
+
+    return createdUser.save();
   }
 
   async findById(_id: string): Promise<UserDocument> {

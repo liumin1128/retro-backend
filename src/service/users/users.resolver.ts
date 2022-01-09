@@ -1,7 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { HttpException, HttpStatus } from '@nestjs/common';
-import { md5Encode } from '@/utils/crypto';
-// import { AuthService } from '@/service/auth/auth.service';
 import { UsersService } from '@/service/users/users.service';
 import { UserDocument as User } from '@/service/users/schemas/users.schema';
 import CreateUserDto from './dto/create.dto';
@@ -26,16 +23,11 @@ export class UsersResolver {
 
   @Mutation('register')
   async register(@Args('input') args: RegisterUserDto): Promise<User> {
-    const params = {
-      username: 'zx',
-    };
-    const createdUsers = await this.usersService.create(params);
-    return createdUsers;
+    return this.usersService.register(args);
   }
 
   @Mutation('createUser')
   async create(@Args('createUsersInput') args: CreateUserDto): Promise<User> {
-    const createdUsers = await this.usersService.create(args);
-    return createdUsers;
+    return this.usersService.create(args);
   }
 }
