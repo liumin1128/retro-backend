@@ -223,8 +223,8 @@ export class Retro implements Document {
 }
 
 export class UserWithToken {
-    token?: Nullable<string>;
-    user?: Nullable<User>;
+    token: string;
+    user: User;
 }
 
 export class User {

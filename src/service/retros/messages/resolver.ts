@@ -4,6 +4,8 @@ import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
+import { ApolloError } from 'apollo-server';
+
 import { RetroMessageDocument as RetroMessage } from './schema';
 import { RetroMessagesService } from './service';
 import { CreateRetroMessageDto, UpdateRetroMessageDto } from './dto';
@@ -44,11 +46,19 @@ export class RetroMessagesResolver {
     @CurrentUser() user: SignUserPayload,
     @Args('input') args: UpdateRetroMessageDto,
   ): Promise<RetroMessage> {
-    // 不进行用户校验，任何人都可以修改retro message
-    // const obj = await this.retroMessagesService.findById(_id);
-    // if(obj.user._id !== user._id) {
-    //   return
-    // }
+    // 如果改变状态，需要校验retro管理员
+    if (args.status) {
+      const obj = await (
+        await this.retroMessagesService.findById(_id)
+      ).populate({
+        path: 'retro',
+        select: ['user'],
+      });
+
+      if (obj.retro.user._id + '' !== user._id + '') {
+        throw new ApolloError('403');
+      }
+    }
 
     const updatedRetroMessage = await this.retroMessagesService.update(_id, {
       ...args,

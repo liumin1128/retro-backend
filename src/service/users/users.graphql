@@ -5,8 +5,8 @@ type Query {
 }
 
 type UserWithToken {
-  token: String
-  user: User
+  token: String!
+  user: User!
 }
 
 type Mutation {
