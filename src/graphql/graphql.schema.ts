@@ -129,7 +129,7 @@ export abstract class IQuery {
 
     abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract login(input?: Nullable<LoginUserInput>): Nullable<User> | Promise<Nullable<User>>;
+    abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
 }
 
 export abstract class IMutation {
@@ -219,6 +219,11 @@ export class Retro implements Document {
     content?: Nullable<string>;
     title?: Nullable<string>;
     date?: Nullable<string>;
+    user?: Nullable<User>;
+}
+
+export class UserWithToken {
+    token?: Nullable<string>;
     user?: Nullable<User>;
 }
 

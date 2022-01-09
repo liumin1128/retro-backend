@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { pick } from 'lodash/object';
 import { md5Encode } from '@/utils/crypto';
+import { AuthService } from '@/service/auth/auth.service';
 import CreateUserDto from './dto/create.dto';
 import LoginUserDto from './dto/login.dto';
 import RegisterUserDto from './dto/register.dto';
@@ -12,6 +13,7 @@ import { User, UserDocument } from './schemas/users.schema';
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly authService: AuthService,
   ) {}
 
   async create(createUserParams: CreateUserDto): Promise<UserDocument> {
@@ -19,21 +21,22 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async login(loginUserParams: LoginUserDto): Promise<UserDocument> {
+  async login(
+    loginUserParams: LoginUserDto,
+  ): Promise<{ token: string; user: UserDocument }> {
     const query: User = pick(loginUserParams, ['username']);
     const user = await this.userModel.findOne(query);
 
     if (user) {
       const pwMd5 = md5Encode(loginUserParams.password);
       if (`${pwMd5}` === user.password) {
-        // const token = await this.authService.login({ _id: user._id });
-        // console.log('token');
-        // console.log(token);
-        return user;
+        const token = await this.authService.login({ _id: user._id });
+        return { token, user };
       }
+      throw new Error('password not match');
     }
 
-    throw new HttpException('BAD_REQUEST', HttpStatus.BAD_REQUEST);
+    throw new Error('user not found');
   }
 
   async register(params: RegisterUserDto): Promise<UserDocument> {
@@ -41,14 +44,13 @@ export class UsersService {
     const user = await this.userModel.findOne(query);
 
     if (user) {
-      throw new HttpException('BAD_REQUEST', HttpStatus.BAD_REQUEST);
+      throw new Error('user exist');
     }
 
-    const encodedPassword = md5Encode(params.password);
-
+    const pwMd5 = md5Encode(params.password);
     const createdUser = new this.userModel({
       ...params,
-      password: encodedPassword,
+      password: pwMd5,
     });
 
     return createdUser.save();

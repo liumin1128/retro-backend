@@ -1,7 +1,12 @@
 type Query {
   users: [User]
   user(_id: String!): User
-  login(input: LoginUserInput): User
+  login(input: LoginUserInput): UserWithToken
+}
+
+type UserWithToken {
+  token: String
+  user: User
 }
 
 type Mutation {

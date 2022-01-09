@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from '@/service/users/users.service';
 import { UserDocument as User } from '@/service/users/schemas/users.schema';
+import { UserInputError } from 'apollo-server';
 import CreateUserDto from './dto/create.dto';
 import RegisterUserDto from './dto/register.dto';
 import LoginUserDto from './dto/login.dto';
@@ -17,13 +18,23 @@ export class UsersResolver {
   }
 
   @Query('login')
-  async login(@Args('input') args: LoginUserDto): Promise<User> {
-    return this.usersService.login(args);
+  async login(
+    @Args('input') args: LoginUserDto,
+  ): Promise<{ token: string; user: User }> {
+    try {
+      return await this.usersService.login(args);
+    } catch (error) {
+      throw new UserInputError(error.message);
+    }
   }
 
   @Mutation('register')
   async register(@Args('input') args: RegisterUserDto): Promise<User> {
-    return this.usersService.register(args);
+    try {
+      return await this.usersService.register(args);
+    } catch (error) {
+      throw new UserInputError(error.message);
+    }
   }
 
   @Mutation('createUser')
