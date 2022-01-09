@@ -1,6 +1,7 @@
 type Query {
-  users: [User]
-  user(_id: String!): User
+  findUser(_id: String!): User
+  findUsers: [User]
+  findUserInfo: User
   login(input: LoginUserInput): UserWithToken
 }
 

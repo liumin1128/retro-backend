@@ -2,6 +2,9 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from '@/service/users/users.service';
 import { UserDocument as User } from '@/service/users/schemas/users.schema';
 import { UserInputError } from 'apollo-server';
+import { SignUserPayload } from '@/service/auth/auth.service';
+import { CurrentUser, GqlAuthGuard } from '@/service/auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
 import CreateUserDto from './dto/create.dto';
 import RegisterUserDto from './dto/register.dto';
 import LoginUserDto from './dto/login.dto';
@@ -12,9 +15,20 @@ export class UsersResolver {
     private readonly usersService: UsersService, // private readonly authService: AuthService,
   ) {}
 
-  @Query('users')
-  async getUsers(): Promise<User[]> {
+  @Query('findUsers')
+  async findUsers(): Promise<User[]> {
     return this.usersService.findAll();
+  }
+
+  @Query('findUser')
+  async findUser(@Args('_id') _id: string): Promise<User> {
+    return this.usersService.findById(_id);
+  }
+
+  @Query('findUserInfo')
+  @UseGuards(GqlAuthGuard)
+  async findUserInfo(@CurrentUser() user: SignUserPayload): Promise<User> {
+    return this.usersService.findById(user._id);
   }
 
   @Query('login')

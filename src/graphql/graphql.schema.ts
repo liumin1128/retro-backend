@@ -138,6 +138,12 @@ export abstract class IQuery {
     abstract findRetros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
+
+    abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract findUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
