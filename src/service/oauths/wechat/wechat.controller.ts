@@ -51,6 +51,9 @@ export class WechatController {
         uuid: unionid || openid,
       });
 
+      console.log('oauth');
+      console.log(oauth);
+
       // 检查第三方信息，不存在就创建新的
       if (!oauth) {
         const userInfo: GetUserInfoResponse =
