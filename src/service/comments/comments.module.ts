@@ -6,12 +6,14 @@ import {
   CommentObjectUnionResolver,
 } from './comments.resolver';
 import { NewsModule } from '@/service/news/news.module';
+import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { Comment, CommentSchema } from './comments.schema';
 import { CommentsController } from './comments.controller';
 
 @Module({
   imports: [
     NewsModule,
+    RetroMessagesModule,
     MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
   ],
   providers: [CommentsService, CommentsResolver, CommentObjectUnionResolver],

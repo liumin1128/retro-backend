@@ -16,7 +16,8 @@ export enum Role {
 
 export enum CommentObjectUnionModel {
     News = "News",
-    Comment = "Comment"
+    Comment = "Comment",
+    RetroMessage = "RetroMessage"
 }
 
 export enum RetroMessageStatus {
@@ -42,16 +43,6 @@ export class CreateDynamicInput {
     content?: Nullable<string>;
 }
 
-export class CreateNewsInput {
-    name?: Nullable<string>;
-    age?: Nullable<number>;
-}
-
-export class CreateOAuthInput {
-    name?: Nullable<string>;
-    age?: Nullable<number>;
-}
-
 export class CreateRetroMessageInput {
     retro: string;
     content: string;
@@ -62,6 +53,16 @@ export class UpdateRetroMessageInput {
     content?: Nullable<string>;
     status?: Nullable<RetroMessageStatus>;
     type?: Nullable<RetroMessageType>;
+}
+
+export class CreateNewsInput {
+    name?: Nullable<string>;
+    age?: Nullable<number>;
+}
+
+export class CreateOAuthInput {
+    name?: Nullable<string>;
+    age?: Nullable<number>;
 }
 
 export class CreateRetroInput {
@@ -109,6 +110,10 @@ export abstract class IQuery {
 
     abstract dynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+
+    abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
     abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
 
     abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
@@ -116,24 +121,6 @@ export abstract class IQuery {
     abstract oauths(): Nullable<Nullable<OAuth>[]> | Promise<Nullable<Nullable<OAuth>[]>>;
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
-
-    abstract retroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
-
-    abstract retroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
-
-    abstract retros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
-
-    abstract retro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
-
-    abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
-
-    abstract user(_id: string): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
-
-    abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
-
-    abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract findRetros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
 
@@ -144,16 +131,14 @@ export abstract class IQuery {
     abstract findUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
 }
 
 export abstract class IMutation {
-    abstract createComment(createCommentInput?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
+    abstract createComment(input?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
 
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
-
-    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
-
-    abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -162,6 +147,10 @@ export abstract class IMutation {
     abstract likeRetroMessage(_id?: Nullable<string>, count?: Nullable<number>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract deleteRetroMessage(_id?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
+
+    abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
@@ -175,8 +164,6 @@ export abstract class ISubscription {
 
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
-
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroMessageUpdated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -184,6 +171,8 @@ export abstract class ISubscription {
     abstract retroMessageDeleted(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroMessageLiked(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+
+    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 }
@@ -203,6 +192,17 @@ export class Dynamic implements Document {
     content?: Nullable<string>;
 }
 
+export class RetroMessage implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
+    status?: Nullable<RetroMessageStatus>;
+    type?: Nullable<RetroMessageType>;
+    user?: Nullable<User>;
+    like?: Nullable<number>;
+}
+
 export class News {
     _id: string;
     title?: Nullable<string>;
@@ -213,17 +213,6 @@ export class News {
 export class OAuth {
     _id: string;
     platform?: Nullable<string>;
-}
-
-export class RetroMessage implements Document {
-    _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
-    content?: Nullable<string>;
-    status?: Nullable<RetroMessageStatus>;
-    type?: Nullable<RetroMessageType>;
-    user?: Nullable<User>;
-    like?: Nullable<number>;
 }
 
 export class Retro implements Document {
@@ -254,5 +243,5 @@ export class User {
     company?: Nullable<string>;
 }
 
-export type CommentObjectUnion = News | Comment;
+export type CommentObjectUnion = News | Comment | RetroMessage;
 type Nullable<T> = T | null;

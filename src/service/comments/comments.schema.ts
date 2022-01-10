@@ -21,7 +21,11 @@ export class Comment {
   })
   object: mongoose.Types.ObjectId | unknown;
 
-  @Prop({ type: String, required: true, enum: ['News', 'Comment'] })
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['News', 'Comment', 'RetroMessage'],
+  })
   objectModel: string;
 }
 

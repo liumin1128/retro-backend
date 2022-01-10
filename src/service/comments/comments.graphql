@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-  createComment(createCommentInput: CreateCommentInput): Comment
+  createComment(input: CreateCommentInput): Comment
 }
 
 type Subscription {
@@ -21,7 +21,7 @@ type Comment implements Document {
 
 input CreateCommentInput {
   content: String
-  object: String!
+  object: ID!
   objectModel: CommentObjectUnionModel!
 }
 
@@ -30,9 +30,10 @@ input CreateCommentInput {
 #   model: CommentObjectUnionModel!
 # }
 
-union CommentObjectUnion = News | Comment
+union CommentObjectUnion = News | Comment | RetroMessage
 
 enum CommentObjectUnionModel {
   News
   Comment
+  RetroMessage
 }
