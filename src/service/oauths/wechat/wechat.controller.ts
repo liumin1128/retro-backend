@@ -46,10 +46,10 @@ export class WechatController {
       let user: UserDocument;
       let oauth: OAuthDocument;
 
-      oauth = await this.oauthService.findOne({
-        platform: 'wechat',
-        uuid: unionid || openid,
-      });
+      const uuid: string = unionid || openid;
+      const platform = 'wechat';
+
+      oauth = await this.oauthService.findOne({ uuid, platform });
 
       console.log('oauth');
       console.log(oauth);
@@ -64,8 +64,6 @@ export class WechatController {
 
         const { nickname, headimgurl } = userInfo;
 
-        const uuid: string = openid;
-
         const avatarUrl = await this.qiniuService.fetchToQiniu(headimgurl);
         console.log('avatarUrl');
         console.log(avatarUrl);
@@ -77,10 +75,10 @@ export class WechatController {
         });
 
         oauth = await this.oauthService.create({
-          uuid: uuid,
-          platform: 'wechat',
+          uuid,
+          platform,
+          user,
           data: userInfo,
-          user: user,
         });
       }
 

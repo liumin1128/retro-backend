@@ -47,10 +47,10 @@ export class WxController {
       let user: UserDocument;
       let oauth: OAuthDocument;
 
-      oauth = await this.oauthService.findOne({
-        platform: 'wx',
-        uuid: unionid || openid,
-      });
+      const uuid: string = unionid || openid;
+      const platform = 'wx';
+
+      oauth = await this.oauthService.findOne({ uuid, platform });
 
       console.log('oauth');
       console.log(oauth);
@@ -67,8 +67,6 @@ export class WxController {
 
         const { nickname, headimgurl } = userInfo;
 
-        const uuid: string = openid;
-
         const avatarUrl = await this.qiniuService.fetchToQiniu(headimgurl);
         console.log('avatarUrl');
         console.log(avatarUrl);
@@ -80,10 +78,10 @@ export class WxController {
         });
 
         oauth = await this.oauthService.create({
-          uuid: uuid,
-          platform: 'wx',
+          uuid,
+          user,
+          platform,
           data: userInfo,
-          user: user,
         });
       }
 
