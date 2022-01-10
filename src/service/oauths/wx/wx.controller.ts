@@ -8,7 +8,7 @@ import { OAuthsService } from '@/service/oauths/oauths.service';
 import { UsersService } from '@/service/users/users.service';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
 import { UserDocument } from '@/service/users/schemas/users.schema';
-import { OAuthDocument } from '@/service/oauths/schemas/oauths.schema';
+import { OAuthDocument } from '@/service/oauths/oauths.schema';
 import { AuthService } from '@/service/auth/auth.service';
 
 @Controller('/oauth/wx')

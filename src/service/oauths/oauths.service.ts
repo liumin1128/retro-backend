@@ -6,7 +6,7 @@ import {
   FindOneOAuthDto,
   UpdateUserOAuthDto,
 } from './dto/create.dto';
-import { OAuth, OAuthDocument } from './schemas/oauths.schema';
+import { OAuth, OAuthDocument } from './oauths.schema';
 
 @Injectable()
 export class OAuthsService {
@@ -24,7 +24,7 @@ export class OAuthsService {
   }
 
   async update(updateUserOAuthDto: UpdateUserOAuthDto): Promise<OAuthDocument> {
-    return this.oauthModel.findOne(updateUserOAuthDto);
+    return this.oauthModel.findByIdAndUpdate(updateUserOAuthDto);
   }
 
   async findAll(): Promise<OAuthDocument[]> {

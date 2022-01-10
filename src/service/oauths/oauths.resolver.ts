@@ -12,7 +12,7 @@ import { PubSub } from 'graphql-subscriptions';
 // import { OAuths } from '@/graphql/graphql.schema';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
-import { OAuthDocument as OAuth } from './schemas/oauths.schema';
+import { OAuthDocument as OAuth } from './oauths.schema';
 import { OAuthsService } from './oauths.service';
 import { CreateOAuthDto } from './dto/create.dto';
 

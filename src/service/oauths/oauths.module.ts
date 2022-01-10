@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { OAuthsService } from './oauths.service';
 // import { GithubService } from './github/github.service';
 // import { GithubModule } from './github/github.module';
-import { OAuth, OAuthSchema } from './schemas/oauths.schema';
+import { OAuth, OAuthSchema } from './oauths.schema';
 import { OAuthsResolver } from './oauths.resolver';
 
 @Module({
