@@ -69,6 +69,7 @@ export class CreateRetroInput {
     content?: Nullable<string>;
     title?: Nullable<string>;
     date?: Nullable<string>;
+    anonymous?: Nullable<boolean>;
 }
 
 export class CreateUserInput {
@@ -223,6 +224,7 @@ export class Retro implements Document {
     title?: Nullable<string>;
     date?: Nullable<string>;
     user?: Nullable<User>;
+    anonymous?: Nullable<boolean>;
 }
 
 export class UserWithToken {

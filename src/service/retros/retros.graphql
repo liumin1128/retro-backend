@@ -19,10 +19,12 @@ type Retro implements Document {
   title: String
   date: String
   user: User
+  anonymous: Boolean
 }
 
 input CreateRetroInput {
   content: String
   title: String
   date: String
+  anonymous: Boolean
 }

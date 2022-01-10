@@ -3,4 +3,5 @@ export class CreateRetroDto {
   readonly content: string;
   readonly title: string;
   readonly date: string;
+  readonly anonymous: boolean;
 }

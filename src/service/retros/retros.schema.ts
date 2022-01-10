@@ -20,6 +20,9 @@ export class Retro {
   title: string;
 
   @Prop()
+  anonymous: boolean;
+
+  @Prop()
   pictures: string[];
 }
 
