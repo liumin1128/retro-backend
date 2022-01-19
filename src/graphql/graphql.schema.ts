@@ -39,6 +39,11 @@ export class CreateCommentInput {
     objectModel: CommentObjectUnionModel;
 }
 
+export class CreateNewsInput {
+    name?: Nullable<string>;
+    age?: Nullable<number>;
+}
+
 export class CreateDynamicInput {
     content?: Nullable<string>;
 }
@@ -53,11 +58,6 @@ export class UpdateRetroMessageInput {
     content?: Nullable<string>;
     status?: Nullable<RetroMessageStatus>;
     type?: Nullable<RetroMessageType>;
-}
-
-export class CreateNewsInput {
-    name?: Nullable<string>;
-    age?: Nullable<number>;
 }
 
 export class CreateOAuthInput {
@@ -107,6 +107,10 @@ export abstract class IQuery {
 
     abstract comment(_id: string): Nullable<Comment> | Promise<Nullable<Comment>>;
 
+    abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
+
+    abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
+
     abstract dynamics(): Nullable<Nullable<Dynamic>[]> | Promise<Nullable<Nullable<Dynamic>[]>>;
 
     abstract dynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
@@ -114,10 +118,6 @@ export abstract class IQuery {
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
-
-    abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
-
-    abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
 
     abstract oauths(): Nullable<Nullable<OAuth>[]> | Promise<Nullable<Nullable<OAuth>[]>>;
 
@@ -139,6 +139,8 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createComment(input?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
 
+    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
+
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -148,8 +150,6 @@ export abstract class IMutation {
     abstract likeRetroMessage(_id?: Nullable<string>, count?: Nullable<number>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract deleteRetroMessage(_id?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
-
-    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
 
     abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
@@ -163,6 +163,8 @@ export abstract class IMutation {
 export abstract class ISubscription {
     abstract commentCreated(): Nullable<Comment> | Promise<Nullable<Comment>>;
 
+    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
+
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -173,8 +175,6 @@ export abstract class ISubscription {
 
     abstract retroMessageLiked(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
-    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
-
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 }
 
@@ -184,6 +184,13 @@ export class Comment implements Document {
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
     object: CommentObjectUnion;
+}
+
+export class News {
+    _id: string;
+    title?: Nullable<string>;
+    cover?: Nullable<string>;
+    html?: Nullable<string>;
 }
 
 export class Dynamic implements Document {
@@ -202,13 +209,6 @@ export class RetroMessage implements Document {
     type?: Nullable<RetroMessageType>;
     user?: Nullable<User>;
     like?: Nullable<number>;
-}
-
-export class News {
-    _id: string;
-    title?: Nullable<string>;
-    cover?: Nullable<string>;
-    html?: Nullable<string>;
 }
 
 export class OAuth {

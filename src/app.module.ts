@@ -11,6 +11,7 @@ import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { AppController } from '@/app.controller';
 import { GraphqlModule } from '@/graphql/graphql.module';
+import { CommonModule } from '@/service/common/common.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { GraphqlModule } from '@/graphql/graphql.module';
         'subscriptions-transport-ws': true,
       },
     }),
+    CommonModule,
     GraphqlModule,
     AuthModule,
     OAuthIndexModule,
