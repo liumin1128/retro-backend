@@ -112,9 +112,9 @@ export abstract class IQuery {
 
     abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
 
-    abstract dynamics(): Nullable<Nullable<Dynamic>[]> | Promise<Nullable<Nullable<Dynamic>[]>>;
+    abstract findDynamics(): Nullable<Nullable<Dynamic>[]> | Promise<Nullable<Nullable<Dynamic>[]>>;
 
-    abstract dynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
+    abstract findDynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 

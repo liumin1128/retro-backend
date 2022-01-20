@@ -1,6 +1,6 @@
 type Query {
-  dynamics: [Dynamic]
-  dynamic(_id: ID!): Dynamic
+  findDynamics: [Dynamic]
+  findDynamic(_id: ID!): Dynamic
 }
 
 type Mutation {
