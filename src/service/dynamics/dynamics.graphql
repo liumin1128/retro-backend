@@ -16,8 +16,10 @@ type Dynamic implements Document {
   createdAt: String
   updatedAt: String
   content: String
+  pictures: [String!]
 }
 
 input CreateDynamicInput {
   content: String
+  pictures: [String!]
 }

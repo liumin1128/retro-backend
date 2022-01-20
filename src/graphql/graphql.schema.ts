@@ -46,6 +46,7 @@ export class CreateNewsInput {
 
 export class CreateDynamicInput {
     content?: Nullable<string>;
+    pictures?: Nullable<string[]>;
 }
 
 export class CreateRetroMessageInput {
@@ -198,6 +199,7 @@ export class Dynamic implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
+    pictures?: Nullable<string[]>;
 }
 
 export class RetroMessage implements Document {
