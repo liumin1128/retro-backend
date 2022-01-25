@@ -17,7 +17,8 @@ export class DynamicsService {
   }
 
   async findAll(): Promise<DynamicDocument[]> {
-    return this.dynamicsModel.find();
+    const sort = [['createdAt', -1]];
+    return this.dynamicsModel.find().sort(sort).populate('user');
   }
 
   async findById(_id: string): Promise<DynamicDocument> {

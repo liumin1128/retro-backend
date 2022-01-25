@@ -200,6 +200,7 @@ export class Dynamic implements Document {
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
     pictures?: Nullable<string[]>;
+    user: User;
 }
 
 export class RetroMessage implements Document {
