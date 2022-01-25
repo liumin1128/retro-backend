@@ -26,6 +26,7 @@ type RetroMessage implements Document {
   type: RetroMessageType
   user: User
   like: Int
+  pictures: [String!]
 }
 
 enum RetroMessageStatus {
@@ -45,10 +46,12 @@ input CreateRetroMessageInput {
   retro: ID!
   content: String!
   type: RetroMessageType!
+  pictures: [String!]
 }
 
 input UpdateRetroMessageInput {
   content: String
   status: RetroMessageStatus
   type: RetroMessageType
+  pictures: [String!]
 }

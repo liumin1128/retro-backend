@@ -53,12 +53,14 @@ export class CreateRetroMessageInput {
     retro: string;
     content: string;
     type: RetroMessageType;
+    pictures?: Nullable<string[]>;
 }
 
 export class UpdateRetroMessageInput {
     content?: Nullable<string>;
     status?: Nullable<RetroMessageStatus>;
     type?: Nullable<RetroMessageType>;
+    pictures?: Nullable<string[]>;
 }
 
 export class CreateOAuthInput {
@@ -212,6 +214,7 @@ export class RetroMessage implements Document {
     type?: Nullable<RetroMessageType>;
     user?: Nullable<User>;
     like?: Nullable<number>;
+    pictures?: Nullable<string[]>;
 }
 
 export class OAuth {
