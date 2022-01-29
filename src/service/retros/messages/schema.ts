@@ -26,6 +26,9 @@ export class RetroMessage {
   @Prop()
   like: number;
 
+  @Prop({ default: false })
+  anonymous: boolean;
+
   @Prop()
   pictures: string[];
 }

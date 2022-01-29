@@ -3,6 +3,7 @@ export class CreateRetroMessageDto {
   readonly retro: string;
   readonly content: string;
   readonly type: string;
+  readonly anonymous?: boolean;
   readonly pictures?: string[];
 }
 
@@ -11,5 +12,6 @@ export class UpdateRetroMessageDto {
   readonly content?: string;
   readonly status?: string;
   readonly type?: string;
+  readonly anonymous?: boolean;
   readonly pictures?: string[];
 }

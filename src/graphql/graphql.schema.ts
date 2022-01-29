@@ -54,6 +54,7 @@ export class CreateRetroMessageInput {
     content: string;
     type: RetroMessageType;
     pictures?: Nullable<string[]>;
+    anonymous?: Nullable<boolean>;
 }
 
 export class UpdateRetroMessageInput {
@@ -61,6 +62,7 @@ export class UpdateRetroMessageInput {
     status?: Nullable<RetroMessageStatus>;
     type?: Nullable<RetroMessageType>;
     pictures?: Nullable<string[]>;
+    anonymous?: Nullable<boolean>;
 }
 
 export class CreateOAuthInput {
@@ -214,6 +216,7 @@ export class RetroMessage implements Document {
     type?: Nullable<RetroMessageType>;
     user?: Nullable<User>;
     like?: Nullable<number>;
+    anonymous?: Nullable<boolean>;
     pictures?: Nullable<string[]>;
 }
 

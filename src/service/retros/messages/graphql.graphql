@@ -22,6 +22,7 @@ type RetroMessage implements Document {
   createdAt: String
   updatedAt: String
   content: String
+  anonymous: Boolean
   status: RetroMessageStatus
   type: RetroMessageType
   user: User
@@ -47,6 +48,7 @@ input CreateRetroMessageInput {
   content: String!
   type: RetroMessageType!
   pictures: [String!]
+  anonymous: Boolean
 }
 
 input UpdateRetroMessageInput {
@@ -54,4 +56,5 @@ input UpdateRetroMessageInput {
   status: RetroMessageStatus
   type: RetroMessageType
   pictures: [String!]
+  anonymous: Boolean
 }
