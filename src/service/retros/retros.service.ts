@@ -40,12 +40,14 @@ export class RetrosService {
           let: { retro: '$_id' },
           pipeline: [
             { $match: { $expr: { $eq: ['$$retro', '$retro'] } } },
+
             {
               $group: {
                 _id: '$type',
                 count: { $sum: 1 },
               },
             },
+
             {
               $project: {
                 _id: 0,
@@ -61,6 +63,59 @@ export class RetrosService {
       {
         $addFields: {
           count: { $arrayToObject: '$count' },
+        },
+      },
+
+      {
+        $lookup: {
+          from: 'retromessages',
+          let: { retro: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$$retro', '$retro'] } } },
+
+            {
+              $project: {
+                like: 1,
+              },
+            },
+
+            {
+              $group: {
+                _id: null,
+                count: { $sum: '$like' },
+              },
+            },
+
+            {
+              $project: {
+                _id: 0,
+              },
+            },
+          ],
+          as: 'likeCount',
+        },
+      },
+
+      // 重新组织数据结构
+      {
+        $addFields: {
+          likeCount: { $first: '$likeCount' },
+        },
+      },
+
+      {
+        $addFields: {
+          likeCount: '$likeCount.count',
+          happyCount: '$count.HAPPY',
+          unhappyCount: '$count.UNHAPPY',
+          wonderringCount: '$count.WONDERRING',
+          todoCount: '$count.TODO',
+        },
+      },
+
+      {
+        $project: {
+          count: 0,
         },
       },
 

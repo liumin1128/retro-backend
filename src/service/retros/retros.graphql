@@ -11,13 +11,6 @@ type Subscription {
   retroCreated: Retro
 }
 
-type RetroCount {
-  HAPPY: Int 
-  WONDERRING: Int 
-  UNHAPPY: Int 
-  TODO: Int 
-}
-
 type Retro implements Document {
   _id: ID!
   createdAt: String
@@ -27,7 +20,11 @@ type Retro implements Document {
   date: String
   user: User
   anonymous: Boolean
-  count: RetroCount
+  likeCount: Int,
+  happyCount: Int
+  unhappyCount: Int
+  wonderringCount: Int
+  todoCount: Int
 }
 
 input CreateRetroInput {

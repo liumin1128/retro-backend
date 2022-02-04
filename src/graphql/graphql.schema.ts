@@ -225,13 +225,6 @@ export class OAuth {
     platform?: Nullable<string>;
 }
 
-export class RetroCount {
-    HAPPY?: Nullable<number>;
-    WONDERRING?: Nullable<number>;
-    UNHAPPY?: Nullable<number>;
-    TODO?: Nullable<number>;
-}
-
 export class Retro implements Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -241,7 +234,11 @@ export class Retro implements Document {
     date?: Nullable<string>;
     user?: Nullable<User>;
     anonymous?: Nullable<boolean>;
-    count?: Nullable<RetroCount>;
+    likeCount?: Nullable<number>;
+    happyCount?: Nullable<number>;
+    unhappyCount?: Nullable<number>;
+    wonderringCount?: Nullable<number>;
+    todoCount?: Nullable<number>;
 }
 
 export class UserWithToken {
