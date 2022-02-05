@@ -1,5 +1,5 @@
 type Query {
-  findRetros: [Retro]
+  findRetros: [RetroListItem]
   findRetro(_id: ID!): Retro
 }
 
@@ -12,6 +12,17 @@ type Subscription {
 }
 
 type Retro implements Document {
+  _id: ID!
+  createdAt: String
+  updatedAt: String
+  content: String
+  title: String
+  date: String
+  user: User
+  anonymous: Boolean
+}
+
+type RetroListItem implements Document {
   _id: ID!
   createdAt: String
   updatedAt: String

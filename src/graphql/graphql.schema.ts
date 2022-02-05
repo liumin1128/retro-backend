@@ -128,7 +128,7 @@ export abstract class IQuery {
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract findRetros(): Nullable<Nullable<Retro>[]> | Promise<Nullable<Nullable<Retro>[]>>;
+    abstract findRetros(): Nullable<Nullable<RetroListItem>[]> | Promise<Nullable<Nullable<RetroListItem>[]>>;
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
@@ -226,6 +226,17 @@ export class OAuth {
 }
 
 export class Retro implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
+    title?: Nullable<string>;
+    date?: Nullable<string>;
+    user?: Nullable<User>;
+    anonymous?: Nullable<boolean>;
+}
+
+export class RetroListItem implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
