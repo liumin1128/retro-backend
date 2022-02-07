@@ -16,8 +16,8 @@ export class CommentsService {
     return createdComment.save();
   }
 
-  async findAll(): Promise<CommentDocument[]> {
-    return this.commentsModel.find().populate('object');
+  async findAll(object: string): Promise<CommentDocument[]> {
+    return this.commentsModel.find({ object }).populate('user');
   }
 
   async findById(_id: string): Promise<CommentDocument> {

@@ -24,7 +24,7 @@ export class Comment {
   @Prop({
     type: String,
     required: true,
-    enum: ['News', 'Comment', 'RetroMessage'],
+    enum: ['Dynamic', 'News', 'Comment', 'RetroMessage'],
   })
   objectModel: string;
 }

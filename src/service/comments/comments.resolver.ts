@@ -8,13 +8,17 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
+import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
+import { SignUserPayload } from '@/service/auth/auth.service';
 import { NewsService } from '@/service/news/news.service';
+import { DynamicsService } from '@/service/dynamics/dynamics.service';
 import { RetroMessagesService } from '@/service/retros/messages/service';
 // import { Comments } from '@/graphql/graphql.schema';
 // import { CommentsGuard } from './comments.guard';
 import { CommentDocument as Comment } from './comments.schema';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './comments.dto';
+import { UseGuards } from '@nestjs/common';
 
 const pubSub = new PubSub();
 
@@ -24,22 +28,37 @@ export class CommentsResolver {
     private readonly retroMessagesService: RetroMessagesService,
     private readonly commentsService: CommentsService,
     private readonly newsService: NewsService,
+    private readonly dynamicsService: DynamicsService,
   ) {}
 
-  @Query('comments')
-  // @UseGuards(CommentsGuard)
-  async getComments(): Promise<Comment[]> {
-    const data = await this.commentsService.findAll();
+  @Query('findComments')
+  async findComments(@Args('object') object: string): Promise<Comment[]> {
+    console.log('xxx');
+    const data = await this.commentsService.findAll(object);
     return data;
   }
 
+  @Query('findComment')
+  async findComment(@Args('_id') _id: string): Promise<Comment> {
+    const data = await this.commentsService.findById(_id);
+    return data;
+  }
+
+  @UseGuards(GqlAuthGuard)
   @Mutation('createComment')
-  async create(@Args('input') input: CreateCommentDto): Promise<Comment> {
+  async createComment(
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') input: CreateCommentDto,
+  ): Promise<Comment> {
     let object;
 
     switch (input.objectModel) {
       case 'Comment': {
         object = await this.commentsService.findById(input.object);
+        break;
+      }
+      case 'Dynamic': {
+        object = await this.dynamicsService.findById(input.object);
         break;
       }
       case 'News': {
@@ -55,8 +74,13 @@ export class CommentsResolver {
     }
 
     if (object) {
-      const createdComment = await this.commentsService.create(input);
+      const createdComment = await this.commentsService.create({
+        user,
+        ...input,
+      });
+
       createdComment.object = object;
+
       pubSub.publish('commentCreated', { commentCreated: createdComment });
       return createdComment;
     }

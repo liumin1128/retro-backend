@@ -1,6 +1,6 @@
 type Query {
-  comments: [Comment]
-  comment(_id: ID!): Comment
+  findComments(object: ID!): [Comment]
+  findComment(_id: ID!): Comment
 }
 
 type Mutation {
@@ -17,6 +17,7 @@ type Comment implements Document {
   updatedAt: String
   content: String
   object: CommentObjectUnion!
+  user: User
 }
 
 input CreateCommentInput {
@@ -25,15 +26,11 @@ input CreateCommentInput {
   objectModel: CommentObjectUnionModel!
 }
 
-# input CreateCommentObjectInput {
-#   _id: ID!
-#   model: CommentObjectUnionModel!
-# }
-
 union CommentObjectUnion = News | Comment | RetroMessage
 
 enum CommentObjectUnionModel {
   News
+  Dynamic
   Comment
   RetroMessage
 }

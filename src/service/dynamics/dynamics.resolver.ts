@@ -19,6 +19,11 @@ export class DynamicsResolver {
     return this.dynamicsService.findAll();
   }
 
+  @Query('findDynamic')
+  async findDynamic(@Args('_id') _id: string): Promise<Dynamic> {
+    return this.dynamicsService.findById(_id);
+  }
+
   @Mutation('createDynamic')
   @UseGuards(GqlAuthGuard)
   async create(

@@ -16,6 +16,7 @@ export enum Role {
 
 export enum CommentObjectUnionModel {
     News = "News",
+    Dynamic = "Dynamic",
     Comment = "Comment",
     RetroMessage = "RetroMessage"
 }
@@ -108,9 +109,9 @@ export interface Document {
 }
 
 export abstract class IQuery {
-    abstract comments(): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
+    abstract findComments(object: string): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
 
-    abstract comment(_id: string): Nullable<Comment> | Promise<Nullable<Comment>>;
+    abstract findComment(_id: string): Nullable<Comment> | Promise<Nullable<Comment>>;
 
     abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
 
@@ -189,6 +190,7 @@ export class Comment implements Document {
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
     object: CommentObjectUnion;
+    user?: Nullable<User>;
 }
 
 export class News {
