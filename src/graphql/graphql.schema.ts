@@ -40,6 +40,11 @@ export class CreateCommentInput {
     objectModel: CommentObjectUnionModel;
 }
 
+export class ReplyCommentInput {
+    content?: Nullable<string>;
+    to: string;
+}
+
 export class CreateNewsInput {
     name?: Nullable<string>;
     age?: Nullable<number>;
@@ -145,6 +150,8 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createComment(input?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
 
+    abstract replyComment(input?: Nullable<ReplyCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
+
     abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
 
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
@@ -189,8 +196,23 @@ export class Comment implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     content?: Nullable<string>;
-    object: CommentObjectUnion;
+    object?: Nullable<string>;
+    objectModel?: Nullable<CommentObjectUnionModel>;
+    objectUnion?: Nullable<CommentObjectUnion>;
     user?: Nullable<User>;
+    comments?: Nullable<Nullable<Reply>[]>;
+}
+
+export class Reply {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
+    object?: Nullable<string>;
+    objectModel?: Nullable<CommentObjectUnionModel>;
+    objectUnion?: Nullable<CommentObjectUnion>;
+    user?: Nullable<User>;
+    replyTo?: Nullable<Comment>;
 }
 
 export class News {

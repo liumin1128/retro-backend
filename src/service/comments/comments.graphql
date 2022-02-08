@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
   createComment(input: CreateCommentInput): Comment
+  replyComment(input: ReplyCommentInput): Comment
 }
 
 type Subscription {
@@ -12,18 +13,38 @@ type Subscription {
 }
 
 type Comment implements Document {
+    _id: ID! @upper
+  createdAt: String
+  updatedAt: String
+  content: String
+  object: ID
+  objectModel: CommentObjectUnionModel
+  objectUnion: CommentObjectUnion
+  user: User
+  comments:[Reply]
+}
+
+type Reply {
   _id: ID! @upper
   createdAt: String
   updatedAt: String
   content: String
-  object: CommentObjectUnion!
+  object: ID
+  objectModel: CommentObjectUnionModel
+  objectUnion: CommentObjectUnion
   user: User
+  replyTo: Comment
 }
 
 input CreateCommentInput {
   content: String
   object: ID!
   objectModel: CommentObjectUnionModel!
+}
+
+input ReplyCommentInput {
+  content: String
+  to: ID!
 }
 
 union CommentObjectUnion = News | Comment | RetroMessage

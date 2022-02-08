@@ -17,7 +17,7 @@ import { RetroMessagesService } from '@/service/retros/messages/service';
 // import { CommentsGuard } from './comments.guard';
 import { CommentDocument as Comment } from './comments.schema';
 import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './comments.dto';
+import { CreateCommentDto, ReplyCommentDto } from './comments.dto';
 import { UseGuards } from '@nestjs/common';
 
 const pubSub = new PubSub();
@@ -80,6 +80,31 @@ export class CommentsResolver {
       });
 
       createdComment.object = object;
+
+      pubSub.publish('commentCreated', { commentCreated: createdComment });
+      return createdComment;
+    }
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation('replyComment')
+  async replyComment(
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') input: ReplyCommentDto,
+  ): Promise<Comment> {
+    const comment = await this.commentsService.findById(input.to);
+
+    if (comment) {
+      const createdComment = await this.commentsService.create({
+        user: user._id,
+        content: input.content,
+        object: comment.object + '',
+        // eslint-disable-next-line
+        //@ts-ignore
+        objectModel: comment.objectModel,
+        commentTo: comment.commentTo || comment._id,
+        replyTo: comment._id,
+      });
 
       pubSub.publish('commentCreated', { commentCreated: createdComment });
       return createdComment;
