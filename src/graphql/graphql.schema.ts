@@ -150,7 +150,7 @@ export abstract class IQuery {
 export abstract class IMutation {
     abstract createComment(input?: Nullable<CreateCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract replyComment(input?: Nullable<ReplyCommentInput>): Nullable<Comment> | Promise<Nullable<Comment>>;
+    abstract replyComment(input?: Nullable<ReplyCommentInput>): Nullable<Reply> | Promise<Nullable<Reply>>;
 
     abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
 

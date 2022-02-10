@@ -13,7 +13,13 @@ export class CommentsService {
 
   async create(createCommentDto: CreateCommentDto): Promise<CommentDocument> {
     const createdComment = new this.commentsModel(createCommentDto);
-    return createdComment.save();
+    await createdComment.save();
+    await createdComment.populate('user');
+    await createdComment.populate({
+      path: 'replyTo',
+      populate: { path: 'user' },
+    });
+    return createdComment;
   }
 
   async findAll(object: string): Promise<CommentDocument[]> {

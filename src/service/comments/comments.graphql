@@ -5,7 +5,7 @@ type Query {
 
 type Mutation {
   createComment(input: CreateCommentInput): Comment
-  replyComment(input: ReplyCommentInput): Comment
+  replyComment(input: ReplyCommentInput): Reply
 }
 
 type Subscription {
