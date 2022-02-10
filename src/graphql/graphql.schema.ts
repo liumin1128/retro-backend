@@ -213,6 +213,7 @@ export class Reply {
     objectUnion?: Nullable<CommentObjectUnion>;
     user?: Nullable<User>;
     replyTo?: Nullable<Comment>;
+    commentTo?: Nullable<Comment>;
 }
 
 export class News {
