@@ -7,6 +7,6 @@ export class CommentsController {
 
   @Get()
   async findAll(): Promise<any> {
-    return this.commentsService.findAll('');
+    return this.commentsService.findAll('', '');
   }
 }

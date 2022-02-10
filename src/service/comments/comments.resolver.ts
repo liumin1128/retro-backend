@@ -13,18 +13,19 @@ import { SignUserPayload } from '@/service/auth/auth.service';
 import { NewsService } from '@/service/news/news.service';
 import { DynamicsService } from '@/service/dynamics/dynamics.service';
 import { RetroMessagesService } from '@/service/retros/messages/service';
-// import { Comments } from '@/graphql/graphql.schema';
-// import { CommentsGuard } from './comments.guard';
 import { CommentDocument as Comment } from './comments.schema';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto, ReplyCommentDto } from './comments.dto';
 import { UseGuards } from '@nestjs/common';
+import { GetToken } from '@/graphql/graphql.decorators';
+import { AuthService } from '@/service/auth/auth.service';
 
 const pubSub = new PubSub();
 
 @Resolver('Comments')
 export class CommentsResolver {
   constructor(
+    private readonly authService: AuthService,
     private readonly retroMessagesService: RetroMessagesService,
     private readonly commentsService: CommentsService,
     private readonly newsService: NewsService,
@@ -32,9 +33,20 @@ export class CommentsResolver {
   ) {}
 
   @Query('findComments')
-  async findComments(@Args('object') object: string): Promise<Comment[]> {
-    console.log('xxx');
-    const data = await this.commentsService.findAll(object);
+  async findComments(
+    @GetToken() token: string,
+    @Args('object') object: string,
+  ): Promise<Comment[]> {
+    let user;
+    try {
+      const { _id } = await this.authService.verify(token);
+      user = _id;
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+    }
+
+    const data = await this.commentsService.findAll(object, user);
     return data;
   }
 

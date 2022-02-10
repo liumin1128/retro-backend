@@ -13,7 +13,7 @@ type Subscription {
 }
 
 type Comment implements Document {
-    _id: ID! @upper
+  _id: ID! @upper
   createdAt: String
   updatedAt: String
   content: String
@@ -21,6 +21,8 @@ type Comment implements Document {
   objectModel: CommentObjectUnionModel
   objectUnion: CommentObjectUnion
   user: User
+  likeCount: Int
+  likeStatus: Boolean
   comments:[Reply]
 }
 
@@ -33,6 +35,8 @@ type Reply {
   objectModel: CommentObjectUnionModel
   objectUnion: CommentObjectUnion
   user: User
+  likeCount: Int
+  likeStatus: Boolean
   replyTo: Comment
   commentTo: Comment
 }

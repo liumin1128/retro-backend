@@ -10,9 +10,11 @@ import { DynamicsModule } from '@/service/dynamics/dynamics.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { Comment, CommentSchema } from './comments.schema';
 import { CommentsController } from './comments.controller';
+import { AuthModule } from '@/service/auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     DynamicsModule,
     NewsModule,
     RetroMessagesModule,

@@ -21,6 +21,13 @@ export enum CommentObjectUnionModel {
     RetroMessage = "RetroMessage"
 }
 
+export enum LikeObjectUnionModel {
+    News = "News",
+    Dynamic = "Dynamic",
+    Comment = "Comment",
+    RetroMessage = "RetroMessage"
+}
+
 export enum RetroMessageStatus {
     NORMAL = "NORMAL",
     CLOSED = "CLOSED",
@@ -53,6 +60,11 @@ export class CreateNewsInput {
 export class CreateDynamicInput {
     content?: Nullable<string>;
     pictures?: Nullable<string[]>;
+}
+
+export class CreateLikeInput {
+    object: string;
+    objectModel: LikeObjectUnionModel;
 }
 
 export class CreateRetroMessageInput {
@@ -126,6 +138,10 @@ export abstract class IQuery {
 
     abstract findDynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract findLikes(object: string): Nullable<Nullable<Like>[]> | Promise<Nullable<Nullable<Like>[]>>;
+
+    abstract findLike(_id: string): Nullable<Like> | Promise<Nullable<Like>>;
+
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -156,6 +172,8 @@ export abstract class IMutation {
 
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract createLike(input?: Nullable<CreateLikeInput>): Nullable<Like> | Promise<Nullable<Like>>;
+
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -180,6 +198,8 @@ export abstract class ISubscription {
 
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
+
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroMessageUpdated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -201,6 +221,8 @@ export class Comment implements Document {
     objectUnion?: Nullable<CommentObjectUnion>;
     user?: Nullable<User>;
     comments?: Nullable<Nullable<Reply>[]>;
+    likeCount?: Nullable<number>;
+    likeStatus?: Nullable<boolean>;
 }
 
 export class Reply {
@@ -214,6 +236,8 @@ export class Reply {
     user?: Nullable<User>;
     replyTo?: Nullable<Comment>;
     commentTo?: Nullable<Comment>;
+    likeCount?: Nullable<number>;
+    likeStatus?: Nullable<boolean>;
 }
 
 export class News {
@@ -230,6 +254,16 @@ export class Dynamic implements Document {
     content?: Nullable<string>;
     pictures?: Nullable<string[]>;
     user: User;
+}
+
+export class Like implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    object?: Nullable<string>;
+    objectModel?: Nullable<LikeObjectUnionModel>;
+    objectUnion?: Nullable<LikeObjectUnion>;
+    user?: Nullable<User>;
 }
 
 export class RetroMessage implements Document {
@@ -296,4 +330,5 @@ export class User {
 }
 
 export type CommentObjectUnion = News | Comment | RetroMessage;
+export type LikeObjectUnion = News | Dynamic | Comment | RetroMessage;
 type Nullable<T> = T | null;
