@@ -11,6 +11,12 @@ export const lookupComments = (user) => {
         pipeline: [
           { $match: { $expr: { $eq: ['$$commentTo', '$commentTo'] } } },
 
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+
           // 聚合查询回复对象具体内容
           {
             $lookup: {
@@ -49,6 +55,12 @@ export const getCommentsPipline = (object: string, user: string): any[] => {
     {
       $match: {
         $and: [{ object: new Types.ObjectId(object) }, { commentTo: null }],
+      },
+    },
+
+    {
+      $sort: {
+        createdAt: -1,
       },
     },
 
