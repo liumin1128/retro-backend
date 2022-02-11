@@ -11,8 +11,6 @@ export class LikesService {
     private readonly likesModel: Model<LikeDocument>,
   ) {}
   async create(createLikeDto: CreateLikeDto): Promise<LikeDocument> {
-    console.log('createLikeDto');
-    console.log(createLikeDto);
     const createdLike = new this.likesModel(createLikeDto);
     await createdLike.save();
     return createdLike;

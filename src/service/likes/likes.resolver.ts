@@ -48,11 +48,12 @@ export class LikesResolver {
   async createLike(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateLikeDto,
-  ): Promise<Like> {
+  ): Promise<Like | null> {
     const liked = await this.likesService.findOne(user._id, input.object);
+
     if (liked) {
       liked.remove();
-      return liked;
+      return null;
     }
 
     let object;
