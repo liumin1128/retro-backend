@@ -13,11 +13,15 @@ type Subscription {
 
 type Dynamic implements Document {
   _id: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: String!
+  updatedAt: String!
   content: String
   pictures: [String!]
   user: User!
+  likeCount: Int
+  likeStatus: Boolean
+  commentCount: Int
+  shareCount: Int
 }
 
 input CreateDynamicInput {

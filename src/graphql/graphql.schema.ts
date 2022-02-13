@@ -249,11 +249,15 @@ export class News {
 
 export class Dynamic implements Document {
     _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
+    createdAt: string;
+    updatedAt: string;
     content?: Nullable<string>;
     pictures?: Nullable<string[]>;
     user: User;
+    likeCount?: Nullable<number>;
+    likeStatus?: Nullable<boolean>;
+    commentCount?: Nullable<number>;
+    shareCount?: Nullable<number>;
 }
 
 export class Like implements Document {

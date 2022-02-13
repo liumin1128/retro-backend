@@ -50,6 +50,41 @@ export const lookupComments = (user) => {
   ];
 };
 
+export const lookupCommentCount = [
+  {
+    $lookup: {
+      from: 'comments',
+      let: { object: '$_id' },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$$object', '$object'] } } },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: 1 },
+          },
+        },
+
+        {
+          $project: {
+            _id: 0,
+          },
+        },
+      ],
+      as: 'commentCount',
+    },
+  },
+  {
+    $addFields: {
+      commentCount: { $first: '$commentCount' },
+    },
+  },
+  {
+    $addFields: {
+      commentCount: '$commentCount.count',
+    },
+  },
+];
+
 export const getCommentsPipline = (object: string, user: string): any[] => {
   return [
     {

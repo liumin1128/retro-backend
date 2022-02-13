@@ -7,16 +7,30 @@ import { SignUserPayload } from '@/service/auth/auth.service';
 import { DynamicDocument as Dynamic } from './dynamics.schema';
 import { DynamicsService } from './dynamics.service';
 import { CreateDynamicDto } from './dynamics.dto';
+import { GetToken } from '@/graphql/graphql.decorators';
+import { AuthService } from '@/service/auth/auth.service';
 
 const pubSub = new PubSub();
 
 @Resolver('Dynamics')
 export class DynamicsResolver {
-  constructor(private readonly dynamicsService: DynamicsService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly dynamicsService: DynamicsService,
+  ) {}
 
   @Query('findDynamics')
-  async findDynamics(): Promise<Dynamic[]> {
-    return this.dynamicsService.findAll();
+  async findDynamics(@GetToken() token: string): Promise<Dynamic[]> {
+    let user;
+    try {
+      const { _id } = await this.authService.verify(token);
+      user = _id;
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+    }
+
+    return this.dynamicsService.findAll(user);
   }
 
   @Query('findDynamic')
