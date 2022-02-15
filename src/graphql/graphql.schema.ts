@@ -62,6 +62,13 @@ export class CreateDynamicInput {
     pictures?: Nullable<string[]>;
 }
 
+export class CreateInterestInput {
+    category?: Nullable<string>;
+    name: string;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
 export class CreateLikeInput {
     object: string;
     objectModel: LikeObjectUnionModel;
@@ -138,6 +145,10 @@ export abstract class IQuery {
 
     abstract findDynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract findInterests(): Nullable<Nullable<Interest>[]> | Promise<Nullable<Nullable<Interest>[]>>;
+
+    abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
+
     abstract findLikes(object: string): Nullable<Nullable<Like>[]> | Promise<Nullable<Nullable<Like>[]>>;
 
     abstract findLike(_id: string): Nullable<Like> | Promise<Nullable<Like>>;
@@ -172,6 +183,8 @@ export abstract class IMutation {
 
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
+    abstract createInterest(input?: Nullable<CreateInterestInput>): Nullable<Interest> | Promise<Nullable<Interest>>;
+
     abstract createLike(input?: Nullable<CreateLikeInput>): Nullable<Like> | Promise<Nullable<Like>>;
 
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -197,6 +210,8 @@ export abstract class ISubscription {
     abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
+
+    abstract interestCreated(): Nullable<Interest> | Promise<Nullable<Interest>>;
 
     abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
 
@@ -258,6 +273,17 @@ export class Dynamic implements Document {
     likeStatus?: Nullable<boolean>;
     commentCount?: Nullable<number>;
     shareCount?: Nullable<number>;
+}
+
+export class Interest implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    user?: Nullable<User>;
+    category?: Nullable<string>;
+    name?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class Like implements Document {

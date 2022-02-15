@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { LikesService } from './interests.service';
+import { InterestsService } from './interests.service';
 
-@Controller('likes')
-export class LikesController {
-  constructor(private readonly likesService: LikesService) {}
+@Controller('interests')
+export class InterestsController {
+  constructor(private readonly interestsService: InterestsService) {}
 
   @Get()
   async findAll(): Promise<any> {
-    return this.likesService.findAll();
+    return this.interestsService.findAll();
   }
 }

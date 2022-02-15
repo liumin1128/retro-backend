@@ -1,5 +1,7 @@
-export class CreateLikeDto {
+export class CreateInterestDto {
   readonly user: string;
-  readonly object: string;
-  readonly objectModel: 'Dynamic' | 'News' | 'Comment' | 'RetroMessage';
+  readonly category: string;
+  readonly name: string;
+  readonly icon: string;
+  readonly cover: string;
 }

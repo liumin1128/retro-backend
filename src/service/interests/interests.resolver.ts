@@ -1,118 +1,39 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import {
-  Args,
-  Mutation,
-  Query,
-  Resolver,
-  Subscription,
-  ResolveField,
-} from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
-import { NewsService } from '@/service/news/news.service';
-import { CommentsService } from '@/service/comments/comments.service';
-import { DynamicsService } from '@/service/dynamics/dynamics.service';
-import { RetroMessagesService } from '@/service/retros/messages/service';
-import { LikeDocument as Like } from './interests.schema';
-import { LikesService } from './interests.service';
-import { CreateLikeDto } from './interests.dto';
-import { UseGuards } from '@nestjs/common';
+import { InterestDocument as Interest } from './interests.schema';
+import { InterestsService } from './interests.service';
+import { CreateInterestDto } from './interests.dto';
 
-const pubSub = new PubSub();
+@Resolver('Interests')
+export class InterestsResolver {
+  constructor(private readonly interestsService: InterestsService) {}
 
-@Resolver('Likes')
-export class LikesResolver {
-  constructor(
-    private readonly retroMessagesService: RetroMessagesService,
-    private readonly likesService: LikesService,
-    private readonly commentsService: CommentsService,
-    private readonly newsService: NewsService,
-    private readonly dynamicsService: DynamicsService,
-  ) {}
-
-  @Query('findLikes')
-  async findLikes(): Promise<Like[]> {
-    const data = await this.likesService.findAll();
+  @Query('findInterests')
+  async findInterests(): Promise<Interest[]> {
+    const data = await this.interestsService.findAll();
     return data;
   }
 
-  @Query('findLike')
-  async findLike(@Args('_id') _id: string): Promise<Like> {
-    const data = await this.likesService.findById(_id);
+  @Query('findInterest')
+  async findInterest(@Args('_id') _id: string): Promise<Interest> {
+    const data = await this.interestsService.findById(_id);
     return data;
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation('createLike')
-  async createLike(
+  @Mutation('createInterest')
+  async createInterest(
     @CurrentUser() user: SignUserPayload,
-    @Args('input') input: CreateLikeDto,
-  ): Promise<Like | null> {
-    const liked = await this.likesService.findOne(user._id, input.object);
+    @Args('input') input: CreateInterestDto,
+  ): Promise<Interest | null> {
+    const createdInterest = await this.interestsService.create({
+      user,
+      ...input,
+    });
 
-    if (liked) {
-      liked.remove();
-      return null;
-    }
-
-    let object;
-
-    switch (input.objectModel) {
-      case 'Comment': {
-        object = await this.commentsService.findById(input.object);
-        break;
-      }
-      case 'Dynamic': {
-        object = await this.dynamicsService.findById(input.object);
-        break;
-      }
-      case 'News': {
-        object = await this.newsService.findById(input.object);
-        break;
-      }
-      case 'RetroMessage': {
-        object = await this.retroMessagesService.findById(input.object);
-        break;
-      }
-      default:
-        return;
-    }
-
-    if (object) {
-      const createdLike = await this.likesService.create({
-        user,
-        ...input,
-      });
-
-      createdLike.object = object;
-
-      pubSub.publish('likeCreated', { likeCreated: createdLike });
-      return createdLike;
-    }
-  }
-
-  @Subscription('likeCreated')
-  likeCreated() {
-    return pubSub.asyncIterator('likeCreated');
-  }
-}
-
-@Resolver('LikeObjectUnion')
-export class LikeObjectUnionResolver {
-  @ResolveField()
-  __resolveType(value, context, info) {
-    console.log('value, context, info');
-    console.log(value, context, info);
-    if (value.title) {
-      return 'News';
-    }
-    if (value.status) {
-      return 'RetroMessage';
-    }
-    if (value.content) {
-      return 'Like';
-    }
-    return null;
+    return createdInterest;
   }
 }

@@ -5,15 +5,18 @@ import * as mongooseDelete from 'mongoose-delete';
 // import * as mongooseAutopopulate from 'mongoose-autopopulate';
 
 @Schema({ timestamps: true })
-export class Like {
+export class Interest {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
-    enum: ['Game', 'News', 'Pet', 'Other'],
+    enum: ['Game', 'Pet', 'Digital', 'Peripherals', 'Other'],
   })
   category: string;
+
+  @Prop()
+  name: string;
 
   @Prop()
   cover: string;
@@ -22,13 +25,13 @@ export class Like {
   icon: string;
 }
 
-const LikeSchema = SchemaFactory.createForClass(Like);
+const InterestSchema = SchemaFactory.createForClass(Interest);
 
 // https://stackoverflow.com/questions/49387454/mongoose-plugins-nestjs
-LikeSchema.plugin(mongoosePaginate);
-LikeSchema.plugin(mongooseDelete);
-// LikeSchema.plugin(mongooseAutopopulate);
+InterestSchema.plugin(mongoosePaginate);
+InterestSchema.plugin(mongooseDelete);
+// InterestSchema.plugin(mongooseAutopopulate);
 
-type LikeDocument = Like & mongoose.Document;
+type InterestDocument = Interest & mongoose.Document;
 
-export { LikeSchema, LikeDocument };
+export { InterestSchema, InterestDocument };
