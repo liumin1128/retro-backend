@@ -2,18 +2,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AuthModule } from '@/service/auth/auth.module';
-import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
-import { NewsModule } from '@/service/news/news.module';
-import { InterestsModule } from '@/service/interests/interests.module';
-import { CommentsModule } from '@/service/comments/comments.module';
-import { LikesModule } from '@/service/likes/likes.module';
-import { DynamicsModule } from '@/service/dynamics/dynamics.module';
-import { RetrosModule } from '@/service/retros/retros.module';
-import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { AppController } from '@/app.controller';
 import { GraphqlModule } from '@/graphql/graphql.module';
-import { CommonModule } from '@/service/common/common.module';
+import services from '@/service/modules';
 
 @Module({
   imports: [
@@ -42,17 +33,10 @@ import { CommonModule } from '@/service/common/common.module';
         'subscriptions-transport-ws': true,
       },
     }),
-    CommonModule,
+
     GraphqlModule,
-    AuthModule,
-    OAuthIndexModule,
-    NewsModule,
-    CommentsModule,
-    LikesModule,
-    DynamicsModule,
-    RetrosModule,
-    RetroMessagesModule,
-    InterestsModule,
+
+    ...services,
   ],
   controllers: [AppController],
   providers: [],

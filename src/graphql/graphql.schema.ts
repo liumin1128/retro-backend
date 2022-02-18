@@ -62,16 +62,20 @@ export class CreateDynamicInput {
     pictures?: Nullable<string[]>;
 }
 
+export class CreateLikeInput {
+    object: string;
+    objectModel: LikeObjectUnionModel;
+}
+
+export class CreateFollowInput {
+    to: string;
+}
+
 export class CreateInterestInput {
     category?: Nullable<string>;
     name: string;
     cover?: Nullable<string>;
     icon?: Nullable<string>;
-}
-
-export class CreateLikeInput {
-    object: string;
-    objectModel: LikeObjectUnionModel;
 }
 
 export class CreateRetroMessageInput {
@@ -145,13 +149,17 @@ export abstract class IQuery {
 
     abstract findDynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract findInterests(): Nullable<Nullable<Interest>[]> | Promise<Nullable<Nullable<Interest>[]>>;
-
-    abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
-
     abstract findLikes(object: string): Nullable<Nullable<Like>[]> | Promise<Nullable<Nullable<Like>[]>>;
 
     abstract findLike(_id: string): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract findFollows(): Nullable<Nullable<Follow>[]> | Promise<Nullable<Nullable<Follow>[]>>;
+
+    abstract findFollow(_id: string): Nullable<Follow> | Promise<Nullable<Follow>>;
+
+    abstract findInterests(): Nullable<Nullable<Interest>[]> | Promise<Nullable<Nullable<Interest>[]>>;
+
+    abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
 
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
@@ -183,9 +191,11 @@ export abstract class IMutation {
 
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract createInterest(input?: Nullable<CreateInterestInput>): Nullable<Interest> | Promise<Nullable<Interest>>;
-
     abstract createLike(input?: Nullable<CreateLikeInput>): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract createFollow(input?: Nullable<CreateFollowInput>): Nullable<Follow> | Promise<Nullable<Follow>>;
+
+    abstract createInterest(input?: Nullable<CreateInterestInput>): Nullable<Interest> | Promise<Nullable<Interest>>;
 
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -211,9 +221,11 @@ export abstract class ISubscription {
 
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
 
-    abstract interestCreated(): Nullable<Interest> | Promise<Nullable<Interest>>;
-
     abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract followCreated(): Nullable<Follow> | Promise<Nullable<Follow>>;
+
+    abstract interestCreated(): Nullable<Interest> | Promise<Nullable<Interest>>;
 
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -275,6 +287,24 @@ export class Dynamic implements Document {
     shareCount?: Nullable<number>;
 }
 
+export class Like implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    object?: Nullable<string>;
+    objectModel?: Nullable<LikeObjectUnionModel>;
+    objectUnion?: Nullable<LikeObjectUnion>;
+    user?: Nullable<User>;
+}
+
+export class Follow implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    from?: Nullable<User>;
+    to?: Nullable<User>;
+}
+
 export class Interest implements Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -284,16 +314,6 @@ export class Interest implements Document {
     name?: Nullable<string>;
     cover?: Nullable<string>;
     icon?: Nullable<string>;
-}
-
-export class Like implements Document {
-    _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
-    object?: Nullable<string>;
-    objectModel?: Nullable<LikeObjectUnionModel>;
-    objectUnion?: Nullable<LikeObjectUnion>;
-    user?: Nullable<User>;
 }
 
 export class RetroMessage implements Document {
