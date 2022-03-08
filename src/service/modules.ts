@@ -7,10 +7,15 @@ import { LikesModule } from '@/service/likes/likes.module';
 import { DynamicsModule } from '@/service/dynamics/dynamics.module';
 import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
+<<<<<<< HEAD
 import { CommonModule } from '@/service/common/common.module';
 
 export default [
   CommonModule,
+=======
+
+export default [
+>>>>>>> d195413 (fix: 更新文件结构)
   AuthModule,
   OAuthIndexModule,
   NewsModule,
