@@ -35,6 +35,12 @@ export class RetrosService {
       // 关联查询retromessage信息
 
       {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+
+      {
         $lookup: {
           from: 'retromessages',
           let: { retro: '$_id' },
