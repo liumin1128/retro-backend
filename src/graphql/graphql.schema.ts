@@ -78,6 +78,13 @@ export class CreateInterestInput {
     icon?: Nullable<string>;
 }
 
+export class CreateHashtagInput {
+    category?: Nullable<string>;
+    name: string;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
 export class CreateRetroMessageInput {
     retro: string;
     content: string;
@@ -161,6 +168,10 @@ export abstract class IQuery {
 
     abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
 
+    abstract findHashtags(): Nullable<Nullable<Hashtag>[]> | Promise<Nullable<Nullable<Hashtag>[]>>;
+
+    abstract findHashtag(_id: string): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -197,6 +208,8 @@ export abstract class IMutation {
 
     abstract createInterest(input?: Nullable<CreateInterestInput>): Nullable<Interest> | Promise<Nullable<Interest>>;
 
+    abstract createHashtag(input?: Nullable<CreateHashtagInput>): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -226,6 +239,8 @@ export abstract class ISubscription {
     abstract followCreated(): Nullable<Follow> | Promise<Nullable<Follow>>;
 
     abstract interestCreated(): Nullable<Interest> | Promise<Nullable<Interest>>;
+
+    abstract hashtagCreated(): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
 
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -306,6 +321,17 @@ export class Follow implements Document {
 }
 
 export class Interest implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    user?: Nullable<User>;
+    category?: Nullable<string>;
+    name?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
+export class Hashtag implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
