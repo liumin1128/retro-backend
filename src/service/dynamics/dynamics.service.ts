@@ -3,7 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateDynamicDto } from './dynamics.dto';
 import { Dynamic, DynamicDocument } from './dynamics.schema';
-import { getDynamicsPipline } from '@/utils/mongo/pipline/dynamics';
+import {
+  getDynamicsPipline,
+  getDynamicPipline,
+} from '@/utils/mongo/pipline/dynamics';
 
 @Injectable()
 export class DynamicsService {
@@ -17,10 +20,23 @@ export class DynamicsService {
     return createdDynamic.save();
   }
 
-  async findAll(user: string): Promise<DynamicDocument[]> {
+  async findList(user: string): Promise<DynamicDocument[]> {
     const pipeline = getDynamicsPipline(user);
     const data = await this.dynamicsModel.aggregate(pipeline);
     return data;
+  }
+
+  async findListItem(user: string, _id: string): Promise<DynamicDocument> {
+    const pipeline = getDynamicPipline(user, _id);
+    const data = await this.dynamicsModel.aggregate(pipeline);
+    if (data.length === 0) {
+      throw new Error('Not Fount');
+    }
+    return data[0];
+  }
+
+  async find(): Promise<DynamicDocument[]> {
+    return this.dynamicsModel.find();
   }
 
   async findById(_id: string): Promise<DynamicDocument> {

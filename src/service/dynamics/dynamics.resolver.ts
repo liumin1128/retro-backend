@@ -30,12 +30,24 @@ export class DynamicsResolver {
       console.log(error);
     }
 
-    return this.dynamicsService.findAll(user);
+    return this.dynamicsService.findList(user);
   }
 
   @Query('findDynamic')
-  async findDynamic(@Args('_id') _id: string): Promise<Dynamic> {
-    return this.dynamicsService.findById(_id);
+  async findDynamic(
+    @GetToken() token: string,
+    @Args('_id') _id: string,
+  ): Promise<Dynamic> {
+    let user;
+    try {
+      const { _id } = await this.authService.verify(token);
+      user = _id;
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+    }
+
+    return this.dynamicsService.findListItem(user, _id);
   }
 
   @Mutation('createDynamic')

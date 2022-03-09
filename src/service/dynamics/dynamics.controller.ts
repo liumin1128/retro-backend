@@ -7,6 +7,6 @@ export class DynamicsController {
 
   @Get()
   async findAll(): Promise<any> {
-    return this.dynamicsService.findAll('');
+    return this.dynamicsService.find();
   }
 }
