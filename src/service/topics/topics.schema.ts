@@ -5,7 +5,7 @@ import * as mongooseDelete from 'mongoose-delete';
 // import * as mongooseAutopopulate from 'mongoose-autopopulate';
 
 @Schema({ timestamps: true })
-export class Interest {
+export class Topic {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: mongoose.Types.ObjectId;
 
@@ -28,13 +28,13 @@ export class Interest {
   icon: string;
 }
 
-const InterestSchema = SchemaFactory.createForClass(Interest);
+const TopicSchema = SchemaFactory.createForClass(Topic);
 
 // https://stackoverflow.com/questions/49387454/mongoose-plugins-nestjs
-InterestSchema.plugin(mongoosePaginate);
-InterestSchema.plugin(mongooseDelete);
-// InterestSchema.plugin(mongooseAutopopulate);
+TopicSchema.plugin(mongoosePaginate);
+TopicSchema.plugin(mongooseDelete);
+// TopicSchema.plugin(mongooseAutopopulate);
 
-type InterestDocument = Interest & mongoose.Document;
+type TopicDocument = Topic & mongoose.Document;
 
-export { InterestSchema, InterestDocument };
+export { TopicSchema, TopicDocument };

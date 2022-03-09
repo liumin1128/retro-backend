@@ -113,6 +113,13 @@ export class CreateRetroInput {
     anonymous?: Nullable<boolean>;
 }
 
+export class CreateTopicInput {
+    category?: Nullable<string>;
+    name: string;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
 export class CreateUserInput {
     phoneNumber?: Nullable<number>;
     password?: Nullable<string>;
@@ -184,6 +191,10 @@ export abstract class IQuery {
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract findTopics(): Nullable<Nullable<Topic>[]> | Promise<Nullable<Nullable<Topic>[]>>;
+
+    abstract findTopic(_id: string): Nullable<Topic> | Promise<Nullable<Topic>>;
+
     abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
     abstract findUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
@@ -222,6 +233,8 @@ export abstract class IMutation {
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract createTopic(input?: Nullable<CreateTopicInput>): Nullable<Topic> | Promise<Nullable<Topic>>;
+
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
@@ -251,6 +264,8 @@ export abstract class ISubscription {
     abstract retroMessageLiked(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
+
+    abstract topicCreated(): Nullable<Topic> | Promise<Nullable<Topic>>;
 }
 
 export class Comment implements Document {
@@ -385,6 +400,17 @@ export class RetroListItem implements Document {
     unhappyCount?: Nullable<number>;
     wonderringCount?: Nullable<number>;
     todoCount?: Nullable<number>;
+}
+
+export class Topic implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    user?: Nullable<User>;
+    category?: Nullable<string>;
+    name?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class UserWithToken {
