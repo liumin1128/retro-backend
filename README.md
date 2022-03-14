@@ -121,8 +121,18 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@8.131.92.84
 
 # 安装SSL证书
 
+<!-- 手动 -->
+
 acme.sh --issue --dns -d react.mobi -d *.react.mobi --yes-I-know-dns-manual-mode-enough-go-ahead-please
 
 acme.sh --renew -d react.mobi -d *.react.mobi --yes-I-know-dns-manual-mode-enough-go-ahead-please
 
+<!-- dns -->
+export Ali_Key=""
+export Ali_Secret=""
+acme.sh --issue --dns dns_ali -d react.mobi -d *.react.mobi
+
+<!-- 安装证书 -->
 acme.sh --install-cert -d react.mobi --key-file /etc/nginx/ssl/key.pem --fullchain-file /etc/nginx/ssl/cert.pem
+
+<!-- 更新nginx -->
