@@ -30,7 +30,7 @@ export class NewsService {
 
   async getNewsFromIData(): Promise<NewsDocument> {
     try {
-      const data = await this.idataService.getNewList({ keyword: 'APPLE' });
+      const data = await this.idataService.getNewList({ keyword: 'switch' });
 
       await Promise.all(
         data.data.map(async (i) => {

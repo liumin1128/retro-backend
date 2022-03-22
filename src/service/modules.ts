@@ -1,3 +1,4 @@
+import { CommonModule } from '@/service/common/common.module';
 import { AuthModule } from '@/service/auth/auth.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { NewsModule } from '@/service/news/news.module';
@@ -20,4 +21,5 @@ export default [
   RetroMessagesModule,
   InterestsModule,
   HashtagsModule,
+  CommonModule,
 ];
