@@ -52,23 +52,20 @@ export class ReplyCommentInput {
     to: string;
 }
 
-export class CreateNewsInput {
-    name?: Nullable<string>;
-    age?: Nullable<number>;
-}
-
 export class CreateDynamicInput {
     content?: Nullable<string>;
     pictures?: Nullable<string[]>;
 }
 
-export class CreateLikeInput {
-    object: string;
-    objectModel: LikeObjectUnionModel;
-}
-
 export class CreateFollowInput {
     to: string;
+}
+
+export class CreateHashtagInput {
+    category?: Nullable<string>;
+    name: string;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class CreateInterestInput {
@@ -78,11 +75,19 @@ export class CreateInterestInput {
     icon?: Nullable<string>;
 }
 
-export class CreateHashtagInput {
-    category?: Nullable<string>;
-    name: string;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
+export class CreateLikeInput {
+    object: string;
+    objectModel: LikeObjectUnionModel;
+}
+
+export class CreateNewsInput {
+    name?: Nullable<string>;
+    age?: Nullable<number>;
+}
+
+export class CreateOAuthInput {
+    name?: Nullable<string>;
+    age?: Nullable<number>;
 }
 
 export class CreateRetroMessageInput {
@@ -99,11 +104,6 @@ export class UpdateRetroMessageInput {
     type?: Nullable<RetroMessageType>;
     pictures?: Nullable<string[]>;
     anonymous?: Nullable<boolean>;
-}
-
-export class CreateOAuthInput {
-    name?: Nullable<string>;
-    age?: Nullable<number>;
 }
 
 export class CreateRetroInput {
@@ -155,37 +155,37 @@ export abstract class IQuery {
 
     abstract findComment(_id: string): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
-
-    abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
-
     abstract findDynamics(): Nullable<Nullable<Dynamic>[]> | Promise<Nullable<Nullable<Dynamic>[]>>;
 
     abstract findDynamic(_id: string): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
-
-    abstract findLikes(object: string): Nullable<Nullable<Like>[]> | Promise<Nullable<Nullable<Like>[]>>;
-
-    abstract findLike(_id: string): Nullable<Like> | Promise<Nullable<Like>>;
 
     abstract findFollows(): Nullable<Nullable<Follow>[]> | Promise<Nullable<Nullable<Follow>[]>>;
 
     abstract findFollow(_id: string): Nullable<Follow> | Promise<Nullable<Follow>>;
 
-    abstract findInterests(): Nullable<Nullable<Interest>[]> | Promise<Nullable<Nullable<Interest>[]>>;
-
-    abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
-
     abstract findHashtags(): Nullable<Nullable<Hashtag>[]> | Promise<Nullable<Nullable<Hashtag>[]>>;
 
     abstract findHashtag(_id: string): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
 
-    abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+    abstract findInterests(): Nullable<Nullable<Interest>[]> | Promise<Nullable<Nullable<Interest>[]>>;
 
-    abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+    abstract findInterest(_id: string): Nullable<Interest> | Promise<Nullable<Interest>>;
+
+    abstract findLikes(object: string): Nullable<Nullable<Like>[]> | Promise<Nullable<Nullable<Like>[]>>;
+
+    abstract findLike(_id: string): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract newsList(): Nullable<Nullable<News>[]> | Promise<Nullable<Nullable<News>[]>>;
+
+    abstract news(_id: string): Nullable<News> | Promise<Nullable<News>>;
 
     abstract oauths(): Nullable<Nullable<OAuth>[]> | Promise<Nullable<Nullable<OAuth>[]>>;
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
+
+    abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
+
+    abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract findRetros(): Nullable<Nullable<RetroListItem>[]> | Promise<Nullable<Nullable<RetroListItem>[]>>;
 
@@ -209,17 +209,19 @@ export abstract class IMutation {
 
     abstract replyComment(input?: Nullable<ReplyCommentInput>): Nullable<Reply> | Promise<Nullable<Reply>>;
 
-    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
-
     abstract createDynamic(input?: Nullable<CreateDynamicInput>): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
-
-    abstract createLike(input?: Nullable<CreateLikeInput>): Nullable<Like> | Promise<Nullable<Like>>;
 
     abstract createFollow(input?: Nullable<CreateFollowInput>): Nullable<Follow> | Promise<Nullable<Follow>>;
 
+    abstract createHashtag(input?: Nullable<CreateHashtagInput>): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+
     abstract createInterest(input?: Nullable<CreateInterestInput>): Nullable<Interest> | Promise<Nullable<Interest>>;
 
-    abstract createHashtag(input?: Nullable<CreateHashtagInput>): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+    abstract createLike(input?: Nullable<CreateLikeInput>): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract createNews(createNewsInput?: Nullable<CreateNewsInput>): Nullable<News> | Promise<Nullable<News>>;
+
+    abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -228,8 +230,6 @@ export abstract class IMutation {
     abstract likeRetroMessage(_id?: Nullable<string>, count?: Nullable<number>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract deleteRetroMessage(_id?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
-
-    abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
@@ -243,17 +243,17 @@ export abstract class IMutation {
 export abstract class ISubscription {
     abstract commentCreated(): Nullable<Comment> | Promise<Nullable<Comment>>;
 
-    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
-
     abstract dynamicCreated(): Nullable<Dynamic> | Promise<Nullable<Dynamic>>;
-
-    abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
 
     abstract followCreated(): Nullable<Follow> | Promise<Nullable<Follow>>;
 
+    abstract hashtagCreated(): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+
     abstract interestCreated(): Nullable<Interest> | Promise<Nullable<Interest>>;
 
-    abstract hashtagCreated(): Nullable<Hashtag> | Promise<Nullable<Hashtag>>;
+    abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
+
+    abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
 
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -277,9 +277,9 @@ export class Comment implements Document {
     objectModel?: Nullable<CommentObjectUnionModel>;
     objectUnion?: Nullable<CommentObjectUnion>;
     user?: Nullable<User>;
-    comments?: Nullable<Nullable<Reply>[]>;
     likeCount?: Nullable<number>;
     likeStatus?: Nullable<boolean>;
+    comments?: Nullable<Nullable<Reply>[]>;
 }
 
 export class Reply {
@@ -291,17 +291,10 @@ export class Reply {
     objectModel?: Nullable<CommentObjectUnionModel>;
     objectUnion?: Nullable<CommentObjectUnion>;
     user?: Nullable<User>;
-    replyTo?: Nullable<Comment>;
-    commentTo?: Nullable<Comment>;
     likeCount?: Nullable<number>;
     likeStatus?: Nullable<boolean>;
-}
-
-export class News {
-    _id: string;
-    title?: Nullable<string>;
-    cover?: Nullable<string>;
-    html?: Nullable<string>;
+    replyTo?: Nullable<Comment>;
+    commentTo?: Nullable<Comment>;
 }
 
 export class Dynamic implements Document {
@@ -317,33 +310,12 @@ export class Dynamic implements Document {
     shareCount?: Nullable<number>;
 }
 
-export class Like implements Document {
-    _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
-    object?: Nullable<string>;
-    objectModel?: Nullable<LikeObjectUnionModel>;
-    objectUnion?: Nullable<LikeObjectUnion>;
-    user?: Nullable<User>;
-}
-
 export class Follow implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     from?: Nullable<User>;
     to?: Nullable<User>;
-}
-
-export class Interest implements Document {
-    _id: string;
-    createdAt?: Nullable<string>;
-    updatedAt?: Nullable<string>;
-    user?: Nullable<User>;
-    category?: Nullable<string>;
-    name?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
 }
 
 export class Hashtag implements Document {
@@ -357,22 +329,50 @@ export class Hashtag implements Document {
     icon?: Nullable<string>;
 }
 
-export class RetroMessage implements Document {
+export class Interest implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
-    content?: Nullable<string>;
-    status?: Nullable<RetroMessageStatus>;
-    type?: Nullable<RetroMessageType>;
     user?: Nullable<User>;
-    like?: Nullable<number>;
-    anonymous?: Nullable<boolean>;
-    pictures?: Nullable<string[]>;
+    category?: Nullable<string>;
+    name?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
+export class Like implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    object?: Nullable<string>;
+    objectModel?: Nullable<LikeObjectUnionModel>;
+    objectUnion?: Nullable<LikeObjectUnion>;
+    user?: Nullable<User>;
+}
+
+export class News {
+    _id: string;
+    title?: Nullable<string>;
+    cover?: Nullable<string>;
+    html?: Nullable<string>;
 }
 
 export class OAuth {
     _id: string;
     platform?: Nullable<string>;
+}
+
+export class RetroMessage implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    content?: Nullable<string>;
+    anonymous?: Nullable<boolean>;
+    status?: Nullable<RetroMessageStatus>;
+    type?: Nullable<RetroMessageType>;
+    user?: Nullable<User>;
+    like?: Nullable<number>;
+    pictures?: Nullable<string[]>;
 }
 
 export class Retro implements Document {

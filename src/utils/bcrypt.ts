@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 export async function getHash(str: string) {
   const salt = await bcrypt.genSalt();

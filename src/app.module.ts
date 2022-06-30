@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { AppController } from '@/app.controller';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import serviceModules from '@/service/modules';
 
 @Module({
@@ -38,6 +39,6 @@ import serviceModules from '@/service/modules';
     ...serviceModules,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [AppService],
 })
 export class AppModule {}
