@@ -66,11 +66,11 @@ export class RetrosService {
         },
       },
 
-      // {
-      //   $addFields: {
-      //     count: { $arrayToObject: '$count' },
-      //   },
-      // },
+      {
+        $addFields: {
+          count: { $arrayToObject: '$count' },
+        },
+      },
 
       {
         $lookup: {
