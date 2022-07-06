@@ -27,14 +27,7 @@ export class RetroMessagesService {
     updateRetroMessageDto: UpdateRetroMessageDto,
   ): Promise<RetroMessageDocument> {
     const obj = await this.retroMessagesModel
-      .findByIdAndUpdate(
-        _id,
-        {
-          content: updateRetroMessageDto.content,
-          status: updateRetroMessageDto.status,
-        },
-        { new: true },
-      )
+      .findByIdAndUpdate(_id, updateRetroMessageDto, { new: true })
       .populate('user');
     return obj;
   }
@@ -53,7 +46,10 @@ export class RetroMessagesService {
   }
 
   async findAll(query): Promise<RetroMessageDocument[]> {
-    return this.retroMessagesModel.find(query).populate('user');
+    return this.retroMessagesModel
+      .find(query)
+      .sort({ updatedAt: -1 })
+      .populate('user');
   }
 
   async findById(_id: string): Promise<RetroMessageDocument> {
