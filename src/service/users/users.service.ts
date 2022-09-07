@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { pick } from 'lodash/object';
+import { pick } from 'lodash';
 import { md5Encode } from '@/utils/crypto';
 import { AuthService } from '@/service/auth/auth.service';
 import CreateUserDto from './dto/create.dto';

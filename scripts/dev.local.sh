@@ -4,7 +4,7 @@ docker start mongo
 echo '>>> start redis'
 docker start redis
 
-yarn dev
+npm run dev
 
 
 # podman run -it -v `pwd`:/workspace -w /workspace --privileged=true node:12 yarn

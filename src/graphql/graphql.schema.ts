@@ -7,6 +7,7 @@
 
 /* tslint:disable */
 /* eslint-disable */
+
 export enum Role {
     ADMIN = "ADMIN",
     REVIEWER = "REVIEWER",

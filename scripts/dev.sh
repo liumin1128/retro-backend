@@ -4,7 +4,7 @@ podman start mongo
 echo '>>> start redis'
 podman start redis
 
-yarn dev
+npm run dev
 
 
 # podman run -it -v `pwd`:/workspace -w /workspace --privileged=true node:12 yarn
