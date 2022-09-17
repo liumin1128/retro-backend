@@ -9,6 +9,7 @@ import { LikesModule } from '@/service/likes/likes.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
+import { OrganizationsModule } from '@/service/organizations/organizations.module';
 
 export default [
   CommonModule,
@@ -22,4 +23,5 @@ export default [
   OAuthIndexModule,
   RetrosModule,
   RetroMessagesModule,
+  OrganizationsModule,
 ];

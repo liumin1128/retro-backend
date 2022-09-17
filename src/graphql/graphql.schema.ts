@@ -91,6 +91,12 @@ export class CreateOAuthInput {
     age?: Nullable<number>;
 }
 
+export class CreateOrganizationInput {
+    name: string;
+    description?: Nullable<string>;
+    logo?: Nullable<string>;
+}
+
 export class CreateRetroMessageInput {
     retro: string;
     content: string;
@@ -184,6 +190,10 @@ export abstract class IQuery {
 
     abstract oauth(_id: string): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
+    abstract findOrganizations(): Nullable<Nullable<Organization>[]> | Promise<Nullable<Nullable<Organization>[]>>;
+
+    abstract findOrganization(_id: string): Nullable<Organization> | Promise<Nullable<Organization>>;
+
     abstract findRetroMessages(retro?: Nullable<string>): Nullable<Nullable<RetroMessage>[]> | Promise<Nullable<Nullable<RetroMessage>[]>>;
 
     abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -224,6 +234,8 @@ export abstract class IMutation {
 
     abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
+    abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
+
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -255,6 +267,8 @@ export abstract class ISubscription {
     abstract likeCreated(): Nullable<Like> | Promise<Nullable<Like>>;
 
     abstract newsCreated(): Nullable<News> | Promise<Nullable<News>>;
+
+    abstract organizationCreated(): Nullable<Organization> | Promise<Nullable<Organization>>;
 
     abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
@@ -361,6 +375,17 @@ export class News {
 export class OAuth {
     _id: string;
     platform?: Nullable<string>;
+}
+
+export class Organization implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    owner: User;
+    users?: Nullable<Nullable<User>[]>;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    logo?: Nullable<string>;
 }
 
 export class RetroMessage implements Document {
