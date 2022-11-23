@@ -1,7 +1,7 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
+import { CurrentUser, GqlAuthGuard } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { OrganizationDocument as Organization } from './organizations.schema';
 import { OrganizationsService } from './organizations.service';
@@ -13,14 +13,12 @@ export class OrganizationsResolver {
 
   @Query('findOrganizations')
   async findOrganizations(): Promise<Organization[]> {
-    const data = await this.organizationsService.findAll();
-    return data;
+    return await this.organizationsService.findAll();
   }
 
   @Query('findOrganization')
   async findOrganization(@Args('_id') _id: string): Promise<Organization> {
-    const data = await this.organizationsService.findById(_id);
-    return data;
+    return await this.organizationsService.findById(_id);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -29,10 +27,10 @@ export class OrganizationsResolver {
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateOrganizationDto,
   ): Promise<Organization | null> {
-    const createdOrganization = await this.organizationsService.create({
-      owner: user,
+    return await this.organizationsService.create({
       ...input,
+      owner: user._id,
+      users: [user._id],
     });
-    return createdOrganization;
   }
 }

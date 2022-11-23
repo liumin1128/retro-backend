@@ -55,6 +55,7 @@ export class QiniuService {
   }
 
   getQiniuToken(): { token: string; expires: number } {
+    console.log('xxxxx');
     return {
       token: this.putPolicy.uploadToken(this.mac),
       expires: this.expires,
