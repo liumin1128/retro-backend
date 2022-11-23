@@ -3,10 +3,6 @@ type Query {
   findOrganization(_id: ID!): Organization
 }
 
-type Mutation {
-  createOrganization(input: CreateOrganizationInput): Organization
-}
-
 type Subscription {
   organizationCreated: Organization
 }
@@ -17,7 +13,6 @@ type Organization implements Document {
   updatedAt: String
 
   owner: User!
-  users: [User]
   name: String
   description: String
   logo: String

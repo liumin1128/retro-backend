@@ -2,16 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
-import { User } from '@/service/users/schemas/users.schema';
-// import * as mongooseAutopopulate from 'mongoose-autopopulate';
+import { UserDocument } from '@/service/users/schemas/users.schema';
 
 @Schema({ timestamps: true })
 export class Organization {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  owner: User;
-
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-  users: User[];
+  owner: UserDocument;
 
   @Prop({ required: true, unique: true })
   name: string;

@@ -10,6 +10,7 @@ import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { OrganizationsModule } from '@/service/organizations/organizations.module';
+import { UserToOrganizationsModule } from '@/service/usertoorganizations/usertoorganizations.module';
 
 export default [
   CommonModule,
@@ -24,4 +25,5 @@ export default [
   RetrosModule,
   RetroMessagesModule,
   OrganizationsModule,
+  UserToOrganizationsModule,
 ];

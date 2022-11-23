@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
+import * as mongooseDelete from 'mongoose-delete';
 
 @Schema({ timestamps: true })
 export class User {
@@ -31,6 +33,11 @@ export class User {
   password: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+const UserSchema = SchemaFactory.createForClass(User);
 
-export type UserDocument = User & Document;
+UserSchema.plugin(mongoosePaginate);
+UserSchema.plugin(mongooseDelete);
+
+type UserDocument = User & mongoose.Document;
+
+export { UserSchema, UserDocument };

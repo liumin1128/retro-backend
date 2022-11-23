@@ -21,14 +21,13 @@ export class OrganizationsService {
   }
 
   async findAll(): Promise<OrganizationDocument[]> {
-    return this.organizationsModel.find().populate('owner').populate('users');
+    return this.organizationsModel.find().populate('owner');
   }
 
-  async findOne(user: string, object: string): Promise<OrganizationDocument> {
-    return this.organizationsModel
-      .findOne({ user, object })
-      .populate('owner')
-      .populate('users');
+  async findOne(
+    params: Record<string, unknown>,
+  ): Promise<OrganizationDocument> {
+    return this.organizationsModel.findOne(params).populate('owner');
   }
 
   async findById(_id: string): Promise<OrganizationDocument> {

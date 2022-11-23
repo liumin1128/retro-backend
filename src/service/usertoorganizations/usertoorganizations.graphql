@@ -1,0 +1,31 @@
+type Query {
+  findMyOrganizations: [UserToOrganization]
+  findUserToOrganizations(user: ID, organization: ID): [UserToOrganization]
+  findUserToOrganization(_id: ID!): UserToOrganization
+}
+
+type Mutation {
+  createOrganization(input: CreateOrganizationInput): Organization
+  organizationInviteUser(input: OrganizationInviteUserInput): UserToOrganization
+}
+
+type Subscription {
+  userToOrganizationCreated: UserToOrganization
+}
+
+type UserToOrganization implements Document {
+  _id: ID! @upper
+  createdAt: String
+  updatedAt: String
+
+  isCurrent: Boolean
+
+  user: User!
+  organization: Organization!
+}
+
+input OrganizationInviteUserInput {
+  user: ID!
+  organization: ID!
+}
+

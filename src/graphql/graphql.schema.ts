@@ -151,6 +151,11 @@ export class LoginUserInput {
     password?: Nullable<string>;
 }
 
+export class OrganizationInviteUserInput {
+    user: string;
+    organization: string;
+}
+
 export interface Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -213,6 +218,12 @@ export abstract class IQuery {
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 
     abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
+
+    abstract findMyOrganizations(): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
+
+    abstract findUserToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
+
+    abstract findUserToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 }
 
 export abstract class IMutation {
@@ -234,8 +245,6 @@ export abstract class IMutation {
 
     abstract createOAuth(createOAuthInput?: Nullable<CreateOAuthInput>): Nullable<OAuth> | Promise<Nullable<OAuth>>;
 
-    abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
-
     abstract createRetroMessage(input?: Nullable<CreateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract updateRetroMessage(_id?: Nullable<string>, input?: Nullable<UpdateRetroMessageInput>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
@@ -251,6 +260,10 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
+
+    abstract organizationInviteUser(input?: Nullable<OrganizationInviteUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 }
 
 export abstract class ISubscription {
@@ -281,6 +294,8 @@ export abstract class ISubscription {
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 
     abstract topicCreated(): Nullable<Topic> | Promise<Nullable<Topic>>;
+
+    abstract userToOrganizationCreated(): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 }
 
 export class Comment implements Document {
@@ -382,7 +397,6 @@ export class Organization implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     owner: User;
-    users?: Nullable<Nullable<User>[]>;
     name?: Nullable<string>;
     description?: Nullable<string>;
     logo?: Nullable<string>;
@@ -455,6 +469,15 @@ export class User {
     birthday?: Nullable<string>;
     position?: Nullable<string>;
     company?: Nullable<string>;
+}
+
+export class UserToOrganization implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    isCurrent?: Nullable<boolean>;
+    user: User;
+    organization: Organization;
 }
 
 export type CommentObjectUnion = News | Comment | RetroMessage;
