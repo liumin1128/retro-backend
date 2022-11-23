@@ -21,4 +21,4 @@ import { OrganizationsModule } from '@/service/organizations/organizations.modul
   exports: [UserToOrganizationsService],
   controllers: [],
 })
-export class UserToOrganizationsModule {}
+export class UserToOrganizationModule {}

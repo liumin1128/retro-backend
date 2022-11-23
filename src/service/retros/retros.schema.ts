@@ -4,11 +4,23 @@ import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
 // import * as mongooseAutopopulate from 'mongoose-autopopulate';
 import { UserDocument } from '@/service/users/schemas/users.schema';
+import { OrganizationDocument } from '@/service/organizations/organizations.schema';
 
 @Schema({ timestamps: true })
 export class Retro {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  })
   user: UserDocument;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
+    required: true,
+  })
+  organization: OrganizationDocument;
 
   @Prop()
   content: string;

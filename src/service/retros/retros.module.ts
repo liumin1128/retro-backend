@@ -9,11 +9,19 @@ import {
   RetroMessageSchema,
 } from '@/service/retros/messages/schema';
 
+import {
+  UserToOrganization,
+  UserToOrganizationSchema,
+} from '@/service/usertoorganizations/usertoorganizations.schema';
+
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Retro.name, schema: RetroSchema }]),
     MongooseModule.forFeature([
       { name: RetroMessage.name, schema: RetroMessageSchema },
+    ]),
+    MongooseModule.forFeature([
+      { name: UserToOrganization.name, schema: UserToOrganizationSchema },
     ]),
   ],
   providers: [RetrosService, RetrosResolver],

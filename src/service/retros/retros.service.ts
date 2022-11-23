@@ -4,6 +4,10 @@ import { Model } from 'mongoose';
 import { CreateRetroDto } from './retros.dto';
 import { Retro, RetroDocument } from './retros.schema';
 import { RetroMessage, RetroMessageDocument } from './messages/schema';
+import {
+  UserToOrganization,
+  UserToOrganizationDocument,
+} from '@/service/usertoorganizations/usertoorganizations.schema';
 
 @Injectable()
 export class RetrosService {
@@ -13,6 +17,9 @@ export class RetrosService {
 
     @InjectModel(RetroMessage.name)
     private readonly retroMessagesModel: Model<RetroMessageDocument>,
+
+    @InjectModel(UserToOrganization.name)
+    private readonly userToOrganizationsModel: Model<UserToOrganizationDocument>,
   ) {}
 
   async create(createRetroDto: CreateRetroDto): Promise<RetroDocument> {
@@ -22,17 +29,28 @@ export class RetrosService {
     return createdRetro;
   }
 
-  async findAll(): Promise<any> {
-    // 不需要使用这种老套的方法
-    // happyCount: {
-    //   $sum: {
-    //     $cond: [{ $eq: ['$type', 'HAPPY'] }, 1, 0],
-    //   },
-    // },
+  async findAll(user: string): Promise<any> {
+    // 获取用户当前Organization
+    const record = await this.userToOrganizationsModel.findOne({
+      user,
+      isCurrent: true,
+    });
+
+    if (!record) {
+      return [];
+    }
 
     // https://www.5axxw.com/questions/content/3l0r6i
-    const data = await this.retrosModel.aggregate([
+    return this.retrosModel.aggregate([
       // 关联查询retromessage信息
+
+      {
+        $match: {
+          $expr: {
+            $eq: ['$organization', record?.organization?._id],
+          },
+        },
+      },
 
       {
         $sort: {
@@ -143,8 +161,6 @@ export class RetrosService {
         },
       },
     ]);
-
-    return data;
   }
 
   async findById(_id: string): Promise<RetroDocument> {
