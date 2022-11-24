@@ -1,5 +1,7 @@
 type Query {
-  findMyOrganizations: [UserToOrganization]
+  findMyOrganizations: [Organization]
+  findCurrentOrganization: Organization
+  findCurrentOrganizationUsers: [User]
   findUserToOrganizations(user: ID, organization: ID): [UserToOrganization]
   findUserToOrganization(_id: ID!): UserToOrganization
 }

@@ -13,6 +13,7 @@ import {
   UserToOrganization,
   UserToOrganizationSchema,
 } from '@/service/usertoorganizations/usertoorganizations.schema';
+import { UserToOrganizationModule } from '../usertoorganizations/usertoorganizations.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import {
     MongooseModule.forFeature([
       { name: UserToOrganization.name, schema: UserToOrganizationSchema },
     ]),
+    UserToOrganizationModule,
   ],
   providers: [RetrosService, RetrosResolver],
   exports: [RetrosService],

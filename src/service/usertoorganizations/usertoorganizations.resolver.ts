@@ -3,13 +3,14 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { CurrentUser, GqlAuthGuard } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
-import { UserToOrganizationDocument as UserToOrganization } from './usertoorganizations.schema';
+import { UserToOrganizationDocument } from './usertoorganizations.schema';
 import { UserToOrganizationsService } from './usertoorganizations.service';
 import { OrganizationsService } from '@/service/organizations/organizations.service';
 import { UsersService } from '@/service/users/users.service';
 import { CreateUserToOrganizationDto } from './usertoorganizations.dto';
 import { CreateOrganizationDto } from '@/service/organizations/organizations.dto';
-import { OrganizationDocument as Organization } from '@/service/organizations/organizations.schema';
+import { OrganizationDocument } from '@/service/organizations/organizations.schema';
+import { UserDocument } from '@/service/users/schemas/users.schema';
 
 @Resolver('UserToOrganizations')
 export class UserToOrganizationsResolver {
@@ -19,22 +20,51 @@ export class UserToOrganizationsResolver {
     private readonly userService: UsersService,
   ) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query('findMyOrganizations')
   async findMyOrganizations(
     @CurrentUser() user: SignUserPayload,
-  ): Promise<UserToOrganization[]> {
-    const params: Record<any, unknown> = {};
-    if (user) {
-      params.user = user;
-    }
-    return await this.userToOrganizationsService.findAll(params);
+  ): Promise<OrganizationDocument[]> {
+    const record = await this.userToOrganizationsService.findAll({
+      user: user._id,
+    });
+    return record.map((i) => i.organization);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query('findCurrentOrganization')
+  async findCurrentOrganization(
+    @CurrentUser() user: SignUserPayload,
+  ): Promise<OrganizationDocument> {
+    const record = await this.userToOrganizationsService.findOne({
+      user: user._id,
+      isCurrent: true,
+    });
+    return record.organization;
+  }
+
+  @Query('findCurrentOrganizationUsers')
+  @UseGuards(GqlAuthGuard)
+  async findCurrentOrganizationUsers(
+    @CurrentUser() user: SignUserPayload,
+  ): Promise<UserDocument[]> {
+    const currentRecord = await this.userToOrganizationsService.findOne({
+      user: user._id,
+      isCurrent: true,
+    });
+
+    const record = await this.userToOrganizationsService.findAll({
+      organization: currentRecord.organization._id,
+    });
+
+    return record.map((i) => i.user);
   }
 
   @Query('findUserToOrganizations')
   async findUserToOrganizations(
     @Args('user') user: string,
     @Args('organization') organization: string,
-  ): Promise<UserToOrganization[]> {
+  ): Promise<UserToOrganizationDocument[]> {
     const params: Record<any, unknown> = {};
     if (organization) {
       params.organization = organization;
@@ -48,7 +78,7 @@ export class UserToOrganizationsResolver {
   @Query('findUserToOrganization')
   async findUserToOrganization(
     @Args('_id') _id: string,
-  ): Promise<UserToOrganization> {
+  ): Promise<UserToOrganizationDocument> {
     return await this.userToOrganizationsService.findById(_id);
   }
 
@@ -57,7 +87,7 @@ export class UserToOrganizationsResolver {
   async organizationInviteUser(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateUserToOrganizationDto,
-  ): Promise<UserToOrganization> {
+  ): Promise<UserToOrganizationDocument> {
     // 检查organization
     const organization = await this.organizationsService.findById(
       input.organization,
@@ -104,7 +134,7 @@ export class UserToOrganizationsResolver {
   async createOrganization(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateOrganizationDto,
-  ): Promise<Organization | null> {
+  ): Promise<OrganizationDocument> {
     const organization = await this.organizationsService.create({
       ...input,
       owner: user._id,

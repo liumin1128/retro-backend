@@ -5,16 +5,21 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { ApolloError } from 'apollo-server';
-
 import { RetroMessageDocument as RetroMessage } from './schema';
 import { RetroMessagesService } from './service';
 import { CreateRetroMessageDto, UpdateRetroMessageDto } from './dto';
+import { RetrosService } from '@/service/retros/retros.service';
+import { UserToOrganizationsService } from '@/service/usertoorganizations/usertoorganizations.service';
 
 const pubSub = new PubSub();
 
 @Resolver('RetroMessages')
 export class RetroMessagesResolver {
-  constructor(private readonly retroMessagesService: RetroMessagesService) {}
+  constructor(
+    private readonly retroMessagesService: RetroMessagesService,
+    private readonly retroService: RetrosService,
+    private readonly userToOrganizationsService: UserToOrganizationsService,
+  ) {}
 
   @Query('findRetroMessage')
   async findRetroMessage(@Args('_id') _id: string): Promise<RetroMessage> {
@@ -22,9 +27,23 @@ export class RetroMessagesResolver {
   }
 
   @Query('findRetroMessages')
+  @UseGuards(GqlAuthGuard)
   async findRetroMessages(
+    @CurrentUser() user: SignUserPayload,
     @Args('retro') retro: string,
   ): Promise<RetroMessage[]> {
+    // 查找当前retro
+    const retroObj = await this.retroService.findById(retro);
+
+    // 查找当前retro的organization是否关联了当前用户
+    const recordObj = await this.userToOrganizationsService.findOne({
+      user: user._id,
+      organization: retroObj.organization._id,
+    });
+    if (!recordObj) {
+      throw new ApolloError('Permission  denied');
+    }
+
     return this.retroMessagesService.findAll({ retro });
   }
 
