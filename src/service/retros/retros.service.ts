@@ -31,14 +31,14 @@ export class RetrosService {
 
   async findAll(user: string): Promise<any> {
     // 获取用户当前Organization
-    const record = await this.userToOrganizationsModel.findOne({
-      user,
-      isCurrent: true,
-    });
-
-    if (!record) {
-      return [];
-    }
+    // const record = await this.userToOrganizationsModel.findOne({
+    //   user,
+    //   isCurrent: true,
+    // });
+    //
+    // if (!record) {
+    //   return [];
+    // }
 
     // https://www.5axxw.com/questions/content/3l0r6i
     return this.retrosModel.aggregate([
@@ -47,7 +47,7 @@ export class RetrosService {
       {
         $match: {
           $expr: {
-            $eq: ['$organization', record?.organization?._id],
+            // $eq: ['$organization', record?.organization?._id],
           },
         },
       },

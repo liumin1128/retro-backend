@@ -1,14 +1,15 @@
 type Query {
-  findMyOrganizations: [Organization]
-  findCurrentOrganization: Organization
-  findCurrentOrganizationUsers: [User]
-  findUserToOrganizations(user: ID, organization: ID): [UserToOrganization]
-  findUserToOrganization(_id: ID!): UserToOrganization
+  myOrganizations: [Organization]
+  currentOrganization: Organization
+  currentOrganizationUsers: [User]
+  userToOrganizations(user: ID, organization: ID): [UserToOrganization]
+  userToOrganization(_id: ID!): UserToOrganization
 }
 
 type Mutation {
   createOrganization(input: CreateOrganizationInput): Organization
   organizationInviteUser(input: OrganizationInviteUserInput): UserToOrganization
+  organizationRemoveUser(input: OrganizationRemoveUserInput): UserToOrganization
 }
 
 type Subscription {
@@ -31,3 +32,7 @@ input OrganizationInviteUserInput {
   organization: ID!
 }
 
+input OrganizationRemoveUserInput {
+  user: ID!
+  organization: ID!
+}

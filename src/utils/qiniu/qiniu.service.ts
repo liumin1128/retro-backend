@@ -8,7 +8,6 @@ export class QiniuService {
   private bucket = process.env.QINIU_BUCKET_NAME;
   private expires = parseInt(process.env.QINIU_EXPIRES_TIME, 10);
   private domain = process.env.QINIU_BUCKET_DOMAIN;
-
   private mac = new qiniu.auth.digest.Mac(this.accessKey, this.secretKey);
   private options = { scope: this.bucket, expires: this.expires };
   private config = new qiniu.conf.Config();

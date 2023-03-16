@@ -25,7 +25,7 @@ import { AppService } from './app.service';
       driver: ApolloDriver,
       debug: true,
       playground: true,
-      typePaths: ['./**/*.graphql'],
+      typePaths: ['./src/**/*.graphql'],
       definitions: {
         path: './src/graphql/graphql.schema.ts',
         outputAs: 'class',

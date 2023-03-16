@@ -33,16 +33,16 @@ export class RetroMessagesResolver {
     @Args('retro') retro: string,
   ): Promise<RetroMessage[]> {
     // 查找当前retro
-    const retroObj = await this.retroService.findById(retro);
-
-    // 查找当前retro的organization是否关联了当前用户
-    const recordObj = await this.userToOrganizationsService.findOne({
-      user: user._id,
-      organization: retroObj.organization._id,
-    });
-    if (!recordObj) {
-      throw new ApolloError('Permission  denied');
-    }
+    // // const retroObj = await this.retroService.findById(retro);
+    //
+    // // 查找当前retro的organization是否关联了当前用户
+    // const recordObj = await this.userToOrganizationsService.findOne({
+    //   user: user._id,
+    //   // organization: retroObj.organization._id,
+    // });
+    // if (!recordObj) {
+    //   throw new ApolloError('Permission  denied');
+    // }
 
     return this.retroMessagesService.findAll({ retro });
   }

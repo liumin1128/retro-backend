@@ -156,6 +156,11 @@ export class OrganizationInviteUserInput {
     organization: string;
 }
 
+export class OrganizationRemoveUserInput {
+    user: string;
+    organization: string;
+}
+
 export interface Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -219,15 +224,15 @@ export abstract class IQuery {
 
     abstract login(input?: Nullable<LoginUserInput>): Nullable<UserWithToken> | Promise<Nullable<UserWithToken>>;
 
-    abstract findMyOrganizations(): Nullable<Nullable<Organization>[]> | Promise<Nullable<Nullable<Organization>[]>>;
+    abstract myOrganizations(): Nullable<Nullable<Organization>[]> | Promise<Nullable<Nullable<Organization>[]>>;
 
-    abstract findCurrentOrganization(): Nullable<Organization> | Promise<Nullable<Organization>>;
+    abstract currentOrganization(): Nullable<Organization> | Promise<Nullable<Organization>>;
 
-    abstract findCurrentOrganizationUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract currentOrganizationUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
-    abstract findUserToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
+    abstract userToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
 
-    abstract findUserToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+    abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 }
 
 export abstract class IMutation {
@@ -268,6 +273,8 @@ export abstract class IMutation {
     abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
 
     abstract organizationInviteUser(input?: Nullable<OrganizationInviteUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract organizationRemoveUser(input?: Nullable<OrganizationRemoveUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 }
 
 export abstract class ISubscription {

@@ -21,8 +21,8 @@ export class UserToOrganizationsResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard)
-  @Query('findMyOrganizations')
-  async findMyOrganizations(
+  @Query('myOrganizations')
+  async myOrganizations(
     @CurrentUser() user: SignUserPayload,
   ): Promise<OrganizationDocument[]> {
     const record = await this.userToOrganizationsService.findAll({
@@ -32,8 +32,8 @@ export class UserToOrganizationsResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Query('findCurrentOrganization')
-  async findCurrentOrganization(
+  @Query('currentOrganization')
+  async currentOrganization(
     @CurrentUser() user: SignUserPayload,
   ): Promise<OrganizationDocument> {
     const record = await this.userToOrganizationsService.findOne({
@@ -43,9 +43,9 @@ export class UserToOrganizationsResolver {
     return record.organization;
   }
 
-  @Query('findCurrentOrganizationUsers')
   @UseGuards(GqlAuthGuard)
-  async findCurrentOrganizationUsers(
+  @Query('currentOrganizationUsers')
+  async currentOrganizationUsers(
     @CurrentUser() user: SignUserPayload,
   ): Promise<UserDocument[]> {
     const currentRecord = await this.userToOrganizationsService.findOne({
@@ -60,8 +60,8 @@ export class UserToOrganizationsResolver {
     return record.map((i) => i.user);
   }
 
-  @Query('findUserToOrganizations')
-  async findUserToOrganizations(
+  @Query('userToOrganizations')
+  async userToOrganizations(
     @Args('user') user: string,
     @Args('organization') organization: string,
   ): Promise<UserToOrganizationDocument[]> {
@@ -75,8 +75,8 @@ export class UserToOrganizationsResolver {
     return await this.userToOrganizationsService.findAll(params);
   }
 
-  @Query('findUserToOrganization')
-  async findUserToOrganization(
+  @Query('userToOrganization')
+  async userToOrganization(
     @Args('_id') _id: string,
   ): Promise<UserToOrganizationDocument> {
     return await this.userToOrganizationsService.findById(_id);
@@ -127,6 +127,46 @@ export class UserToOrganizationsResolver {
       ...input,
       isCurrent: !hasCurrentOrganization,
     });
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation('organizationRemoveUser')
+  async organizationRemoveUser(
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') input: CreateUserToOrganizationDto,
+  ): Promise<UserToOrganizationDocument> {
+    // 检查organization
+    const organization = await this.organizationsService.findById(
+      input.organization,
+    );
+    if (!organization) {
+      throw new Error('Organization not found');
+    }
+
+    // 检查user
+    const objuser = await this.userService.findById(input.user);
+    if (!objuser) {
+      throw new Error('User not found');
+    }
+
+    // 检查权限
+    if (organization.owner._id + '' !== user._id) {
+      throw new Error('Permission denied');
+    }
+
+    // 是否已经加入
+    const joinedCrganization = await this.userToOrganizationsService.findOne({
+      user: input.user,
+      organization: input.organization,
+    });
+
+    if (joinedCrganization) {
+      joinedCrganization.remove();
+
+      return joinedCrganization;
+    }
+
+    throw new Error('User Not Exist');
   }
 
   @UseGuards(GqlAuthGuard)
