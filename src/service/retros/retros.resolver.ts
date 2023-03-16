@@ -23,8 +23,13 @@ export class RetrosResolver {
 
   @Query('findRetros')
   @UseGuards(GqlAuthGuard)
-  async findRetros(@CurrentUser() user: SignUserPayload): Promise<Retro[]> {
-    return this.retrosService.findAll(user?._id);
+  async findRetros(
+    @CurrentUser() user: SignUserPayload,
+    @Args('page') page?: number,
+    @Args('pageSize') pageSize?: number,
+  ): Promise<Retro[]> {
+    console.log(user?._id);
+    return this.retrosService.findAll({ page, pageSize });
   }
 
   @Mutation('createRetro')

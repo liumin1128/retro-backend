@@ -208,7 +208,7 @@ export abstract class IQuery {
 
     abstract findRetroMessage(_id: string): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
-    abstract findRetros(): Nullable<Nullable<RetroListItem>[]> | Promise<Nullable<Nullable<RetroListItem>[]>>;
+    abstract findRetros(page?: Nullable<number>, pageSize?: Nullable<number>): Nullable<Nullable<RetroListItem>[]> | Promise<Nullable<Nullable<RetroListItem>[]>>;
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 

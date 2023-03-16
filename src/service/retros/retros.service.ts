@@ -29,7 +29,13 @@ export class RetrosService {
     return createdRetro;
   }
 
-  async findAll(user: string): Promise<any> {
+  async findAll({
+    page = 0,
+    pageSize = 10,
+  }: {
+    page?: number;
+    pageSize?: number;
+  }): Promise<any> {
     // 获取用户当前Organization
     // const record = await this.userToOrganizationsModel.findOne({
     //   user,
@@ -40,23 +46,29 @@ export class RetrosService {
     //   return [];
     // }
 
+    const skip = page === 0 ? 0 : (page - 1) * pageSize;
+
     // https://www.5axxw.com/questions/content/3l0r6i
     return this.retrosModel.aggregate([
       // 关联查询retromessage信息
 
-      {
-        $match: {
-          $expr: {
-            // $eq: ['$organization', record?.organization?._id],
-          },
-        },
-      },
+      // {
+      //   $match: {
+      //     $expr: {
+      //       // $eq: ['$organization', record?.organization?._id],
+      //     },
+      //   },
+      // },
 
       {
         $sort: {
           createdAt: -1,
         },
       },
+
+      { $skip: skip },
+
+      { $limit: pageSize },
 
       {
         $lookup: {

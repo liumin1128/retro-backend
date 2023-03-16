@@ -1,5 +1,5 @@
 type Query {
-  findRetros: [RetroListItem]
+  findRetros(page: Int, pageSize: Int): [RetroListItem]
   findRetro(_id: ID!): Retro
 }
 

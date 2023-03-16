@@ -9,6 +9,6 @@ export class RetrosController {
 
   @Get()
   async findAll(@CurrentUser() user: SignUserPayload): Promise<any> {
-    return this.retrosService.findAll(user?._id);
+    return this.retrosService.findAll({ pageSize: 10 });
   }
 }
