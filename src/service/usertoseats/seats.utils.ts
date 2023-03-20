@@ -1,0 +1,1 @@
+for usertoseat in usertoseat*; do mv "$usertoseat" "usertousertoseat${usertoseat#usertoseat}"; done

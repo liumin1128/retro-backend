@@ -1,0 +1,25 @@
+type Query {
+  findUsertoseats: [Usertoseat]
+  findUsertoseat(_id: ID!): Usertoseat
+}
+
+type Subscription {
+  usertoseatCreated: Usertoseat
+}
+
+type Usertoseat implements Document {
+  _id: ID! @upper
+  createdAt: String
+  updatedAt: String
+
+  owner: User!
+  name: String
+  description: String
+  logo: String
+}
+
+input CreateUsertoseatInput {
+  name: String!
+  description: String
+  logo: String
+}

@@ -120,6 +120,12 @@ export class CreateRetroInput {
     anonymous?: Nullable<boolean>;
 }
 
+export class CreateSeatInput {
+    name: string;
+    description?: Nullable<string>;
+    logo?: Nullable<string>;
+}
+
 export class CreateTopicInput {
     category?: Nullable<string>;
     name: string;
@@ -212,6 +218,10 @@ export abstract class IQuery {
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract findSeats(): Nullable<Nullable<Seat>[]> | Promise<Nullable<Nullable<Seat>[]>>;
+
+    abstract findSeat(_id: string): Nullable<Seat> | Promise<Nullable<Seat>>;
+
     abstract findTopics(): Nullable<Nullable<Topic>[]> | Promise<Nullable<Nullable<Topic>[]>>;
 
     abstract findTopic(_id: string): Nullable<Topic> | Promise<Nullable<Topic>>;
@@ -303,6 +313,8 @@ export abstract class ISubscription {
     abstract retroMessageLiked(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
+
+    abstract seatCreated(): Nullable<Seat> | Promise<Nullable<Seat>>;
 
     abstract topicCreated(): Nullable<Topic> | Promise<Nullable<Topic>>;
 
@@ -451,6 +463,16 @@ export class RetroListItem implements Document {
     unhappyCount?: Nullable<number>;
     wonderringCount?: Nullable<number>;
     todoCount?: Nullable<number>;
+}
+
+export class Seat implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    owner: User;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    logo?: Nullable<string>;
 }
 
 export class Topic implements Document {
