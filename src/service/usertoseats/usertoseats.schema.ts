@@ -9,23 +9,11 @@ export class UserToSeat {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: mongoose.Types.ObjectId;
 
-  @Prop({
-    // required: true,
-    enum: ['Game', 'Pet', 'Digital', 'Peripherals', 'Other'],
-  })
-  category: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' })
+  seat: mongoose.Types.ObjectId;
 
   @Prop()
-  name: string;
-
-  @Prop()
-  description: string;
-
-  @Prop()
-  cover: string;
-
-  @Prop()
-  icon: string;
+  cancel: boolean;
 }
 
 const UserToSeatSchema = SchemaFactory.createForClass(UserToSeat);

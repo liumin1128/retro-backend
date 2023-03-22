@@ -1,7 +1,7 @@
 export class CreateSeatDto {
-  readonly user: string;
-  readonly category: string;
+  readonly id: string;
   readonly name: string;
+  readonly description: string;
   readonly icon: string;
   readonly cover: string;
 }

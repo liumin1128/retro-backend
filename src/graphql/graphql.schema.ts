@@ -121,8 +121,9 @@ export class CreateRetroInput {
 }
 
 export class CreateSeatInput {
-    category?: Nullable<string>;
-    name: string;
+    id: string;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
     cover?: Nullable<string>;
     icon?: Nullable<string>;
 }
@@ -169,10 +170,8 @@ export class OrganizationRemoveUserInput {
 }
 
 export class CreateUserToSeatInput {
-    category?: Nullable<string>;
-    name: string;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
+    seat?: Nullable<string>;
+    cancel?: Nullable<boolean>;
 }
 
 export interface Document {
@@ -487,9 +486,9 @@ export class Seat implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
-    user?: Nullable<User>;
-    category?: Nullable<string>;
+    id: string;
     name?: Nullable<string>;
+    description?: Nullable<string>;
     cover?: Nullable<string>;
     icon?: Nullable<string>;
 }
@@ -537,10 +536,8 @@ export class UserToSeat implements Document {
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
     user?: Nullable<User>;
-    category?: Nullable<string>;
-    name?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
+    seat?: Nullable<Seat>;
+    cancel?: Nullable<boolean>;
 }
 
 export type CommentObjectUnion = News | Comment | RetroMessage;

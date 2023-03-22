@@ -6,14 +6,8 @@ import * as mongooseDelete from 'mongoose-delete';
 
 @Schema({ timestamps: true })
 export class Seat {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: mongoose.Types.ObjectId;
-
-  @Prop({
-    // required: true,
-    enum: ['Game', 'Pet', 'Digital', 'Peripherals', 'Other'],
-  })
-  category: string;
+  @Prop()
+  id: string;
 
   @Prop()
   name: string;

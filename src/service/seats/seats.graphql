@@ -15,16 +15,18 @@ type Seat implements Document {
   _id: ID! @upper
   createdAt: String
   updatedAt: String
-  user: User
-  category: String
+
+  id: ID!
   name: String
+  description: String
   cover: String
   icon: String
 }
 
 input CreateSeatInput {
-  category: String
-  name: String!
+  id: ID!
+  name: String
+  description: String
   cover: String
   icon: String
 }
