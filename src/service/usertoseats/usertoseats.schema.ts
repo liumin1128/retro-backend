@@ -2,30 +2,39 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
-import { UserDocument } from '@/service/users/schemas/users.schema';
+// import * as mongooseAutopopulate from 'mongoose-autopopulate';
 
 @Schema({ timestamps: true })
-export class Usertoseat {
+export class UserToSeat {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  owner: UserDocument;
+  user: mongoose.Types.ObjectId;
 
-  @Prop({ required: true, unique: true })
+  @Prop({
+    // required: true,
+    enum: ['Game', 'Pet', 'Digital', 'Peripherals', 'Other'],
+  })
+  category: string;
+
+  @Prop()
   name: string;
 
   @Prop()
   description: string;
 
   @Prop()
-  logo: string;
+  cover: string;
+
+  @Prop()
+  icon: string;
 }
 
-const UsertoseatSchema = SchemaFactory.createForClass(Usertoseat);
+const UserToSeatSchema = SchemaFactory.createForClass(UserToSeat);
 
 // https://stackoverflow.com/questions/49387454/mongoose-plugins-nestjs
-UsertoseatSchema.plugin(mongoosePaginate);
-UsertoseatSchema.plugin(mongooseDelete);
-// UsertoseatSchema.plugin(mongooseAutopopulate);
+UserToSeatSchema.plugin(mongoosePaginate);
+UserToSeatSchema.plugin(mongooseDelete);
+// UserToSeatSchema.plugin(mongooseAutopopulate);
 
-type UsertoseatDocument = Usertoseat & mongoose.Document;
+type UserToSeatDocument = UserToSeat & mongoose.Document;
 
-export { UsertoseatSchema, UsertoseatDocument };
+export { UserToSeatSchema, UserToSeatDocument };

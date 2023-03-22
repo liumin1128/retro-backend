@@ -121,9 +121,10 @@ export class CreateRetroInput {
 }
 
 export class CreateSeatInput {
+    category?: Nullable<string>;
     name: string;
-    description?: Nullable<string>;
-    logo?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class CreateTopicInput {
@@ -165,6 +166,13 @@ export class OrganizationInviteUserInput {
 export class OrganizationRemoveUserInput {
     user: string;
     organization: string;
+}
+
+export class CreateUserToSeatInput {
+    category?: Nullable<string>;
+    name: string;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export interface Document {
@@ -243,6 +251,10 @@ export abstract class IQuery {
     abstract userToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
 
     abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract findUserToSeats(): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
+
+    abstract findUserToSeat(_id: string): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export abstract class IMutation {
@@ -274,6 +286,8 @@ export abstract class IMutation {
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract createSeat(input?: Nullable<CreateSeatInput>): Nullable<Seat> | Promise<Nullable<Seat>>;
+
     abstract createTopic(input?: Nullable<CreateTopicInput>): Nullable<Topic> | Promise<Nullable<Topic>>;
 
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
@@ -285,6 +299,8 @@ export abstract class IMutation {
     abstract organizationInviteUser(input?: Nullable<OrganizationInviteUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
     abstract organizationRemoveUser(input?: Nullable<OrganizationRemoveUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract createUserToSeat(input?: Nullable<CreateUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export abstract class ISubscription {
@@ -319,6 +335,8 @@ export abstract class ISubscription {
     abstract topicCreated(): Nullable<Topic> | Promise<Nullable<Topic>>;
 
     abstract userToOrganizationCreated(): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract userToSeatCreated(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export class Comment implements Document {
@@ -469,10 +487,11 @@ export class Seat implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
-    owner: User;
+    user?: Nullable<User>;
+    category?: Nullable<string>;
     name?: Nullable<string>;
-    description?: Nullable<string>;
-    logo?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class Topic implements Document {
@@ -511,6 +530,17 @@ export class UserToOrganization implements Document {
     isCurrent?: Nullable<boolean>;
     user: User;
     organization: Organization;
+}
+
+export class UserToSeat implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    user?: Nullable<User>;
+    category?: Nullable<string>;
+    name?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export type CommentObjectUnion = News | Comment | RetroMessage;

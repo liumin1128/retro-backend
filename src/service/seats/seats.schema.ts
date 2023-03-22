@@ -2,21 +2,30 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
-import { UserDocument } from '@/service/users/schemas/users.schema';
+// import * as mongooseAutopopulate from 'mongoose-autopopulate';
 
 @Schema({ timestamps: true })
 export class Seat {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  owner: UserDocument;
+  user: mongoose.Types.ObjectId;
 
-  @Prop({ required: true, unique: true })
+  @Prop({
+    // required: true,
+    enum: ['Game', 'Pet', 'Digital', 'Peripherals', 'Other'],
+  })
+  category: string;
+
+  @Prop()
   name: string;
 
   @Prop()
   description: string;
 
   @Prop()
-  logo: string;
+  cover: string;
+
+  @Prop()
+  icon: string;
 }
 
 const SeatSchema = SchemaFactory.createForClass(Seat);

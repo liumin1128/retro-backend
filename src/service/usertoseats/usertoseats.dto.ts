@@ -1,6 +1,7 @@
-export class CreateUsertoseatDto {
-  readonly owner: string;
+export class CreateUserToSeatDto {
+  readonly user: string;
+  readonly category: string;
   readonly name: string;
   readonly icon: string;
-  readonly description: string;
+  readonly cover: string;
 }

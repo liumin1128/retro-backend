@@ -11,6 +11,8 @@ import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
 import { OrganizationsModule } from '@/service/organizations/organizations.module';
 import { UserToOrganizationModule } from '@/service/usertoorganizations/usertoorganizations.module';
+import { SeatsModule } from '@/service/seats/seats.module';
+import { UserToSeatsModule } from '@/service/usertoseats/usertoseats.module';
 
 export default [
   CommonModule,
@@ -26,4 +28,6 @@ export default [
   RetroMessagesModule,
   OrganizationsModule,
   UserToOrganizationModule,
+  SeatsModule,
+  UserToSeatsModule,
 ];

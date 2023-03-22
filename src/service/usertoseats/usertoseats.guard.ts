@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
-export class UsertoseatsGuard implements CanActivate {
+export class UserToSeatsGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context);
     return true;

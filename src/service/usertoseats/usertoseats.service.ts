@@ -1,32 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUsertoseatDto } from './usertoseats.dto';
-import { Usertoseat, UsertoseatDocument } from './usertoseats.schema';
+import { CreateUserToSeatDto } from './userToSeats.dto';
+import { UserToSeat, UserToSeatDocument } from './userToSeats.schema';
 
 @Injectable()
-export class UsertoseatsService {
+export class UserToSeatsService {
   constructor(
-    @InjectModel(Usertoseat.name)
-    private readonly usertoseatsModel: Model<UsertoseatDocument>,
+    @InjectModel(UserToSeat.name)
+    private readonly userToSeatsModel: Model<UserToSeatDocument>,
   ) {}
   async create(
-    createUsertoseatDto: CreateUsertoseatDto,
-  ): Promise<UsertoseatDocument> {
-    const createdUsertoseat = new this.usertoseatsModel(createUsertoseatDto);
-    await createdUsertoseat.save();
-    return createdUsertoseat;
+    createUserToSeatDto: CreateUserToSeatDto,
+  ): Promise<UserToSeatDocument> {
+    const createdUserToSeat = new this.userToSeatsModel(createUserToSeatDto);
+    await createdUserToSeat.save();
+    return createdUserToSeat;
   }
 
-  async findAll(): Promise<UsertoseatDocument[]> {
-    return this.usertoseatsModel.find().populate('owner');
+  async findAll(): Promise<UserToSeatDocument[]> {
+    return this.userToSeatsModel.find();
   }
 
-  async findOne(params: Record<string, unknown>): Promise<UsertoseatDocument> {
-    return this.usertoseatsModel.findOne(params).populate('owner');
+  async findOne(user: string, object: string): Promise<UserToSeatDocument> {
+    return this.userToSeatsModel.findOne({ user, object });
   }
 
-  async findById(_id: string): Promise<UsertoseatDocument> {
-    return this.usertoseatsModel.findById(_id);
+  async findById(_id: string): Promise<UserToSeatDocument> {
+    return this.userToSeatsModel.findById(_id);
   }
 }

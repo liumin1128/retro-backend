@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { UsertoseatsService } from './usertoseats.service';
+import { UserToSeatsService } from './userToSeats.service';
 
-@Controller('usertoseats')
-export class UsertoseatsController {
-  constructor(private readonly usertoseatsService: UsertoseatsService) {}
+@Controller('userToSeats')
+export class UserToSeatsController {
+  constructor(private readonly userToSeatsService: UserToSeatsService) {}
 
   @Get()
   async findAll(): Promise<any> {
-    return this.usertoseatsService.findAll();
+    return this.userToSeatsService.findAll();
   }
 }

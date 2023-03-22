@@ -17,11 +17,11 @@ export class SeatsService {
   }
 
   async findAll(): Promise<SeatDocument[]> {
-    return this.seatsModel.find().populate('owner');
+    return this.seatsModel.find();
   }
 
-  async findOne(params: Record<string, unknown>): Promise<SeatDocument> {
-    return this.seatsModel.findOne(params).populate('owner');
+  async findOne(user: string, object: string): Promise<SeatDocument> {
+    return this.seatsModel.findOne({ user, object });
   }
 
   async findById(_id: string): Promise<SeatDocument> {

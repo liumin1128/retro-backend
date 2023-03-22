@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsertoseatsService } from './usertoseats.service';
-import { UsertoseatsResolver } from './usertoseats.resolver';
-import { Usertoseat, UsertoseatSchema } from './usertoseats.schema';
-import { UsertoseatsController } from './usertoseats.controller';
+import { UserToSeatsService } from './userToSeats.service';
+import { UserToSeatsResolver } from './userToSeats.resolver';
+import { UserToSeat, UserToSeatSchema } from './userToSeats.schema';
+import { UserToSeatsController } from './userToSeats.controller';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Usertoseat.name, schema: UsertoseatSchema },
+      { name: UserToSeat.name, schema: UserToSeatSchema },
     ]),
   ],
-  providers: [UsertoseatsService, UsertoseatsResolver],
-  exports: [UsertoseatsService],
-  controllers: [UsertoseatsController],
+  providers: [UserToSeatsService, UserToSeatsResolver],
+  exports: [UserToSeatsService],
+  controllers: [UserToSeatsController],
 })
-export class UsertoseatsModule {}
+export class UserToSeatsModule {}
