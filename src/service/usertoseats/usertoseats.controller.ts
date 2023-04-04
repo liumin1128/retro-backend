@@ -7,6 +7,6 @@ export class UserToSeatsController {
 
   @Get()
   async findAll(): Promise<any> {
-    return this.userToSeatsService.findAll();
+    return this.userToSeatsService.findAll({});
   }
 }

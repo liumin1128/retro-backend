@@ -8,3 +8,12 @@ export const randomString = (len = 32) => {
   }
   return pwd;
 };
+
+export function removeEmptyValue(obj) {
+  for (const key in obj) {
+    if (obj[key] === null || obj[key] === undefined || obj[key] === '') {
+      delete obj[key];
+    }
+  }
+  return obj;
+}

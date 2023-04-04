@@ -13,7 +13,7 @@ export class UserToSeat {
   seat: mongoose.Types.ObjectId;
 
   @Prop()
-  cancel: boolean;
+  date: string;
 }
 
 const UserToSeatSchema = SchemaFactory.createForClass(UserToSeat);

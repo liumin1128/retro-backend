@@ -18,15 +18,26 @@ export class UserToSeatsService {
     return createdUserToSeat;
   }
 
-  async findAll(): Promise<UserToSeatDocument[]> {
-    return this.userToSeatsModel.find();
+  async findAll(query: {
+    date?: string;
+    seat?: string;
+    user?: string;
+  }): Promise<UserToSeatDocument[]> {
+    return this.userToSeatsModel.find(query).populate('user');
   }
 
-  async findOne(user: string, object: string): Promise<UserToSeatDocument> {
-    return this.userToSeatsModel.findOne({ user, object });
+  async findOne(query): Promise<UserToSeatDocument> {
+    return this.userToSeatsModel.findOne(query);
   }
 
   async findById(_id: string): Promise<UserToSeatDocument> {
     return this.userToSeatsModel.findById(_id);
+  }
+
+  async delete(_id: string): Promise<UserToSeatDocument> {
+    const obj = await this.userToSeatsModel.findById(_id).populate('user');
+    if (!obj) return;
+    await this.userToSeatsModel.deleteOne({ _id });
+    return obj;
   }
 }

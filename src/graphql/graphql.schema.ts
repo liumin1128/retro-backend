@@ -171,7 +171,12 @@ export class OrganizationRemoveUserInput {
 
 export class CreateUserToSeatInput {
     seat?: Nullable<string>;
-    cancel?: Nullable<boolean>;
+    date?: Nullable<string>;
+}
+
+export class DeleteUserToSeatInput {
+    seat?: Nullable<string>;
+    date?: Nullable<string>;
 }
 
 export interface Document {
@@ -251,7 +256,7 @@ export abstract class IQuery {
 
     abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
-    abstract findUserToSeats(): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
+    abstract findUserToSeats(date?: Nullable<string>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
 
     abstract findUserToSeat(_id: string): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
@@ -300,6 +305,8 @@ export abstract class IMutation {
     abstract organizationRemoveUser(input?: Nullable<OrganizationRemoveUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
     abstract createUserToSeat(input?: Nullable<CreateUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+
+    abstract deleteUserToSeat(input?: Nullable<DeleteUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export abstract class ISubscription {
@@ -336,6 +343,8 @@ export abstract class ISubscription {
     abstract userToOrganizationCreated(): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
     abstract userToSeatCreated(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+
+    abstract userToSeatDeleted(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export class Comment implements Document {
@@ -537,6 +546,7 @@ export class UserToSeat implements Document {
     updatedAt?: Nullable<string>;
     user?: Nullable<User>;
     seat?: Nullable<Seat>;
+    date?: Nullable<string>;
     cancel?: Nullable<boolean>;
 }
 

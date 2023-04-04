@@ -1,14 +1,16 @@
 type Query {
-  findUserToSeats: [UserToSeat]
+  findUserToSeats(date: String, seat: ID, user: ID): [UserToSeat]
   findUserToSeat(_id: ID!): UserToSeat
 }
 
 type Mutation {
   createUserToSeat(input: CreateUserToSeatInput): UserToSeat
+  deleteUserToSeat(input: DeleteUserToSeatInput): UserToSeat
 }
 
 type Subscription {
   userToSeatCreated: UserToSeat
+  userToSeatDeleted: UserToSeat
 }
 
 type UserToSeat implements Document {
@@ -18,10 +20,16 @@ type UserToSeat implements Document {
 
   user: User
   seat: Seat
+  date: String
   cancel: Boolean
 }
 
 input CreateUserToSeatInput {
   seat: ID
-  cancel: Boolean
+  date: String
+}
+
+input DeleteUserToSeatInput {
+  seat: ID
+  date: String
 }
