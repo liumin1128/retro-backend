@@ -6,9 +6,9 @@ import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { ApolloError } from 'apollo-server';
 import { removeEmptyValue } from '@/utils/common';
-import { UserToSeatDocument as UserToSeat } from './userToSeats.schema';
-import { UserToSeatsService } from './userToSeats.service';
-import { CreateUserToSeatDto, DeleteUserToSeatDto } from './userToSeats.dto';
+import { UserToSeatDocument as UserToSeat } from './usertoseats.schema';
+import { UserToSeatsService } from './usertoseats.service';
+import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
 
 const pubSub = new PubSub();

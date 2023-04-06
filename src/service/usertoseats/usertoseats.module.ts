@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserToSeatsService } from './userToSeats.service';
-import { UserToSeatsResolver } from './userToSeats.resolver';
-import { UserToSeat, UserToSeatSchema } from './userToSeats.schema';
-import { UserToSeatsController } from './userToSeats.controller';
+import { UserToSeatsService } from './usertoseats.service';
+import { UserToSeatsResolver } from './usertoseats.resolver';
+import { UserToSeat, UserToSeatSchema } from './usertoseats.schema';
+import { UserToSeatsController } from './usertoseats.controller';
 import { SeatsModule } from '../seats/seats.module';
 
 @Module({
