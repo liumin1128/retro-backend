@@ -4,6 +4,18 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { AppModule } from './app.module';
 
+const allowlist = ['https://react.mobi', 'http://localhost:3102'];
+
+const corsOptionsDelegate = function (req, callback) {
+  let corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(
@@ -25,7 +37,7 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  app.enableCors(corsOptionsDelegate);
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
