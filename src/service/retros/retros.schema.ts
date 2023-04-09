@@ -2,9 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
 import * as mongooseDelete from 'mongoose-delete';
-// import * as mongooseAutopopulate from 'mongoose-autopopulate';
 import { UserDocument } from '@/service/users/schemas/users.schema';
-import { OrganizationDocument } from '@/service/organizations/organizations.schema';
 
 @Schema({ timestamps: true })
 export class Retro {
@@ -14,13 +12,6 @@ export class Retro {
     required: true,
   })
   user: UserDocument;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Organization',
-    required: true,
-  })
-  organization: OrganizationDocument;
 
   @Prop()
   content: string;
