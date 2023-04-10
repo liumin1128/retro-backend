@@ -6,6 +6,7 @@ import { SignUserPayload } from '@/service/auth/auth.service';
 import { RetroDocument as Retro } from './retros.schema';
 import { RetrosService } from './retros.service';
 import { CreateRetroDto } from './retros.dto';
+import { removeEmptyValue } from '@/utils/common';
 
 const pubSub = new PubSub();
 
@@ -27,8 +28,8 @@ export class RetrosResolver {
     @Args('page') page?: number,
     @Args('pageSize') pageSize?: number,
   ): Promise<Retro[]> {
-    console.log(user?._id);
-    return this.retrosService.findAll({ page, pageSize });
+    const query = removeEmptyValue({ page, pageSize, user: user._id });
+    return this.retrosService.findAll(query);
   }
 
   @Mutation('createRetro')

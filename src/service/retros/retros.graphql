@@ -31,7 +31,7 @@ type RetroListItem implements Document {
   date: String
   user: User
   anonymous: Boolean
-  likeCount: Int,
+  likeCount: Int
   happyCount: Int
   unhappyCount: Int
   wonderringCount: Int
