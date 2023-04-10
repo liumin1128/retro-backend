@@ -39,7 +39,7 @@ export class RetrosService {
     // https://www.5axxw.com/questions/content/3l0r6i
     return this.retrosModel.aggregate([
       // 关联查询retromessage信息
-      { $match: { $expr: { $eq: ['$user', new Types.ObjectId(user)] } } },
+      // { $match: { $expr: { $eq: ['$user', new Types.ObjectId(user)] } } },
 
       {
         $sort: {
