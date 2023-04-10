@@ -9,7 +9,11 @@ export class QiniuService {
   private expires = parseInt(process.env.QINIU_EXPIRES_TIME, 10);
   private domain = process.env.QINIU_BUCKET_DOMAIN;
   private mac = new qiniu.auth.digest.Mac(this.accessKey, this.secretKey);
-  private options = { scope: this.bucket, expires: this.expires };
+  private options = {
+    scope: this.bucket,
+    expires: this.expires,
+    saveKey: '$(etag).$(ext)',
+  };
   private config = new qiniu.conf.Config();
   private putPolicy = new qiniu.rs.PutPolicy(this.options);
   private bucketManager = new qiniu.rs.BucketManager(this.mac, this.config);
