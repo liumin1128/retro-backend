@@ -12,7 +12,7 @@ export class QiniuService {
   private options = {
     scope: this.bucket,
     expires: this.expires,
-    saveKey: '$(etag).$(ext)',
+    saveKey: '$(etag)$(ext)',
   };
   private config = new qiniu.conf.Config();
   private putPolicy = new qiniu.rs.PutPolicy(this.options);
