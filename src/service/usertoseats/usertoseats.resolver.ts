@@ -21,6 +21,7 @@ export class UserToSeatsResolver {
     private readonly seatService: SeatsService,
   ) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query('findUserToSeats')
   async findUserToSeats(
     @Args('startDate') startDate: number,
@@ -44,6 +45,7 @@ export class UserToSeatsResolver {
     return data;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query('findUserToSeat')
   async findUserToSeat(@Args('_id') _id: string): Promise<UserToSeat> {
     return await this.userToSeatsService.findById(_id);
