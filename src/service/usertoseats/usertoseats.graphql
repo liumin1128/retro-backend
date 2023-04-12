@@ -1,5 +1,10 @@
 type Query {
-  findUserToSeats(date: String, seat: ID, user: ID): [UserToSeat]
+  findUserToSeats(
+    startDate: Float
+    endDate: Float
+    seat: ID
+    user: ID
+  ): [UserToSeat]
   findUserToSeat(_id: ID!): UserToSeat
 }
 
@@ -20,16 +25,16 @@ type UserToSeat implements Document {
 
   user: User
   seat: Seat
-  date: String
+  date: Float
   cancel: Boolean
 }
 
 input CreateUserToSeatInput {
   seat: ID
-  date: String
+  date: Float
 }
 
 input DeleteUserToSeatInput {
   seat: ID
-  date: String
+  date: Float
 }

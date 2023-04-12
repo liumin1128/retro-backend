@@ -171,12 +171,12 @@ export class OrganizationRemoveUserInput {
 
 export class CreateUserToSeatInput {
     seat?: Nullable<string>;
-    date?: Nullable<string>;
+    date?: Nullable<number>;
 }
 
 export class DeleteUserToSeatInput {
     seat?: Nullable<string>;
-    date?: Nullable<string>;
+    date?: Nullable<number>;
 }
 
 export interface Document {
@@ -256,7 +256,7 @@ export abstract class IQuery {
 
     abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
-    abstract findUserToSeats(date?: Nullable<string>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
+    abstract findUserToSeats(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
 
     abstract findUserToSeat(_id: string): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
@@ -546,7 +546,7 @@ export class UserToSeat implements Document {
     updatedAt?: Nullable<string>;
     user?: Nullable<User>;
     seat?: Nullable<Seat>;
-    date?: Nullable<string>;
+    date?: Nullable<number>;
     cancel?: Nullable<boolean>;
 }
 

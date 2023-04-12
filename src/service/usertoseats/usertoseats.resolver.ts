@@ -1,4 +1,5 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
+import * as dayjs from 'dayjs';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
@@ -22,19 +23,30 @@ export class UserToSeatsResolver {
 
   @Query('findUserToSeats')
   async findUserToSeats(
-    @Args('date') date: string,
+    @Args('startDate') startDate: number,
+    @Args('endDate') endDate: number,
     @Args('seat') seat: string,
     @Args('user') user: string,
   ): Promise<UserToSeat[]> {
-    const query = removeEmptyValue({ date, seat, user });
+    const start = startDate;
+    const end = endDate || startDate;
+
+    const query = removeEmptyValue({
+      $and: [
+        { date: { $gte: start } },
+        { date: { $lte: dayjs(end).endOf('day') }.valueOf() },
+      ],
+      seat,
+      user,
+    });
+
     const data = await this.userToSeatsService.findAll(query);
     return data;
   }
 
   @Query('findUserToSeat')
   async findUserToSeat(@Args('_id') _id: string): Promise<UserToSeat> {
-    const data = await this.userToSeatsService.findById(_id);
-    return data;
+    return await this.userToSeatsService.findById(_id);
   }
 
   @UseGuards(GqlAuthGuard)
