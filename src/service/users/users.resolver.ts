@@ -6,6 +6,7 @@ import { SignUserPayload } from '@/service/auth/auth.service';
 import { CurrentUser, GqlAuthGuard } from '@/service/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import CreateUserDto from './dto/create.dto';
+import UpdateUserInfoDto from './dto/update.dto';
 import RegisterUserDto from './dto/register.dto';
 import LoginUserDto from './dto/login.dto';
 
@@ -54,5 +55,15 @@ export class UsersResolver {
   @Mutation('createUser')
   async create(@Args('createUsersInput') args: CreateUserDto): Promise<User> {
     return this.usersService.create(args);
+  }
+
+  @Mutation('updateUserInfo')
+  @UseGuards(GqlAuthGuard)
+  async updateUserInfo(
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') args: UpdateUserInfoDto,
+  ): Promise<User> {
+    console.log(user._id);
+    return this.usersService.findByIdAndUpdate(user._id, args);
   }
 }

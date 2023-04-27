@@ -159,6 +159,17 @@ export class LoginUserInput {
     password?: Nullable<string>;
 }
 
+export class UpdateUserInfoInput {
+    avatarUrl?: Nullable<string>;
+    nickname?: Nullable<string>;
+    phoneNumber?: Nullable<string>;
+    sign?: Nullable<string>;
+    sex?: Nullable<number>;
+    birthday?: Nullable<string>;
+    position?: Nullable<string>;
+    company?: Nullable<string>;
+}
+
 export class OrganizationInviteUserInput {
     user: string;
     organization: string;
@@ -297,6 +308,8 @@ export abstract class IMutation {
     abstract createUser(createUserInput?: Nullable<CreateUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUserInfo(input?: Nullable<UpdateUserInfoInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
 

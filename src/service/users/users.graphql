@@ -13,6 +13,7 @@ type UserWithToken {
 type Mutation {
   createUser(createUserInput: CreateUserInput): User
   register(input: RegisterUserInput): User
+  updateUserInfo(input: UpdateUserInfoInput): User
 }
 
 type User {
@@ -50,4 +51,15 @@ input LoginUserInput {
   phoneNumber: String
   username: String
   password: String
+}
+
+input UpdateUserInfoInput {
+  avatarUrl: String
+  nickname: String
+  phoneNumber: String
+  sign: String
+  sex: Int
+  birthday: String
+  position: String
+  company: String
 }

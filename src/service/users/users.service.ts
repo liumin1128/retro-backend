@@ -7,6 +7,7 @@ import { AuthService } from '@/service/auth/auth.service';
 import CreateUserDto from './dto/create.dto';
 import LoginUserDto from './dto/login.dto';
 import RegisterUserDto from './dto/register.dto';
+import UpdateUserInfoDto from './dto/update.dto';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -66,5 +67,16 @@ export class UsersService {
 
   async updateOne(...args: any[]): Promise<any> {
     return this.userModel.updateOne(...args);
+  }
+
+  async findByIdAndUpdate(
+    _id: string,
+    updateUserOAuthDto: UpdateUserInfoDto,
+  ): Promise<UserDocument> {
+    console.log('_id', _id);
+    console.log('updateUserOAuthDto', updateUserOAuthDto);
+    return this.userModel.findByIdAndUpdate(_id, updateUserOAuthDto, {
+      new: true,
+    });
   }
 }
