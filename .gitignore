@@ -40,4 +40,4 @@ lerna-debug.log*
 #db
 /mongodb
 
-./deploy.sh
+deploy.sh
