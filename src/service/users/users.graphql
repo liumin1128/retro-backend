@@ -18,6 +18,8 @@ type Mutation {
 
 type User {
   _id: ID!
+  createdAt: String
+  updatedAt: String
   username: String
   nickname: String
   phoneNumber: String

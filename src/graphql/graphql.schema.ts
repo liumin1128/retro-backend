@@ -533,6 +533,8 @@ export class UserWithToken {
 
 export class User {
     _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
     username?: Nullable<string>;
     nickname?: Nullable<string>;
     phoneNumber?: Nullable<string>;
