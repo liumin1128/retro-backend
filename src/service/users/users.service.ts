@@ -71,11 +71,9 @@ export class UsersService {
 
   async findByIdAndUpdate(
     _id: string,
-    updateUserOAuthDto: UpdateUserInfoDto,
+    input: UpdateUserInfoDto,
   ): Promise<UserDocument> {
-    console.log('_id', _id);
-    console.log('updateUserOAuthDto', updateUserOAuthDto);
-    return this.userModel.findByIdAndUpdate(_id, updateUserOAuthDto, {
+    return this.userModel.findByIdAndUpdate(_id, input, {
       new: true,
     });
   }

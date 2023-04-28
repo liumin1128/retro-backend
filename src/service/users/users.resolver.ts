@@ -63,7 +63,6 @@ export class UsersResolver {
     @CurrentUser() user: SignUserPayload,
     @Args('input') args: UpdateUserInfoDto,
   ): Promise<User> {
-    console.log(user._id);
     return this.usersService.findByIdAndUpdate(user._id, args);
   }
 }
