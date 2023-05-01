@@ -17,3 +17,25 @@ export function removeEmptyValue(obj) {
   }
   return obj;
 }
+
+export function parseQueryString(url) {
+  const queryString = url.split('?')[1];
+  const pairs = queryString.split('&');
+  const result = {};
+  pairs.forEach((pair) => {
+    const keyValue = pair.split('=');
+    result[keyValue[0]] = decodeURIComponent(keyValue[1] || '');
+  });
+  return result;
+}
+
+export function serializeObjectToQueryString(obj) {
+  const queryString = Object.entries(obj)
+    .map(([key, value]) => {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(
+        value as string,
+      )}`;
+    })
+    .join('&');
+  return queryString;
+}

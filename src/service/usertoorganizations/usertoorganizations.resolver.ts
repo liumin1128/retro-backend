@@ -161,7 +161,8 @@ export class UserToOrganizationsResolver {
     });
 
     if (joinedCrganization) {
-      joinedCrganization.remove();
+      // joinedCrganization.remove();
+      joinedCrganization.deleteOne();
 
       return joinedCrganization;
     }

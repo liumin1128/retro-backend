@@ -27,7 +27,6 @@ import { AppService } from './app.service';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      debug: true,
       playground: true,
       typePaths: ['./src/**/*.graphql'],
       definitions: {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { stringify } from 'query-string';
 import { map } from 'rxjs/operators';
 import { QiniuService } from '@/utils/qiniu/qiniu.service';
+import { serializeObjectToQueryString } from '@/utils/common';
 
 interface getNewsListParams {
   keyword: string;
@@ -139,7 +139,7 @@ export class IDataService {
       // sourceRegion: '中国',
     };
 
-    const api = `http://api01.idataapi.cn:8000/article/idataapi?${stringify(
+    const api = `http://api01.idataapi.cn:8000/article/idataapi?${serializeObjectToQueryString(
       params,
     )}`;
 
