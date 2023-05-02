@@ -39,6 +39,7 @@ import { AppService } from './app.service';
       },
       cache: 'bounded',
       persistedQueries: false,
+      allowBatchedHttpRequests: true,
     }),
 
     ...serviceModules,
