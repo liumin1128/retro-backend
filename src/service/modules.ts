@@ -13,6 +13,8 @@ import { OrganizationsModule } from '@/service/organizations/organizations.modul
 import { UserToOrganizationModule } from '@/service/usertoorganizations/usertoorganizations.module';
 import { SeatsModule } from '@/service/seats/seats.module';
 import { UserToSeatsModule } from '@/service/usertoseats/usertoseats.module';
+import { RolesModule } from '@/service/roles/roles.module';
+import { UserToRolesModule } from '@/service/usertoroles/usertoroles.module';
 
 export default [
   CommonModule,
@@ -30,4 +32,6 @@ export default [
   UserToOrganizationModule,
   SeatsModule,
   UserToSeatsModule,
+  RolesModule,
+  UserToRolesModule,
 ];

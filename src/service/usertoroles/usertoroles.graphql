@@ -1,0 +1,32 @@
+type Query {
+  findUserToRoles: [UserToRole]
+  findUserToRole(_id: ID!): UserToRole
+}
+
+type Mutation {
+  createUserToRole(input: CreateUserToRoleInput): UserToRole
+}
+
+type Subscription {
+  userToRoleCreated: UserToRole
+}
+
+type UserToRole implements Document {
+  _id: ID! @upper
+  createdAt: String
+  updatedAt: String
+
+  id: ID!
+  name: String
+  description: String
+  cover: String
+  icon: String
+}
+
+input CreateUserToRoleInput {
+  id: ID!
+  name: String
+  description: String
+  cover: String
+  icon: String
+}

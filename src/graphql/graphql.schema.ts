@@ -120,6 +120,14 @@ export class CreateRetroInput {
     anonymous?: Nullable<boolean>;
 }
 
+export class CreateRoleInput {
+    id: string;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
 export class CreateSeatInput {
     id: string;
     name?: Nullable<string>;
@@ -178,6 +186,14 @@ export class OrganizationInviteUserInput {
 export class OrganizationRemoveUserInput {
     user: string;
     organization: string;
+}
+
+export class CreateUserToRoleInput {
+    id: string;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class CreateUserToSeatInput {
@@ -241,6 +257,10 @@ export abstract class IQuery {
 
     abstract findRetro(_id: string): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract findRoles(): Nullable<Nullable<UserRole>[]> | Promise<Nullable<Nullable<UserRole>[]>>;
+
+    abstract findRole(_id: string): Nullable<UserRole> | Promise<Nullable<UserRole>>;
+
     abstract findSeats(): Nullable<Nullable<Seat>[]> | Promise<Nullable<Nullable<Seat>[]>>;
 
     abstract findSeat(_id: string): Nullable<Seat> | Promise<Nullable<Seat>>;
@@ -266,6 +286,10 @@ export abstract class IQuery {
     abstract userToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
 
     abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract findUserToRoles(): Nullable<Nullable<UserToRole>[]> | Promise<Nullable<Nullable<UserToRole>[]>>;
+
+    abstract findUserToRole(_id: string): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
     abstract findUserToSeats(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
 
@@ -301,6 +325,8 @@ export abstract class IMutation {
 
     abstract createRetro(input?: Nullable<CreateRetroInput>): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract createRole(input?: Nullable<CreateRoleInput>): Nullable<UserRole> | Promise<Nullable<UserRole>>;
+
     abstract createSeat(input?: Nullable<CreateSeatInput>): Nullable<Seat> | Promise<Nullable<Seat>>;
 
     abstract createTopic(input?: Nullable<CreateTopicInput>): Nullable<Topic> | Promise<Nullable<Topic>>;
@@ -316,6 +342,8 @@ export abstract class IMutation {
     abstract organizationInviteUser(input?: Nullable<OrganizationInviteUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
 
     abstract organizationRemoveUser(input?: Nullable<OrganizationRemoveUserInput>): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract createUserToRole(input?: Nullable<CreateUserToRoleInput>): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
     abstract createUserToSeat(input?: Nullable<CreateUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 
@@ -349,11 +377,15 @@ export abstract class ISubscription {
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 
+    abstract roleCreated(): Nullable<UserRole> | Promise<Nullable<UserRole>>;
+
     abstract seatCreated(): Nullable<Seat> | Promise<Nullable<Seat>>;
 
     abstract topicCreated(): Nullable<Topic> | Promise<Nullable<Topic>>;
 
     abstract userToOrganizationCreated(): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract userToRoleCreated(): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
     abstract userToSeatCreated(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 
@@ -504,6 +536,17 @@ export class RetroListItem implements Document {
     todoCount?: Nullable<number>;
 }
 
+export class UserRole implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    id: string;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+}
+
 export class Seat implements Document {
     _id: string;
     createdAt?: Nullable<string>;
@@ -553,6 +596,17 @@ export class UserToOrganization implements Document {
     isCurrent?: Nullable<boolean>;
     user: User;
     organization: Organization;
+}
+
+export class UserToRole implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    id: string;
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
 }
 
 export class UserToSeat implements Document {
