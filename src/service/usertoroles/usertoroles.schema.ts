@@ -6,20 +6,11 @@ import * as mongooseDelete from 'mongoose-delete';
 
 @Schema({ timestamps: true })
 export class UserToRole {
-  @Prop()
-  id: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: mongoose.Types.ObjectId;
 
-  @Prop()
-  name: string;
-
-  @Prop()
-  description: string;
-
-  @Prop()
-  cover: string;
-
-  @Prop()
-  icon: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Role' })
+  role: mongoose.Types.ObjectId;
 }
 
 const UserToRoleSchema = SchemaFactory.createForClass(UserToRole);
