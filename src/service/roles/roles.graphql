@@ -16,17 +16,13 @@ type UserRole implements Document {
   createdAt: String
   updatedAt: String
 
-  id: ID!
-  name: String
+  scope: String!
+  name: String!
   description: String
-  cover: String
-  icon: String
 }
 
 input CreateRoleInput {
-  id: ID!
-  name: String
+  scope: String!
+  name: String!
   description: String
-  cover: String
-  icon: String
 }

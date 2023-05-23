@@ -121,11 +121,9 @@ export class CreateRetroInput {
 }
 
 export class CreateRoleInput {
-    id: string;
-    name?: Nullable<string>;
+    scope: string;
+    name: string;
     description?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
 }
 
 export class CreateSeatInput {
@@ -189,11 +187,9 @@ export class OrganizationRemoveUserInput {
 }
 
 export class CreateUserToRoleInput {
-    id: string;
-    name?: Nullable<string>;
-    description?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
+    user: string;
+    role: string;
+    scope: string;
 }
 
 export class CreateUserToSeatInput {
@@ -286,6 +282,8 @@ export abstract class IQuery {
     abstract userToOrganizations(user?: Nullable<string>, organization?: Nullable<string>): Nullable<Nullable<UserToOrganization>[]> | Promise<Nullable<Nullable<UserToOrganization>[]>>;
 
     abstract userToOrganization(_id: string): Nullable<UserToOrganization> | Promise<Nullable<UserToOrganization>>;
+
+    abstract findSeatSelectionUsers(limit?: Nullable<number>, skip?: Nullable<number>, role?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserWithRole>[]> | Promise<Nullable<Nullable<UserWithRole>[]>>;
 
     abstract findUserToRoles(): Nullable<Nullable<UserToRole>[]> | Promise<Nullable<Nullable<UserToRole>[]>>;
 
@@ -540,11 +538,9 @@ export class UserRole implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
-    id: string;
-    name?: Nullable<string>;
+    scope: string;
+    name: string;
     description?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
 }
 
 export class Seat implements Document {
@@ -602,11 +598,17 @@ export class UserToRole implements Document {
     _id: string;
     createdAt?: Nullable<string>;
     updatedAt?: Nullable<string>;
-    id: string;
-    name?: Nullable<string>;
-    description?: Nullable<string>;
-    cover?: Nullable<string>;
-    icon?: Nullable<string>;
+    user: User;
+    role: UserRole;
+    scope: string;
+}
+
+export class UserWithRole {
+    _id: string;
+    username?: Nullable<string>;
+    nickname?: Nullable<string>;
+    avatarUrl?: Nullable<string>;
+    roles?: Nullable<Nullable<UserRole>[]>;
 }
 
 export class UserToSeat implements Document {

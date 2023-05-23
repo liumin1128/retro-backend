@@ -1,4 +1,10 @@
 type Query {
+  findSeatSelectionUsers(
+    limit: Int
+    skip: Int
+    role: ID
+    user: ID
+  ): [UserWithRole]
   findUserToRoles: [UserToRole]
   findUserToRole(_id: ID!): UserToRole
 }
@@ -16,17 +22,21 @@ type UserToRole implements Document {
   createdAt: String
   updatedAt: String
 
-  id: ID!
-  name: String
-  description: String
-  cover: String
-  icon: String
+  user: User!
+  role: UserRole!
+  scope: String!
 }
 
 input CreateUserToRoleInput {
-  id: ID!
-  name: String
-  description: String
-  cover: String
-  icon: String
+  user: ID!
+  role: ID!
+  scope: String!
+}
+
+type UserWithRole {
+  _id: ID! @upper
+  username: String
+  nickname: String
+  avatarUrl: String
+  roles: [UserRole]
 }

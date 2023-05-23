@@ -11,6 +11,12 @@ export class UserToRole {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Role' })
   role: mongoose.Types.ObjectId;
+
+  @Prop({ required: true })
+  scope: string; // 作用域，限定权限模块，seat，dynamic，retro等
+
+  @Prop({ required: true, unique: true })
+  index: string; // 索引，确保数值唯一性，user+scope+role
 }
 
 const UserToRoleSchema = SchemaFactory.createForClass(UserToRole);
