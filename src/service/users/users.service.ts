@@ -65,6 +65,15 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
+  async query(args): Promise<UserDocument[]> {
+    const { limit = 20, skip = 0, search } = args;
+    const query = {};
+    if (search) {
+      query['nickname'] = { $regex: '.*' + search + '.*' };
+    }
+    return this.userModel.find(query).limit(limit).skip(skip).exec();
+  }
+
   async updateOne(...args: any[]): Promise<any> {
     return this.userModel.updateOne(...args);
   }

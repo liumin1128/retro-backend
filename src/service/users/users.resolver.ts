@@ -17,8 +17,12 @@ export class UsersResolver {
   ) {}
 
   @Query('findUsers')
-  async findUsers(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findUsers(
+    @Args('limit') limit?: number,
+    @Args('skip') skip?: number,
+    @Args('search') search?: string,
+  ): Promise<User[]> {
+    return this.usersService.query({ limit, skip, search });
   }
 
   @Query('findUser')

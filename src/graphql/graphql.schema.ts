@@ -267,7 +267,7 @@ export abstract class IQuery {
 
     abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract findUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract findUsers(limit?: Nullable<number>, skip?: Nullable<number>, search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 
