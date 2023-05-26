@@ -21,8 +21,9 @@ export class UsersResolver {
     @Args('limit') limit?: number,
     @Args('skip') skip?: number,
     @Args('search') search?: string,
+    @Args('tags') tags?: string[],
   ): Promise<User[]> {
-    return this.usersService.query({ limit, skip, search });
+    return this.usersService.query({ limit, skip, search, tags });
   }
 
   @Query('findUser')
@@ -70,5 +71,25 @@ export class UsersResolver {
     // console.log('args');
     // console.log(args);
     return this.usersService.findByIdAndUpdate(user._id, args);
+  }
+
+  @Mutation('adminPushUsersTags')
+  @UseGuards(GqlAuthGuard)
+  async adminPushUsersTags(
+    @CurrentUser() user: SignUserPayload,
+    @Args('users') users: string[],
+    @Args('tags') tags: string[],
+  ): Promise<User> {
+    return this.usersService.adminPushUsersTags(users, tags);
+  }
+
+  @Mutation('adminPullUsersTags')
+  @UseGuards(GqlAuthGuard)
+  async adminPullUsersTags(
+    @CurrentUser() user: SignUserPayload,
+    @Args('users') users: string[],
+    @Args('tags') tags: string[],
+  ): Promise<User> {
+    return this.usersService.adminPullUsersTags(users, tags);
   }
 }

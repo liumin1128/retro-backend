@@ -31,6 +31,9 @@ export class User {
 
   @Prop()
   password: string;
+
+  @Prop()
+  tags: string[];
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

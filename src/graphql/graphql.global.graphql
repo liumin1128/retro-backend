@@ -16,3 +16,8 @@ interface Document {
   createdAt: String
   updatedAt: String
 }
+
+type Result {
+  success: Boolean
+  message: String
+}

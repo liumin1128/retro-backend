@@ -1,6 +1,6 @@
 type Query {
   findUser(_id: String!): User
-  findUsers(limit: Int, skip: Int, search: String): [User]
+  findUsers(limit: Int, skip: Int, search: String, tags: [String]): [User]
   findUserInfo: User
   login(input: LoginUserInput): UserWithToken
 }
@@ -14,6 +14,8 @@ type Mutation {
   createUser(createUserInput: CreateUserInput): User
   register(input: RegisterUserInput): User
   updateUserInfo(input: UpdateUserInfoInput): User
+  adminPushUsersTags(users: [ID], tags: [String]): Result
+  adminPullUsersTags(users: [ID], tags: [String]): Result
 }
 
 type User {
@@ -29,6 +31,7 @@ type User {
   birthday: String
   position: String
   company: String
+  tags: [String]
 }
 
 input CreateUserInput {

@@ -66,11 +66,17 @@ export class UsersService {
   }
 
   async query(args): Promise<UserDocument[]> {
-    const { limit = 20, skip = 0, search } = args;
+    const { limit = 20, skip = 0, search, tags } = args;
     const query = {};
+
     if (search) {
       query['nickname'] = { $regex: '.*' + search + '.*' };
     }
+
+    if (tags) {
+      query['tags'] = { $in: tags };
+    }
+
     return this.userModel.find(query).limit(limit).skip(skip).exec();
   }
 
@@ -85,5 +91,20 @@ export class UsersService {
     return this.userModel.findByIdAndUpdate(_id, input, {
       new: true,
     });
+  }
+
+  async adminPushUsersTags(users: string[], tags: string[]): Promise<any> {
+    return this.userModel.updateMany(
+      { _id: { $in: users } },
+      { $addToSet: { tags: { $each: tags } } },
+    );
+  }
+
+  async adminPullUsersTags(users: string[], tags: string[]): Promise<any> {
+    return this.userModel.updateMany(
+      { _id: { $in: users } },
+      { $pull: { tags: { $in: tags } } }, // 使用$pull操作符删除tags数组中的指定元素
+      { multi: true, upsert: false }, // 设置multi为true表示更新多个文档，设置upsert为false表示如果不存在则忽略
+    );
   }
 }

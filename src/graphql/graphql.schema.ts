@@ -208,6 +208,11 @@ export interface Document {
     updatedAt?: Nullable<string>;
 }
 
+export class Result {
+    success?: Nullable<boolean>;
+    message?: Nullable<string>;
+}
+
 export abstract class IQuery {
     abstract findComments(object: string): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
 
@@ -267,7 +272,7 @@ export abstract class IQuery {
 
     abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract findUsers(limit?: Nullable<number>, skip?: Nullable<number>, search?: Nullable<string>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract findUsers(limit?: Nullable<number>, skip?: Nullable<number>, search?: Nullable<string>, tags?: Nullable<Nullable<string>[]>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 
@@ -334,6 +339,10 @@ export abstract class IMutation {
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract updateUserInfo(input?: Nullable<UpdateUserInfoInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract adminPushUsersTags(users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
+
+    abstract adminPullUsersTags(users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
 
     abstract createOrganization(input?: Nullable<CreateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
 
@@ -583,6 +592,7 @@ export class User {
     birthday?: Nullable<string>;
     position?: Nullable<string>;
     company?: Nullable<string>;
+    tags?: Nullable<Nullable<string>[]>;
 }
 
 export class UserToOrganization implements Document {
