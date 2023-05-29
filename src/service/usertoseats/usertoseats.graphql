@@ -11,6 +11,7 @@ type Query {
 type Mutation {
   createUserToSeat(input: CreateUserToSeatInput): UserToSeat
   deleteUserToSeat(input: DeleteUserToSeatInput): UserToSeat
+  toggleUserToSeat(input: ToggleUserToSeatInput): UserToSeat
 }
 
 type Subscription {
@@ -27,6 +28,12 @@ type UserToSeat implements Document {
   seat: Seat
   date: Float
   cancel: Boolean
+}
+
+input ToggleUserToSeatInput {
+  user: ID!
+  seat: ID!
+  date: Float!
 }
 
 input CreateUserToSeatInput {

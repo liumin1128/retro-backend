@@ -11,6 +11,7 @@ import { UserToSeatDocument as UserToSeat } from './usertoseats.schema';
 import { UserToSeatsService } from './usertoseats.service';
 import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
+import { UsersService } from '@/service/users/users.service';
 
 const pubSub = new PubSub();
 
@@ -19,6 +20,7 @@ export class UserToSeatsResolver {
   constructor(
     private readonly userToSeatsService: UserToSeatsService,
     private readonly seatService: SeatsService,
+    private readonly userService: UsersService,
   ) {}
 
   @UseGuards(GqlAuthGuard)
@@ -49,6 +51,82 @@ export class UserToSeatsResolver {
   @Query('findUserToSeat')
   async findUserToSeat(@Args('_id') _id: string): Promise<UserToSeat> {
     return await this.userToSeatsService.findById(_id);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation('toggleUserToSeat')
+  async toggleUserToSeat(
+    @CurrentUser() user: SignUserPayload,
+    @Args('input') input: CreateUserToSeatDto,
+  ): Promise<UserToSeat | null> {
+    // 第一步校验权限
+
+    let hasAuth = false;
+
+    if (user._id === input.user) {
+      hasAuth = true;
+    } else {
+      const userObj = await this.userService.findById(user._id);
+      if (userObj.tags.includes('SeatSelectionAdmin')) {
+        hasAuth = true;
+      }
+    }
+
+    if (!hasAuth) {
+      throw new ApolloError('403 Forbidden');
+    }
+
+    // 检查座位是否存在
+    const seatObj = await this.seatService.findById(input.seat);
+
+    if (!seatObj) {
+      throw new ApolloError('seat not found');
+    }
+
+    // 检查用户是否存在
+    const userObj = await this.userService.findById(input.user);
+    if (!userObj) {
+      throw new ApolloError('user not found');
+    }
+
+    const curUserToSeat = await this.userToSeatsService.findOne({
+      date: input.date,
+      user: input.user,
+      seat: input.seat,
+    });
+
+    if (curUserToSeat) {
+      // 如果选座记录存在，取消选座
+      await curUserToSeat.remove();
+
+      pubSub.publish('userToSeatDeleted', {
+        userToSeatDeleted: curUserToSeat,
+      });
+
+      return curUserToSeat;
+    }
+
+    // 检查本人今日是否已选其他座，或者该座位今日是否有其他人选选择
+    const todayUserToSeat = await this.userToSeatsService.findOne({
+      $or: [
+        { date: input.date, user: input.user },
+        { date: input.date, seat: input.seat },
+      ],
+    });
+
+    if (todayUserToSeat) {
+      // 如果选座记录存在，反馈不可以重复选座
+      throw new ApolloError('Seats have been selected for this day');
+    }
+
+    // 无选座记录，创建选座
+    const createdUserToSeat = await this.userToSeatsService.create(input);
+
+    pubSub.publish('userToSeatCreated', {
+      userToSeatCreated: createdUserToSeat,
+    });
+
+    return createdUserToSeat;
   }
 
   @UseGuards(GqlAuthGuard)

@@ -126,6 +126,17 @@ export class CreateRoleInput {
     description?: Nullable<string>;
 }
 
+export class CreateScheduleInput {
+    date: number;
+    status: string;
+}
+
+export class AdminCreateScheduleInput {
+    user: string;
+    date: number;
+    status: string;
+}
+
 export class CreateSeatInput {
     id: string;
     name?: Nullable<string>;
@@ -190,6 +201,12 @@ export class CreateUserToRoleInput {
     user: string;
     role: string;
     scope: string;
+}
+
+export class ToggleUserToSeatInput {
+    user: string;
+    seat: string;
+    date: number;
 }
 
 export class CreateUserToSeatInput {
@@ -262,6 +279,10 @@ export abstract class IQuery {
 
     abstract findRole(_id: string): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
+    abstract findSchedules(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>): Nullable<Nullable<Schedule>[]> | Promise<Nullable<Nullable<Schedule>[]>>;
+
+    abstract findSchedule(_id: string): Nullable<Schedule> | Promise<Nullable<Schedule>>;
+
     abstract findSeats(): Nullable<Nullable<Seat>[]> | Promise<Nullable<Nullable<Seat>[]>>;
 
     abstract findSeat(_id: string): Nullable<Seat> | Promise<Nullable<Seat>>;
@@ -330,6 +351,10 @@ export abstract class IMutation {
 
     abstract createRole(input?: Nullable<CreateRoleInput>): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
+    abstract createSchedule(input?: Nullable<CreateScheduleInput>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
+
+    abstract adminCreateSchedule(input?: Nullable<AdminCreateScheduleInput>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
+
     abstract createSeat(input?: Nullable<CreateSeatInput>): Nullable<Seat> | Promise<Nullable<Seat>>;
 
     abstract createTopic(input?: Nullable<CreateTopicInput>): Nullable<Topic> | Promise<Nullable<Topic>>;
@@ -355,6 +380,8 @@ export abstract class IMutation {
     abstract createUserToSeat(input?: Nullable<CreateUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 
     abstract deleteUserToSeat(input?: Nullable<DeleteUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+
+    abstract toggleUserToSeat(input?: Nullable<ToggleUserToSeatInput>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export abstract class ISubscription {
@@ -385,6 +412,8 @@ export abstract class ISubscription {
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 
     abstract roleCreated(): Nullable<UserRole> | Promise<Nullable<UserRole>>;
+
+    abstract scheduleCreated(): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
     abstract seatCreated(): Nullable<Seat> | Promise<Nullable<Seat>>;
 
@@ -550,6 +579,15 @@ export class UserRole implements Document {
     scope: string;
     name: string;
     description?: Nullable<string>;
+}
+
+export class Schedule implements Document {
+    _id: string;
+    createdAt?: Nullable<string>;
+    updatedAt?: Nullable<string>;
+    user?: Nullable<User>;
+    status?: Nullable<string>;
+    date?: Nullable<number>;
 }
 
 export class Seat implements Document {

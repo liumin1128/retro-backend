@@ -1,0 +1,33 @@
+type Query {
+  findSchedules(startDate: Float, endDate: Float, user: ID): [Schedule]
+  findSchedule(_id: ID!): Schedule
+}
+
+type Mutation {
+  createSchedule(input: CreateScheduleInput): Schedule
+  adminCreateSchedule(input: AdminCreateScheduleInput): Schedule
+}
+
+type Subscription {
+  scheduleCreated: Schedule
+}
+
+type Schedule implements Document {
+  _id: ID! @upper
+  createdAt: String
+  updatedAt: String
+  user: User
+  status: String
+  date: Float
+}
+
+input CreateScheduleInput {
+  date: Float!
+  status: String!
+}
+
+input AdminCreateScheduleInput {
+  user: ID!
+  date: Float!
+  status: String!
+}

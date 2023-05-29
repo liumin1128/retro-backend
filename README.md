@@ -73,7 +73,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-for schedule in schedule*; do mv "$schedule" "schedule${usertoseats#usertoseats}"; done
+for schedule in schedule*; do mv "$schedule" "schedule${usertointerests#usertointerests}"; done
 
 schedule 记录用户请假情况，用户聚焦这个格子时，可以输入AL、PM、AM等字段，自动匹配颜色，
 
@@ -81,5 +81,5 @@ schedule 记录用户请假情况，用户聚焦这个格子时，可以输入AL
 
 工作日信息，不在乎工作日
 
-for seats in seats*; do mv "$seats" "roles${seats#seats}"; done
+for interests in interests*; do mv "$interests" "schedules${interests#interests}"; done
 

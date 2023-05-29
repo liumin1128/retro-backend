@@ -9,12 +9,9 @@ import { LikesModule } from '@/service/likes/likes.module';
 import { OAuthIndexModule } from '@/service/oauths/oauths.index.module';
 import { RetrosModule } from '@/service/retros/retros.module';
 import { RetroMessagesModule } from '@/service/retros/messages/module';
-import { OrganizationsModule } from '@/service/organizations/organizations.module';
-import { UserToOrganizationModule } from '@/service/usertoorganizations/usertoorganizations.module';
 import { SeatsModule } from '@/service/seats/seats.module';
 import { UserToSeatsModule } from '@/service/usertoseats/usertoseats.module';
-import { RolesModule } from '@/service/roles/roles.module';
-import { UserToRolesModule } from '@/service/usertoroles/usertoroles.module';
+import { SchedulesModule } from '@/service/schedule/schedules.module';
 
 export default [
   CommonModule,
@@ -28,10 +25,7 @@ export default [
   OAuthIndexModule,
   RetrosModule,
   RetroMessagesModule,
-  OrganizationsModule,
-  UserToOrganizationModule,
   SeatsModule,
   UserToSeatsModule,
-  RolesModule,
-  UserToRolesModule,
+  SchedulesModule,
 ];
