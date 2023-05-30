@@ -97,6 +97,8 @@ export class UserToSeatsResolver {
 
     if (curUserToSeat) {
       // 如果选座记录存在，取消选座
+
+      // @ts-ignore
       await curUserToSeat.remove();
 
       pubSub.publish('userToSeatDeleted', {
@@ -124,6 +126,8 @@ export class UserToSeatsResolver {
 
     if (currentUserhasUserToSeat) {
       // 如果选座记录存在，移除已有的记录
+
+      // @ts-ignore
       currentUserhasUserToSeat.remove();
     }
 
