@@ -7,7 +7,7 @@ import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { ApolloError } from 'apollo-server';
 import { removeEmptyValue } from '@/utils/common';
-import { UserToSeatDocument as UserToSeat } from './usertoseats.schema';
+import { UserToSeatDocument } from './usertoseats.schema';
 import { UserToSeatsService } from './usertoseats.service';
 import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
@@ -30,7 +30,7 @@ export class UserToSeatsResolver {
     @Args('endDate') endDate: number,
     @Args('seat') seat: string,
     @Args('user') user: string,
-  ): Promise<UserToSeat[]> {
+  ): Promise<UserToSeatDocument[]> {
     const start = startDate;
     const end = endDate || startDate;
 
@@ -49,7 +49,7 @@ export class UserToSeatsResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query('findUserToSeat')
-  async findUserToSeat(@Args('_id') _id: string): Promise<UserToSeat> {
+  async findUserToSeat(@Args('_id') _id: string): Promise<UserToSeatDocument> {
     return await this.userToSeatsService.findById(_id);
   }
 
@@ -58,7 +58,7 @@ export class UserToSeatsResolver {
   async toggleUserToSeat(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateUserToSeatDto,
-  ): Promise<UserToSeat | null> {
+  ): Promise<UserToSeatDocument | null> {
     // 第一步校验权限
 
     let hasAuth = false;
@@ -97,7 +97,7 @@ export class UserToSeatsResolver {
 
     if (curUserToSeat) {
       // 如果选座记录存在，取消选座
-      await curUserToSeat.delete();
+      await curUserToSeat.remove();
 
       pubSub.publish('userToSeatDeleted', {
         userToSeatDeleted: curUserToSeat,
@@ -124,7 +124,7 @@ export class UserToSeatsResolver {
 
     if (currentUserhasUserToSeat) {
       // 如果选座记录存在，移除已有的记录
-      currentUserhasUserToSeat.delete();
+      currentUserhasUserToSeat.remove();
     }
 
     // 检查本人今日是否已选其他座，或者该座位今日是否有其他人选选择
@@ -150,7 +150,7 @@ export class UserToSeatsResolver {
   async createUserToSeat(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateUserToSeatDto,
-  ): Promise<UserToSeat | null> {
+  ): Promise<UserToSeatDocument | null> {
     const { seat, date } = input;
 
     // 检查座位是否可用，
@@ -191,7 +191,7 @@ export class UserToSeatsResolver {
   async deleteUserToSeat(
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: DeleteUserToSeatDto,
-  ): Promise<UserToSeat | null> {
+  ): Promise<UserToSeatDocument | null> {
     const { seat, date } = input;
 
     // 检查座位是否可用，
