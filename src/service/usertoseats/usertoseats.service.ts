@@ -27,7 +27,7 @@ export class UserToSeatsService {
   }
 
   async findOne(query): Promise<UserToSeatDocument> {
-    return this.userToSeatsModel.findOne(query);
+    return this.userToSeatsModel.findOne(query).populate('user');
   }
 
   async findById(_id: string): Promise<UserToSeatDocument> {

@@ -116,7 +116,7 @@ export class UserToSeatsResolver {
 
     if (todayUserToSeat) {
       // 如果选座记录存在，反馈不可以重复选座
-      throw new ApolloError('Seats have been selected for this day');
+      throw new ApolloError('Bad Request');
     }
 
     // 无选座记录，创建选座
