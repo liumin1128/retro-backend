@@ -15,7 +15,7 @@ export class UserToSeatsService {
   ): Promise<UserToSeatDocument> {
     const createdUserToSeat = new this.userToSeatsModel(createUserToSeatDto);
     await createdUserToSeat.save();
-    return createdUserToSeat;
+    return createdUserToSeat.populate('seat');
   }
 
   async findAll(query: {
@@ -23,19 +23,28 @@ export class UserToSeatsService {
     seat?: string;
     user?: string;
   }): Promise<UserToSeatDocument[]> {
-    return this.userToSeatsModel.find(query).populate('user');
+    return this.userToSeatsModel.find(query).populate('user').populate('seat');
   }
 
   async findOne(query): Promise<UserToSeatDocument> {
-    return this.userToSeatsModel.findOne(query).populate('user');
+    return this.userToSeatsModel
+      .findOne(query)
+      .populate('user')
+      .populate('seat');
   }
 
   async findById(_id: string): Promise<UserToSeatDocument> {
-    return this.userToSeatsModel.findById(_id);
+    return this.userToSeatsModel
+      .findById(_id)
+      .populate('user')
+      .populate('seat');
   }
 
   async delete(_id: string): Promise<UserToSeatDocument> {
-    const obj = await this.userToSeatsModel.findById(_id).populate('user');
+    const obj = await this.userToSeatsModel
+      .findById(_id)
+      .populate('user')
+      .populate('seat');
     if (!obj) return;
     await this.userToSeatsModel.deleteOne({ _id });
     return obj;

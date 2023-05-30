@@ -5,7 +5,6 @@ type Query {
 
 type Mutation {
   createSchedule(input: CreateScheduleInput): Schedule
-  adminCreateSchedule(input: AdminCreateScheduleInput): Schedule
 }
 
 type Subscription {
@@ -22,12 +21,7 @@ type Schedule implements Document {
 }
 
 input CreateScheduleInput {
-  date: Float!
-  status: String!
-}
-
-input AdminCreateScheduleInput {
-  user: ID!
+  user: ID
   date: Float!
   status: String!
 }

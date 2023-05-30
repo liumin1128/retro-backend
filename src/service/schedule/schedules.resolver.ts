@@ -1,17 +1,25 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
+import { PubSub } from 'graphql-subscriptions';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
+import { ApolloError } from 'apollo-server';
 import { ScheduleDocument as Schedule } from './schedules.schema';
 import { SchedulesService } from './schedules.service';
 import { CreateScheduleDto } from './schedules.dto';
 import { removeEmptyValue } from '@/utils/common';
 import * as dayjs from 'dayjs';
+import { UsersService } from '@/service/users/users.service';
+
+const pubSub = new PubSub();
 
 @Resolver('Schedules')
 export class SchedulesResolver {
-  constructor(private readonly schedulesService: SchedulesService) {}
+  constructor(
+    private readonly schedulesService: SchedulesService,
+    private readonly userService: UsersService,
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query('findSchedules')
@@ -46,11 +54,30 @@ export class SchedulesResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation('createSchedule')
   async createSchedule(
-    @CurrentUser() user: SignUserPayload,
+    @CurrentUser() currentUser: SignUserPayload,
     @Args('input') input: CreateScheduleDto,
   ): Promise<Schedule | null> {
+    // 校验权限
+    let userId = input.user;
+    if (userId) {
+      let hasAuth = false;
+      if (currentUser._id === input.user) {
+        hasAuth = true;
+      } else {
+        const userObj = await this.userService.findById(currentUser._id);
+        if (userObj.tags.includes('SeatSelectionAdmin')) {
+          hasAuth = true;
+        }
+      }
+      if (!hasAuth) {
+        throw new ApolloError('403 Forbidden');
+      }
+    } else {
+      userId = currentUser._id;
+    }
+
     // 创建或更新数据
-    const query = { user: user._id, date: input.date };
+    const query = { user: userId, date: input.date };
     const update = { status: input.status };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
@@ -59,26 +86,16 @@ export class SchedulesResolver {
       update,
       options,
     );
+
+    pubSub.publish('scheduleCreated', {
+      scheduleCreated: createdSchedule,
+    });
 
     return createdSchedule;
   }
 
-  @UseGuards(GqlAuthGuard)
-  @Mutation('adminCreateSchedule')
-  async adminCreateSchedule(
-    @Args('input') input: CreateScheduleDto,
-  ): Promise<Schedule | null> {
-    // 创建或更新数据
-    const query = { user: input.user, date: input.date };
-    const update = { status: input.status };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
-    const createdSchedule = await this.schedulesService.findOneAndUpdate(
-      query,
-      update,
-      options,
-    );
-
-    return createdSchedule;
+  @Subscription('scheduleCreated')
+  scheduleCreated() {
+    return pubSub.asyncIterator('scheduleCreated');
   }
 }

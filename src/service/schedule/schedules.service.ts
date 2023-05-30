@@ -15,11 +15,11 @@ export class SchedulesService {
   ): Promise<ScheduleDocument> {
     const createdSchedule = new this.schedulesModel(createScheduleDto);
     await createdSchedule.save();
-    return createdSchedule;
+    return createdSchedule.populate('user');
   }
 
   async findOneAndUpdate(...args): Promise<ScheduleDocument> {
-    return this.schedulesModel.findOneAndUpdate(...args);
+    return this.schedulesModel.findOneAndUpdate(...args).populate('user');
   }
 
   async query(query): Promise<ScheduleDocument[]> {
@@ -30,11 +30,19 @@ export class SchedulesService {
     return this.schedulesModel.find();
   }
 
-  async findOne(user: string, object: string): Promise<ScheduleDocument> {
-    return this.schedulesModel.findOne({ user, object });
+  async findOne(query): Promise<ScheduleDocument> {
+    return this.schedulesModel.findOne(query).populate('user');
   }
 
   async findById(_id: string): Promise<ScheduleDocument> {
     return this.schedulesModel.findById(_id);
+  }
+
+  async switch(
+    createScheduleDto: CreateScheduleDto,
+  ): Promise<ScheduleDocument> {
+    const createdSchedule = new this.schedulesModel(createScheduleDto);
+    await createdSchedule.save();
+    return createdSchedule.populate('user');
   }
 }

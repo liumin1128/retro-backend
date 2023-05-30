@@ -127,12 +127,7 @@ export class CreateRoleInput {
 }
 
 export class CreateScheduleInput {
-    date: number;
-    status: string;
-}
-
-export class AdminCreateScheduleInput {
-    user: string;
+    user?: Nullable<string>;
     date: number;
     status: string;
 }
@@ -352,8 +347,6 @@ export abstract class IMutation {
     abstract createRole(input?: Nullable<CreateRoleInput>): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
     abstract createSchedule(input?: Nullable<CreateScheduleInput>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
-
-    abstract adminCreateSchedule(input?: Nullable<AdminCreateScheduleInput>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
     abstract createSeat(input?: Nullable<CreateSeatInput>): Nullable<Seat> | Promise<Nullable<Seat>>;
 
