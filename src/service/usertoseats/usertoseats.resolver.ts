@@ -106,18 +106,34 @@ export class UserToSeatsResolver {
       return curUserToSeat;
     }
 
-    // 检查本人今日是否已选其他座，或者该座位今日是否有其他人选选择
-    const todayUserToSeat = await this.userToSeatsService.findOne({
-      $or: [
-        { date: input.date, user: input.user },
-        { date: input.date, seat: input.seat },
-      ],
+    // 该座位今日是否有其他人选选择
+    const otherUserHasUserToSeat = await this.userToSeatsService.findOne({
+      date: input.date,
+      seat: input.seat,
     });
 
-    if (todayUserToSeat) {
-      // 如果选座记录存在，反馈不可以重复选座
-      throw new ApolloError('Bad Request');
+    if (otherUserHasUserToSeat) {
+      throw new ApolloError('This Seat has been selected');
     }
+
+    // 检查本人今日是否已选其他座
+    const currentUserhasUserToSeat = await this.userToSeatsService.findOne({
+      date: input.date,
+      user: input.user,
+    });
+
+    if (currentUserhasUserToSeat) {
+      // 如果选座记录存在，移除已有的记录
+      currentUserhasUserToSeat.remove();
+    }
+
+    // 检查本人今日是否已选其他座，或者该座位今日是否有其他人选选择
+    // const todayUserToSeat = await this.userToSeatsService.findOne({
+    //   $or: [
+    //     { date: input.date, user: input.user },
+    //     { date: input.date, seat: input.seat },
+    //   ],
+    // });
 
     // 无选座记录，创建选座
     const createdUserToSeat = await this.userToSeatsService.create(input);
