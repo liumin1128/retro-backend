@@ -20,6 +20,15 @@ export class Seat {
 
   @Prop()
   icon: string;
+
+  @Prop()
+  tags: string[];
+
+  @Prop()
+  status: string;
+
+  @Prop()
+  disabled: boolean;
 }
 
 const SeatSchema = SchemaFactory.createForClass(Seat);

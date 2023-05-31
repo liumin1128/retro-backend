@@ -140,6 +140,16 @@ export class CreateSeatInput {
     icon?: Nullable<string>;
 }
 
+export class UpdateSeatInput {
+    name?: Nullable<string>;
+    description?: Nullable<string>;
+    cover?: Nullable<string>;
+    icon?: Nullable<string>;
+    tags?: Nullable<Nullable<string>[]>;
+    status?: Nullable<string>;
+    disabled?: Nullable<boolean>;
+}
+
 export class CreateTopicInput {
     category?: Nullable<string>;
     name: string;
@@ -349,6 +359,14 @@ export abstract class IMutation {
     abstract createSchedule(input?: Nullable<CreateScheduleInput>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
     abstract createSeat(input?: Nullable<CreateSeatInput>): Nullable<Seat> | Promise<Nullable<Seat>>;
+
+    abstract updateSeat(id?: Nullable<string>, input?: Nullable<UpdateSeatInput>): Nullable<Result> | Promise<Nullable<Result>>;
+
+    abstract setSeatsTags(ids?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
+
+    abstract pushSeatsTags(ids?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
+
+    abstract pullSeatsTags(ids?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
 
     abstract createTopic(input?: Nullable<CreateTopicInput>): Nullable<Topic> | Promise<Nullable<Topic>>;
 
@@ -592,6 +610,9 @@ export class Seat implements Document {
     description?: Nullable<string>;
     cover?: Nullable<string>;
     icon?: Nullable<string>;
+    tags?: Nullable<Nullable<string>[]>;
+    status?: Nullable<string>;
+    disabled?: Nullable<boolean>;
 }
 
 export class Topic implements Document {

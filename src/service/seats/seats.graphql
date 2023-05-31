@@ -5,6 +5,10 @@ type Query {
 
 type Mutation {
   createSeat(input: CreateSeatInput): Seat
+  updateSeat(id: ID, input: UpdateSeatInput): Result
+  setSeatsTags(ids: [ID], tags: [String]): Result
+  pushSeatsTags(ids: [ID], tags: [String]): Result
+  pullSeatsTags(ids: [ID], tags: [String]): Result
 }
 
 type Subscription {
@@ -21,6 +25,9 @@ type Seat implements Document {
   description: String
   cover: String
   icon: String
+  tags: [String]
+  status: String
+  disabled: Boolean
 }
 
 input CreateSeatInput {
@@ -29,4 +36,14 @@ input CreateSeatInput {
   description: String
   cover: String
   icon: String
+}
+
+input UpdateSeatInput {
+  name: String
+  description: String
+  cover: String
+  icon: String
+  tags: [String]
+  status: String
+  disabled: Boolean
 }
