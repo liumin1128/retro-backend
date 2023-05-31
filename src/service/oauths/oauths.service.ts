@@ -19,7 +19,7 @@ export class OAuthsService {
     return createdOAuth.save();
   }
 
-  async findOne(findOneOAuthDto: FindOneOAuthDto): Promise<OAuthDocument> {
+  async findOne(findOneOAuthDto): Promise<OAuthDocument> {
     return this.oauthModel.findOne(findOneOAuthDto);
   }
 
@@ -31,7 +31,11 @@ export class OAuthsService {
     return this.oauthModel.find().exec();
   }
 
-  async updateOne(...args: any[]): Promise<any> {
+  async updateOne(...args): Promise<any> {
     return this.oauthModel.updateOne(...args);
+  }
+
+  async updateMany(...args): Promise<any> {
+    return this.oauthModel.updateMany(...args);
   }
 }

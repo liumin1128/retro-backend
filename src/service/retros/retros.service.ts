@@ -159,4 +159,16 @@ export class RetrosService {
   async findById(_id: string): Promise<RetroDocument> {
     return this.retrosModel.findById(_id).populate('user');
   }
+
+  async find(query): Promise<RetroDocument[]> {
+    return this.retrosModel.find(query);
+  }
+
+  async findOne(query): Promise<RetroDocument> {
+    return this.retrosModel.findOne(query);
+  }
+
+  async updateMany(...args): Promise<any> {
+    return this.retrosModel.updateMany(...args);
+  }
 }

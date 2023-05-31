@@ -10,6 +10,9 @@ import { QiniuService } from '@/utils/qiniu/qiniu.service';
 import { UserDocument } from '@/service/users/schemas/users.schema';
 import { OAuthDocument } from '@/service/oauths/oauths.schema';
 import { AuthService } from '@/service/auth/auth.service';
+import { groupBy, pickBy, mapValues } from 'lodash';
+import { RetrosService } from '@/service/retros/retros.service';
+import { RetroMessagesService } from '@/service/retros/messages/service';
 
 @Controller('/oauth/wechat')
 export class WechatController {
@@ -19,6 +22,8 @@ export class WechatController {
     private readonly userService: UsersService,
     private readonly qiniuService: QiniuService,
     private readonly authService: AuthService,
+    private readonly retrosService: RetrosService,
+    private readonly retroMessagesService: RetroMessagesService,
   ) {}
 
   @Get()
@@ -105,5 +110,40 @@ export class WechatController {
       console.log(error);
       return error.message;
     }
+  }
+
+  @Get('/merge')
+  async merge(): Promise<any> {
+    const users = await this.userService.findAll();
+    console.log('users');
+    console.log(users);
+    const groups = groupBy(users, (user) => user.nickname);
+    console.log('groups');
+    console.log(groups);
+    const groupsPickBy = pickBy(groups, (group) => group.length === 2);
+    console.log('groupsPickBy');
+    console.log(groupsPickBy);
+    const groupsMapValues = mapValues(groupsPickBy, async (group) => {
+      const oldoauth = await this.oauthService.updateMany(
+        { user: group[1]._id },
+        { $set: { user: group[0]._id } },
+      );
+      console.log('oldoauth');
+      console.log(oldoauth);
+      const oldretro = await this.retrosService.updateMany(
+        { user: group[1]._id },
+        { $set: { user: group[0]._id } },
+      );
+      console.log('oldretro');
+      console.log(oldretro);
+      const oldretroMessage = await this.retroMessagesService.updateMany(
+        { user: group[1]._id },
+        { $set: { user: group[0]._id } },
+      );
+      console.log('oldretroMessage');
+      console.log(oldretroMessage);
+      await group[1].remove();
+    });
+    return 'ok';
   }
 }

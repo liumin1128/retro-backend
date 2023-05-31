@@ -62,4 +62,16 @@ export class RetroMessagesService {
     await this.retroMessagesModel.deleteOne({ _id });
     return obj;
   }
+
+  async findOne(query): Promise<RetroMessageDocument> {
+    return this.retroMessagesModel.findOne(query);
+  }
+
+  async find(query): Promise<RetroMessageDocument[]> {
+    return this.retroMessagesModel.find(query);
+  }
+
+  async updateMany(...args): Promise<any> {
+    return this.retroMessagesModel.updateMany(...args);
+  }
 }
