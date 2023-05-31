@@ -40,7 +40,6 @@ export class SeatsResolver {
     @Args('id') id: string,
     @Args('input') input: UpdateSeatDto,
   ): Promise<any> {
-    console.log('updateSeat', id, input);
     return this.seatsService.updateSeat(id, input);
   }
 
