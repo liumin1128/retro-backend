@@ -52,7 +52,6 @@ export class LikesResolver {
     const liked = await this.likesService.findOne(user._id, input.object);
 
     if (liked) {
-      // liked.remove();
       liked.deleteOne();
       return null;
     }

@@ -142,7 +142,7 @@ export class WechatController {
       );
       console.log('oldretroMessage');
       console.log(oldretroMessage);
-      await group[1].remove();
+      await group[1].deleteOne();
     });
     return 'ok';
   }
