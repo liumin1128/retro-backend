@@ -6,11 +6,11 @@
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "cron_restart": "0 4 * * * *",
       "instances": 4,
+      "restart": true,
+      "exec_mode": "cluster",
       "env": {
         "NODE_ENV": "production"
-      },
-      "restart": true,
-      "exec_mode": "cluster"
+      }
     }
   ]
 }
