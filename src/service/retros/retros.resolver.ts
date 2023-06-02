@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
@@ -7,8 +6,7 @@ import { RetroDocument as Retro } from './retros.schema';
 import { RetrosService } from './retros.service';
 import { CreateRetroDto } from './retros.dto';
 import { removeEmptyValue } from '@/utils/common';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('Retros')
 export class RetrosResolver {

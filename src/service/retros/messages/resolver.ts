@@ -1,6 +1,5 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
@@ -10,8 +9,7 @@ import { RetroMessagesService } from './service';
 import { CreateRetroMessageDto, UpdateRetroMessageDto } from './dto';
 import { RetrosService } from '@/service/retros/retros.service';
 import { UserToOrganizationsService } from '@/service/usertoorganizations/usertoorganizations.service';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('RetroMessages')
 export class RetroMessagesResolver {

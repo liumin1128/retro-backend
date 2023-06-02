@@ -7,7 +7,6 @@ import {
   Subscription,
   ResolveField,
 } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { NewsService } from '@/service/news/news.service';
@@ -18,8 +17,7 @@ import { LikeDocument as Like } from './likes.schema';
 import { LikesService } from './likes.service';
 import { CreateLikeDto } from './likes.dto';
 import { UseGuards } from '@nestjs/common';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('Likes')
 export class LikesResolver {

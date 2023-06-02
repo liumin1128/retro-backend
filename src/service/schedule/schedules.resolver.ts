@@ -1,7 +1,6 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { PubSub } from 'graphql-subscriptions';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { ApolloError } from 'apollo-server';
@@ -11,8 +10,7 @@ import { CreateScheduleDto } from './schedules.dto';
 import { removeEmptyValue } from '@/utils/common';
 import * as dayjs from 'dayjs';
 import { UsersService } from '@/service/users/users.service';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('Schedules')
 export class SchedulesResolver {

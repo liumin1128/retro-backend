@@ -1,13 +1,11 @@
 import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 // import { News } from '@/graphql/graphql.schema';
 import { NewsGuard } from './news.guard';
 import { NewsDocument as News } from './schemas/news.schema';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('News')
 export class NewsResolver {

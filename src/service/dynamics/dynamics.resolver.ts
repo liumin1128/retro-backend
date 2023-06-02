@@ -1,6 +1,5 @@
 // import { ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
@@ -9,8 +8,7 @@ import { DynamicsService } from './dynamics.service';
 import { CreateDynamicDto } from './dynamics.dto';
 import { GetToken } from '@/graphql/graphql.decorators';
 import { AuthService } from '@/service/auth/auth.service';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('Dynamics')
 export class DynamicsResolver {

@@ -7,7 +7,6 @@ import {
   Subscription,
   ResolveField,
 } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
 import { GqlAuthGuard, CurrentUser } from '@/service/auth/auth.guard';
 import { SignUserPayload } from '@/service/auth/auth.service';
 import { NewsService } from '@/service/news/news.service';
@@ -19,8 +18,7 @@ import { CreateCommentDto, ReplyCommentDto } from './comments.dto';
 import { UseGuards } from '@nestjs/common';
 import { GetToken } from '@/graphql/graphql.decorators';
 import { AuthService } from '@/service/auth/auth.service';
-
-const pubSub = new PubSub();
+import { pubSub } from '@/utils/subscription';
 
 @Resolver('Comments')
 export class CommentsResolver {
