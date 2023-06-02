@@ -66,7 +66,7 @@ export class UsersService {
   }
 
   async query(args): Promise<UserDocument[]> {
-    const { limit = 20, skip = 0, search, tags } = args;
+    const { limit = 100, skip = 0, search, tags } = args;
     const query = {};
 
     if (search) {
