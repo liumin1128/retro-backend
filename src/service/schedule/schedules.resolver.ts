@@ -24,7 +24,6 @@ export class SchedulesResolver {
   async findSchedules(
     @Args('startDate') startDate: number,
     @Args('endDate') endDate: number,
-    @Args('seat') seat: string,
     @Args('user') user: string,
   ): Promise<Schedule[]> {
     const start = startDate;
@@ -35,7 +34,6 @@ export class SchedulesResolver {
         { date: { $gte: start } },
         { date: { $lte: dayjs(end).endOf('day') }.valueOf() },
       ],
-      seat,
       user,
     });
 
@@ -92,7 +90,22 @@ export class SchedulesResolver {
     return createdSchedule;
   }
 
-  @Subscription('scheduleCreated')
+  @Subscription('scheduleCreated', {
+    filter: (payload, variables) => {
+      const { startDate, endDate } = variables;
+      const start = startDate;
+      const end = endDate || startDate;
+      const date = dayjs(payload.scheduleCreated.date).valueOf();
+
+      if (variables.user && payload.scheduleCreated.user !== variables.user) {
+        return false;
+      }
+      if (start > date || end < date) {
+        return false;
+      }
+      return true;
+    },
+  })
   scheduleCreated() {
     return pubSub.asyncIterator('scheduleCreated');
   }

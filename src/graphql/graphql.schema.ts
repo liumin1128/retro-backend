@@ -424,7 +424,7 @@ export abstract class ISubscription {
 
     abstract roleCreated(): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
-    abstract scheduleCreated(): Nullable<Schedule> | Promise<Nullable<Schedule>>;
+    abstract scheduleCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
     abstract seatCreated(): Nullable<Seat> | Promise<Nullable<Seat>>;
 

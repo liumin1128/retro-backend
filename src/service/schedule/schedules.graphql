@@ -8,7 +8,7 @@ type Mutation {
 }
 
 type Subscription {
-  scheduleCreated: Schedule
+  scheduleCreated(startDate: Float, endDate: Float, user: ID): Schedule
 }
 
 type Schedule implements Document {
