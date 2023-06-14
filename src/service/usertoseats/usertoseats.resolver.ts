@@ -11,7 +11,7 @@ import { UserToSeatsService } from './usertoseats.service';
 import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
 import { UsersService } from '@/service/users/users.service';
-import { pubSub } from '@/utils/subscription';
+import { pubSub, withFilter } from '@/utils/subscription';
 
 @Resolver('UserToSeats')
 export class UserToSeatsResolver {
@@ -123,6 +123,10 @@ export class UserToSeatsResolver {
     if (currentUserhasUserToSeat) {
       // 如果选座记录存在，移除已有的记录
       currentUserhasUserToSeat.deleteOne();
+
+      pubSub.publish('userToSeatDeleted', {
+        userToSeatDeleted: currentUserhasUserToSeat,
+      });
     }
 
     // 检查本人今日是否已选其他座，或者该座位今日是否有其他人选选择
@@ -218,12 +222,48 @@ export class UserToSeatsResolver {
     return userToSeatDeleted;
   }
 
-  @Subscription('userToSeatCreated')
+  @Subscription('userToSeatCreated', {
+    filter: (payload, variables) => {
+      const { startDate, endDate } = variables;
+      const start = startDate;
+      const end = endDate || startDate;
+      const date = dayjs(payload.userToSeatCreated.date).valueOf();
+      if (variables.seat && payload.userToSeatCreated.seat !== variables.seat) {
+        return false;
+      }
+      if (variables.user && payload.userToSeatCreated.user !== variables.user) {
+        return false;
+      }
+      if (start > date || end < date) {
+        return false;
+      }
+      return true;
+    },
+  })
   userToSeatCreated() {
     return pubSub.asyncIterator('userToSeatCreated');
   }
 
-  @Subscription('userToSeatDeleted')
+  @Subscription('userToSeatDeleted', {
+    filter: (payload, variables) => {
+      console.log('payload, variables');
+      console.log(payload, variables);
+      const { startDate, endDate } = variables;
+      const start = startDate;
+      const end = endDate || startDate;
+      const date = dayjs(payload.userToSeatDeleted.date).valueOf();
+      if (variables.seat && payload.userToSeatDeleted.seat !== variables.seat) {
+        return false;
+      }
+      if (variables.user && payload.userToSeatDeleted.user !== variables.user) {
+        return false;
+      }
+      if (start > date || end < date) {
+        return false;
+      }
+      return true;
+    },
+  })
   userToSeatDeleted() {
     return pubSub.asyncIterator('userToSeatDeleted');
   }

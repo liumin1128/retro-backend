@@ -15,8 +15,18 @@ type Mutation {
 }
 
 type Subscription {
-  userToSeatCreated: UserToSeat
-  userToSeatDeleted: UserToSeat
+  userToSeatCreated(
+    startDate: Float
+    endDate: Float
+    seat: ID
+    user: ID
+  ): UserToSeat
+  userToSeatDeleted(
+    startDate: Float
+    endDate: Float
+    seat: ID
+    user: ID
+  ): UserToSeat
 }
 
 type UserToSeat implements Document {

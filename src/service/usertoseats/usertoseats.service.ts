@@ -15,7 +15,9 @@ export class UserToSeatsService {
   ): Promise<UserToSeatDocument> {
     const createdUserToSeat = new this.userToSeatsModel(createUserToSeatDto);
     await createdUserToSeat.save();
-    return createdUserToSeat.populate('seat');
+    await createdUserToSeat.populate('seat');
+    await createdUserToSeat.populate('user');
+    return createdUserToSeat;
   }
 
   async findAll(query: {

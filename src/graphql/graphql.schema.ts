@@ -434,9 +434,9 @@ export abstract class ISubscription {
 
     abstract userToRoleCreated(): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
-    abstract userToSeatCreated(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+    abstract userToSeatCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 
-    abstract userToSeatDeleted(): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+    abstract userToSeatDeleted(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export class Comment implements Document {
