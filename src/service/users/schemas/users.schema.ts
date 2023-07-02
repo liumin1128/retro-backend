@@ -34,6 +34,9 @@ export class User {
 
   @Prop()
   tags: string[];
+
+  @Prop()
+  index: number;
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

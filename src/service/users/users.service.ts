@@ -66,7 +66,14 @@ export class UsersService {
   }
 
   async query(args): Promise<UserDocument[]> {
-    const { limit = 100, skip = 0, search, tags } = args;
+    const {
+      search,
+      tags,
+      limit = 100,
+      skip = 0,
+      sortKey = 'createdAt',
+      sortOrder = 1,
+    } = args;
     const query = {};
 
     if (search) {
@@ -77,7 +84,14 @@ export class UsersService {
       query['tags'] = { $in: tags };
     }
 
-    return this.userModel.find(query).limit(limit).skip(skip).exec();
+    console.log('query', query);
+
+    return this.userModel
+      .find(query)
+      .limit(limit)
+      .skip(skip)
+      .sort({ [sortKey]: sortOrder })
+      .exec();
   }
 
   async updateOne(...args: any[]): Promise<any> {
@@ -91,6 +105,10 @@ export class UsersService {
     return this.userModel.findByIdAndUpdate(_id, input, {
       new: true,
     });
+  }
+
+  async updateUser(id: string, input): Promise<any> {
+    return this.userModel.updateOne({ _id: id }, { $set: input });
   }
 
   async adminPushUsersTags(users: string[], tags: string[]): Promise<any> {

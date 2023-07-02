@@ -6,7 +6,7 @@ import { SignUserPayload } from '@/service/auth/auth.service';
 import { CurrentUser, GqlAuthGuard } from '@/service/auth/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import CreateUserDto from './dto/create.dto';
-import UpdateUserInfoDto from './dto/update.dto';
+import UpdateUserInfoDto, { AdminUpdateUserInfoDto } from './dto/update.dto';
 import RegisterUserDto from './dto/register.dto';
 import LoginUserDto from './dto/login.dto';
 
@@ -22,8 +22,17 @@ export class UsersResolver {
     @Args('skip') skip?: number,
     @Args('search') search?: string,
     @Args('tags') tags?: string[],
+    @Args('sortKey') sortKey?: string,
+    @Args('sortOrder') sortOrder?: number,
   ): Promise<User[]> {
-    return this.usersService.query({ limit, skip, search, tags });
+    return this.usersService.query({
+      limit,
+      skip,
+      search,
+      tags,
+      sortKey,
+      sortOrder,
+    });
   }
 
   @Query('findUser')
@@ -71,6 +80,16 @@ export class UsersResolver {
     // console.log('args');
     // console.log(args);
     return this.usersService.findByIdAndUpdate(user._id, args);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation('adminUpdateUserInfo')
+  async adminUpdateUserInfo(
+    @Args('id') id: string,
+    @Args('input') input: AdminUpdateUserInfoDto,
+  ): Promise<any> {
+    console.log(id, input);
+    return this.usersService.updateUser(id, input);
   }
 
   @Mutation('adminPushUsersTags')

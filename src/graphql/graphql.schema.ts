@@ -192,6 +192,12 @@ export class UpdateUserInfoInput {
     company?: Nullable<string>;
 }
 
+export class AdminUpdateUserInfoInput {
+    nickname?: Nullable<string>;
+    index?: Nullable<string>;
+    tags?: Nullable<Nullable<string>[]>;
+}
+
 export class OrganizationInviteUserInput {
     user: string;
     organization: string;
@@ -298,7 +304,7 @@ export abstract class IQuery {
 
     abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract findUsers(limit?: Nullable<number>, skip?: Nullable<number>, search?: Nullable<string>, tags?: Nullable<Nullable<string>[]>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract findUsers(search?: Nullable<string>, tags?: Nullable<Nullable<string>[]>, limit?: Nullable<number>, skip?: Nullable<number>, sortKey?: Nullable<string>, sortOrder?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 
@@ -375,6 +381,8 @@ export abstract class IMutation {
     abstract register(input?: Nullable<RegisterUserInput>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract updateUserInfo(input?: Nullable<UpdateUserInfoInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract adminUpdateUserInfo(id?: Nullable<string>, input?: Nullable<AdminUpdateUserInfoInput>): Nullable<Result> | Promise<Nullable<Result>>;
 
     abstract adminPushUsersTags(users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>): Nullable<Result> | Promise<Nullable<Result>>;
 
@@ -645,6 +653,7 @@ export class User {
     position?: Nullable<string>;
     company?: Nullable<string>;
     tags?: Nullable<Nullable<string>[]>;
+    index?: Nullable<number>;
 }
 
 export class UserToOrganization implements Document {

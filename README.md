@@ -83,3 +83,29 @@ schedule 记录用户请假情况，用户聚焦这个格子时，可以输入AL
 
 for interests in interests*; do mv "$interests" "schedules${interests#interests}"; done
 
+
+
+# 更新日志
+
+
+* [x] 修复内存溢出问题，增加socket连接数
+
+* [x] 日程表筛选和排序
+
+* [x] 优化用户头像，使用cdn缩略图
+
+* [x] 优化缓存机制，使用更新缓存代替刷新数据
+
+* [ ] 自定义节假日
+
+* [ ] 修复移动端status按钮异常
+
+* [ ] 更新座位图页面
+
+* [ ] CDN部署
+
+* [ ] 暗色主题适配
+
+* [ ] 日期高亮，今日
+
+* [ ] schedule路径参数
