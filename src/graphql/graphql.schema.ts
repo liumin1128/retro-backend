@@ -130,6 +130,7 @@ export class CreateScheduleInput {
     user?: Nullable<string>;
     date: number;
     status: string;
+    comment?: Nullable<string>;
 }
 
 export class CreateSeatInput {
@@ -606,6 +607,7 @@ export class Schedule implements Document {
     updatedAt?: Nullable<string>;
     user?: Nullable<User>;
     status?: Nullable<string>;
+    comment?: Nullable<string>;
     date?: Nullable<number>;
 }
 

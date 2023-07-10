@@ -14,6 +14,9 @@ export class Schedule {
 
   @Prop()
   status: string;
+
+  @Prop()
+  comment: string;
 }
 
 const ScheduleSchema = SchemaFactory.createForClass(Schedule);

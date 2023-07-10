@@ -74,7 +74,7 @@ export class SchedulesResolver {
 
     // 创建或更新数据
     const query = { user: userId, date: input.date };
-    const update = { status: input.status };
+    const update = { status: input.status, comment: input.comment };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
     const createdSchedule = await this.schedulesService.findOneAndUpdate(

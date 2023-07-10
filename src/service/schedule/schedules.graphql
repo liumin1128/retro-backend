@@ -17,6 +17,7 @@ type Schedule implements Document {
   updatedAt: String
   user: User
   status: String
+  comment: String
   date: Float
 }
 
@@ -24,4 +25,5 @@ input CreateScheduleInput {
   user: ID
   date: Float!
   status: String!
+  comment: String
 }
