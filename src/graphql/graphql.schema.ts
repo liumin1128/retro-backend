@@ -563,6 +563,7 @@ export class RetroMessage implements Document {
     user?: Nullable<User>;
     like?: Nullable<number>;
     pictures?: Nullable<string[]>;
+    comments?: Nullable<Comment[]>;
 }
 
 export class Retro implements Document {

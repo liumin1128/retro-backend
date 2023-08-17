@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateRetroMessageDto, UpdateRetroMessageDto } from './dto';
 import { RetroMessage, RetroMessageDocument } from './schema';
 
@@ -45,11 +45,48 @@ export class RetroMessagesService {
     return obj;
   }
 
-  async findAll(query): Promise<RetroMessageDocument[]> {
-    return this.retroMessagesModel
-      .find(query)
-      .sort({ updatedAt: -1 })
-      .populate('user');
+  async findAll({ retro }): Promise<RetroMessageDocument[]> {
+    return this.retroMessagesModel.aggregate([
+      // 匹配文章条件，如果有的话
+      { $match: { retro: new Types.ObjectId(retro) } },
+      // 关联查询评论集合
+      {
+        $lookup: {
+          from: 'comments', // 关联的集合名
+          localField: '_id', // 本地字段
+          foreignField: 'object', // 关联的外部字段
+          as: 'comments', // 查询结果存储到该字段
+        },
+      },
+
+      // 关联user
+      {
+        $lookup: {
+          from: 'users', // 关联的集合名
+          localField: 'user', // 本地字段
+          foreignField: '_id', // 关联的外部字段
+          as: 'user', // 查询结果存储到该字段
+        },
+      },
+      {
+        $unwind: '$user',
+      },
+      {
+        $addFields: {
+          user: '$user',
+        },
+      },
+
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+    ]);
+
+    // .find(query)
+    // .sort({ updatedAt: -1 })
+    // .populate('user');
   }
 
   async findById(_id: string): Promise<RetroMessageDocument> {

@@ -28,6 +28,7 @@ type RetroMessage implements Document {
   user: User
   like: Int
   pictures: [String!]
+  comments: [Comment!]
 }
 
 enum RetroMessageStatus {

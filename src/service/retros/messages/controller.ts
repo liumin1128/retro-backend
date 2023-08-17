@@ -8,6 +8,6 @@ export class RetroMessagesController {
 
   @Get()
   async findAll(@Query('retro') retro: string): Promise<any> {
-    return this.retroMessagesService.findAll(retro);
+    return this.retroMessagesService.findAll({ retro });
   }
 }
