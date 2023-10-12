@@ -10,6 +10,7 @@ import { CreateScheduleDto } from './schedules.dto';
 import { removeEmptyValue } from '@/utils/common';
 import * as dayjs from 'dayjs';
 import { UsersService } from '@/service/users/users.service';
+import { UserToSeatsService } from '@/service/usertoseats/usertoseats.service';
 import { pubSub } from '@/utils/subscription';
 
 @Resolver('Schedules')
@@ -17,6 +18,7 @@ export class SchedulesResolver {
   constructor(
     private readonly schedulesService: SchedulesService,
     private readonly userService: UsersService,
+    private readonly userToSeatsService: UserToSeatsService,
   ) {}
 
   @UseGuards(GqlAuthGuard)
@@ -86,6 +88,22 @@ export class SchedulesResolver {
     pubSub.publish('scheduleCreated', {
       scheduleCreated: createdSchedule,
     });
+
+    // 如果当天存在选座记录，一并清除
+    const userToSeatDeleted = await this.userToSeatsService.userToSeatsModel
+      .findOneAndDelete({
+        date: input.date,
+        user: userId,
+      })
+      .populate('user')
+      .populate('seat');
+
+    // 如果清除选座记录，分发通知
+    if (userToSeatDeleted) {
+      pubSub.publish('userToSeatDeleted', {
+        userToSeatDeleted: userToSeatDeleted,
+      });
+    }
 
     return createdSchedule;
   }

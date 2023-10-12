@@ -8,7 +8,7 @@ import { UserToSeat, UserToSeatDocument } from './usertoseats.schema';
 export class UserToSeatsService {
   constructor(
     @InjectModel(UserToSeat.name)
-    private readonly userToSeatsModel: Model<UserToSeatDocument>,
+    public readonly userToSeatsModel: Model<UserToSeatDocument>,
   ) {}
   async create(
     createUserToSeatDto: CreateUserToSeatDto,

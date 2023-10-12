@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from '@/service/users/users.module';
+import { UserToSeatsModule } from '@/service/usertoseats/usertoseats.module';
 
 import { SchedulesService } from './schedules.service';
 import { SchedulesResolver } from './schedules.resolver';
@@ -12,6 +13,7 @@ import { SchedulesController } from './schedules.controller';
     MongooseModule.forFeature([
       { name: Schedule.name, schema: ScheduleSchema },
     ]),
+    UserToSeatsModule,
     UserModule,
   ],
   providers: [SchedulesService, SchedulesResolver],
