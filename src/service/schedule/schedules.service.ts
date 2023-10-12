@@ -8,7 +8,7 @@ import { Schedule, ScheduleDocument } from './schedules.schema';
 export class SchedulesService {
   constructor(
     @InjectModel(Schedule.name)
-    private readonly schedulesModel: Model<ScheduleDocument>,
+    public readonly schedulesModel: Model<ScheduleDocument>,
   ) {}
   async create(
     createScheduleDto: CreateScheduleDto,

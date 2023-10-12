@@ -11,6 +11,7 @@ import { UserToSeatsService } from './usertoseats.service';
 import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
 import { UsersService } from '@/service/users/users.service';
+import { SchedulesService } from '@/service/schedule/schedules.service';
 import { pubSub, withFilter } from '@/utils/subscription';
 
 @Resolver('UserToSeats')
@@ -19,6 +20,7 @@ export class UserToSeatsResolver {
     private readonly userToSeatsService: UserToSeatsService,
     private readonly seatService: SeatsService,
     private readonly userService: UsersService,
+    private readonly schedulesService: SchedulesService,
   ) {}
 
   @UseGuards(GqlAuthGuard)
@@ -57,6 +59,8 @@ export class UserToSeatsResolver {
     @CurrentUser() user: SignUserPayload,
     @Args('input') input: CreateUserToSeatDto,
   ): Promise<UserToSeatDocument | null> {
+    console.log('toggleUserToSeat');
+    console.log(input);
     // 第一步校验权限
 
     let hasAuth = false;
@@ -142,6 +146,22 @@ export class UserToSeatsResolver {
 
     pubSub.publish('userToSeatCreated', {
       userToSeatCreated: createdUserToSeat,
+    });
+
+    // 如果当天存在选座记录，一并清除
+    const query = { user: input.user, date: input.date };
+    const update = { status: 'Office' };
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+    const createdSchedule =
+      await this.schedulesService.schedulesModel.findOneAndUpdate(
+        query,
+        update,
+        options,
+      );
+
+    pubSub.publish('scheduleCreated', {
+      scheduleCreated: createdSchedule,
     });
 
     return createdUserToSeat;
