@@ -23,7 +23,7 @@ echo '>>> wait 1 second'
 sleep 1
 
 echo '>>> init mongo'
-podman exec -i mongo mongo admin <<EOF
+podman exec -i mongo mongosh admin <<EOF
 use admin
 db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'}]});
 db.auth('admin', '123456')

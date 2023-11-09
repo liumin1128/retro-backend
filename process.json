@@ -7,7 +7,7 @@
       "cron_restart": "0 4 * * * *",
       "instances": 4,
       "restart": true,
-      "exec_mode": "cluster",
+      "exec_mode": "fork",
       "env": {
         "NODE_ENV": "production"
       }
