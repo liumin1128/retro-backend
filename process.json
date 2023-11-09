@@ -5,7 +5,7 @@
       "script": "dist/main.js",
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "cron_restart": "0 4 * * * *",
-      "instances": 4,
+      "instances": "max",
       "restart": true,
       "exec_mode": "fork",
       "env": {
