@@ -17,6 +17,15 @@ TAR_BAK="mongod_bak_$DATE.tar.gz" #最终保存的数据库备份文件名
 
 cd $OUT_DIR
 
+echo "检查$TAR_DIR路径是否存在"
+if [ ! -d "$TAR_DIR" ]; then
+  echo "$TAR_DIR不存在，正在创建..."
+  mkdir -p "$TAR_DIR"
+  echo "$TAR_DIR已创建！"
+else
+  echo "$TAR_DIR已存在"
+fi
+
 echo "-----删除原有备份文件-----"
 
 find $OUT_DIR/ -print
