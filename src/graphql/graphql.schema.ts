@@ -421,13 +421,13 @@ export abstract class ISubscription {
 
     abstract organizationCreated(): Nullable<Organization> | Promise<Nullable<Organization>>;
 
-    abstract retroMessageCreated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+    abstract retroMessageCreated(retroID?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
-    abstract retroMessageUpdated(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+    abstract retroMessageUpdated(retroID?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
-    abstract retroMessageDeleted(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+    abstract retroMessageDeleted(retroID?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
-    abstract retroMessageLiked(): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
+    abstract retroMessageLiked(retroID?: Nullable<string>): Nullable<RetroMessage> | Promise<Nullable<RetroMessage>>;
 
     abstract retroCreated(): Nullable<Retro> | Promise<Nullable<Retro>>;
 

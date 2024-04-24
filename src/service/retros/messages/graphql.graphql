@@ -11,10 +11,10 @@ type Mutation {
 }
 
 type Subscription {
-  retroMessageCreated: RetroMessage
-  retroMessageUpdated: RetroMessage
-  retroMessageDeleted: RetroMessage
-  retroMessageLiked: RetroMessage
+  retroMessageCreated(retroID: ID): RetroMessage
+  retroMessageUpdated(retroID: ID): RetroMessage
+  retroMessageDeleted(retroID: ID): RetroMessage
+  retroMessageLiked(retroID: ID): RetroMessage
 }
 
 type RetroMessage implements Document {

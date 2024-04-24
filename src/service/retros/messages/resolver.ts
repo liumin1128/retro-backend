@@ -128,22 +128,50 @@ export class RetroMessagesResolver {
     return likedRetroMessage;
   }
 
-  @Subscription('retroMessageCreated')
+  @Subscription('retroMessageCreated', {
+    filter: (payload, variables) => {
+      if (variables.retroID === payload.retroMessageCreated.retro.toString()) {
+        return true;
+      }
+      return false;
+    },
+  })
   retroMessageCreated() {
     return pubSub.asyncIterator('retroMessageCreated');
   }
 
-  @Subscription('retroMessageUpdated')
+  @Subscription('retroMessageUpdated', {
+    filter: (payload, variables) => {
+      if (variables.retroID === payload.retroMessageUpdated.retro.toString()) {
+        return true;
+      }
+      return false;
+    },
+  })
   retroMessageUpdated() {
     return pubSub.asyncIterator('retroMessageUpdated');
   }
 
-  @Subscription('retroMessageDeleted')
+  @Subscription('retroMessageDeleted', {
+    filter: (payload, variables) => {
+      if (variables.retroID === payload.retroMessageDeleted.retro.toString()) {
+        return true;
+      }
+      return false;
+    },
+  })
   retroMessageDeleted() {
     return pubSub.asyncIterator('retroMessageDeleted');
   }
 
-  @Subscription('retroMessageLiked')
+  @Subscription('retroMessageLiked', {
+    filter: (payload, variables) => {
+      if (variables.retroID === payload.retroMessageLiked.retro.toString()) {
+        return true;
+      }
+      return false;
+    },
+  })
   retroMessageLiked() {
     return pubSub.asyncIterator('retroMessageLiked');
   }
