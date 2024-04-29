@@ -79,7 +79,7 @@ export class RetroMessagesService {
 
       {
         $sort: {
-          createdAt: -1,
+          createdAt: 1, // -1 为倒序，1 为正序
         },
       },
     ]);
