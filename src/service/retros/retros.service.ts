@@ -32,14 +32,12 @@ export class RetrosService {
     pageSize?: number;
     user?: string;
   }): Promise<any> {
-    console.log('user');
-    console.log(user);
     const skip = page === 0 ? 0 : (page - 1) * pageSize;
 
     // https://www.5axxw.com/questions/content/3l0r6i
     return this.retrosModel.aggregate([
       // 关联查询retromessage信息
-      // { $match: { $expr: { $eq: ['$user', new Types.ObjectId(user)] } } },
+      { $match: { $expr: { $eq: ['$user', new Types.ObjectId(user)] } } },
 
       {
         $sort: {
