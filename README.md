@@ -109,3 +109,5 @@ for interests in interests*; do mv "$interests" "schedules${interests#interests}
 * [ ] 日期高亮，今日
 
 * [ ] schedule路径参数
+
+* [ ] 一键选座
