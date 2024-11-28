@@ -49,6 +49,6 @@ echo "-----开始压缩备份文件-----"
 
 tar -zcvf $TAR_DIR/$TAR_BAK $OUT_DIR/$DATE #压缩为.tar.gz格式
 
-echo "-----删除7天前的备份文件-----"
+echo "-----删除$DAYS天前的备份文件-----"
 
 find $TAR_DIR/ -mtime +$DAYS -delete #删除7天前的备份文件
