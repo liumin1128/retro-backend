@@ -111,3 +111,18 @@ for interests in interests*; do mv "$interests" "schedules${interests#interests}
 * [ ] schedule路径参数
 
 * [ ] 一键选座
+
+# 重启机器
+
+docker stop caddy
+docker rm caddy
+docker run -d --name='caddy' \
+--net='host' \
+-v '/root':'/data':'rw' \
+-v '/root/caddy':'/config':'rw' \
+-v '/root/caddy/Caddyfile':'/etc/caddy/Caddyfile':'rw' \
+caddy
+
+podman start mongo
+
+npm run pm2
