@@ -1,5 +1,12 @@
 type Query {
-  findSchedules(startDate: Float, endDate: Float, user: ID): [Schedule]
+  findSchedules(
+    startDate: Float
+    endDate: Float
+    user: ID
+    users: [ID]
+    tags: [String]
+    requiredTags: [String]
+  ): [Schedule]
   findSchedule(_id: ID!): Schedule
 }
 
@@ -8,7 +15,14 @@ type Mutation {
 }
 
 type Subscription {
-  scheduleCreated(startDate: Float, endDate: Float, user: ID): Schedule
+  scheduleCreated(
+    startDate: Float
+    endDate: Float
+    user: ID
+    users: [ID]
+    tags: [String]
+    requiredTags: [String]
+  ): Schedule
 }
 
 type Schedule implements Document {

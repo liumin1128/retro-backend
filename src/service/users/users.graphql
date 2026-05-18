@@ -3,6 +3,8 @@ type Query {
   findUsers(
     search: String
     tags: [String]
+    requiredTags: [String]
+    users: [ID]
     limit: Int
     skip: Int
     sortKey: String

@@ -291,7 +291,7 @@ export abstract class IQuery {
 
     abstract findRole(_id: string): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
-    abstract findSchedules(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>): Nullable<Nullable<Schedule>[]> | Promise<Nullable<Nullable<Schedule>[]>>;
+    abstract findSchedules(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>, users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>): Nullable<Nullable<Schedule>[]> | Promise<Nullable<Nullable<Schedule>[]>>;
 
     abstract findSchedule(_id: string): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
@@ -305,7 +305,7 @@ export abstract class IQuery {
 
     abstract findUser(_id: string): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract findUsers(search?: Nullable<string>, tags?: Nullable<Nullable<string>[]>, limit?: Nullable<number>, skip?: Nullable<number>, sortKey?: Nullable<string>, sortOrder?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+    abstract findUsers(search?: Nullable<string>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>, users?: Nullable<Nullable<string>[]>, limit?: Nullable<number>, skip?: Nullable<number>, sortKey?: Nullable<string>, sortOrder?: Nullable<number>): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 
     abstract findUserInfo(): Nullable<User> | Promise<Nullable<User>>;
 
@@ -327,7 +327,7 @@ export abstract class IQuery {
 
     abstract findUserToRole(_id: string): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
-    abstract findUserToSeats(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
+    abstract findUserToSeats(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>, users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>): Nullable<Nullable<UserToSeat>[]> | Promise<Nullable<Nullable<UserToSeat>[]>>;
 
     abstract findUserToSeat(_id: string): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
@@ -433,7 +433,7 @@ export abstract class ISubscription {
 
     abstract roleCreated(): Nullable<UserRole> | Promise<Nullable<UserRole>>;
 
-    abstract scheduleCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
+    abstract scheduleCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, user?: Nullable<string>, users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>): Nullable<Schedule> | Promise<Nullable<Schedule>>;
 
     abstract seatCreated(): Nullable<Seat> | Promise<Nullable<Seat>>;
 
@@ -443,9 +443,9 @@ export abstract class ISubscription {
 
     abstract userToRoleCreated(): Nullable<UserToRole> | Promise<Nullable<UserToRole>>;
 
-    abstract userToSeatCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+    abstract userToSeatCreated(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>, users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 
-    abstract userToSeatDeleted(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
+    abstract userToSeatDeleted(startDate?: Nullable<number>, endDate?: Nullable<number>, seat?: Nullable<string>, user?: Nullable<string>, users?: Nullable<Nullable<string>[]>, tags?: Nullable<Nullable<string>[]>, requiredTags?: Nullable<Nullable<string>[]>): Nullable<UserToSeat> | Promise<Nullable<UserToSeat>>;
 }
 
 export class Comment implements Document {

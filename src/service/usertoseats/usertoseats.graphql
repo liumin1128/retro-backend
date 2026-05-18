@@ -4,6 +4,9 @@ type Query {
     endDate: Float
     seat: ID
     user: ID
+    users: [ID]
+    tags: [String]
+    requiredTags: [String]
   ): [UserToSeat]
   findUserToSeat(_id: ID!): UserToSeat
 }
@@ -20,12 +23,18 @@ type Subscription {
     endDate: Float
     seat: ID
     user: ID
+    users: [ID]
+    tags: [String]
+    requiredTags: [String]
   ): UserToSeat
   userToSeatDeleted(
     startDate: Float
     endDate: Float
     seat: ID
     user: ID
+    users: [ID]
+    tags: [String]
+    requiredTags: [String]
   ): UserToSeat
 }
 

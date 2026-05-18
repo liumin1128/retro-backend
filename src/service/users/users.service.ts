@@ -69,6 +69,8 @@ export class UsersService {
     const {
       search,
       tags,
+      requiredTags,
+      users,
       limit = 100,
       skip = 0,
       sortKey = 'createdAt',
@@ -80,11 +82,20 @@ export class UsersService {
       query['nickname'] = { $regex: '.*' + search + '.*' };
     }
 
-    if (tags) {
+    if (tags?.length && users?.length) {
+      query['$or'] = [{ tags: { $in: tags } }, { _id: { $in: users } }];
+    } else if (tags?.length) {
       query['tags'] = { $in: tags };
+    } else if (users?.length) {
+      query['_id'] = { $in: users };
     }
 
-    console.log('query', query);
+    if (requiredTags?.length) {
+      query['tags'] = {
+        ...(query['tags'] || {}),
+        $all: requiredTags,
+      };
+    }
 
     return this.userModel
       .find(query)

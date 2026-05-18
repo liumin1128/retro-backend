@@ -12,7 +12,36 @@ import { CreateUserToSeatDto, DeleteUserToSeatDto } from './usertoseats.dto';
 import { SeatsService } from '../seats/seats.service';
 import { UsersService } from '@/service/users/users.service';
 import { SchedulesService } from '@/service/schedule/schedules.service';
-import { pubSub, withFilter } from '@/utils/subscription';
+import { pubSub } from '@/utils/subscription';
+
+const matchesUserFilters = (record, variables) => {
+  const user = record?.user;
+  const userId = user?._id?.toString?.() || user?.toString?.();
+  const userTags = user?.tags || [];
+
+  if (variables.user && userId !== variables.user) {
+    return false;
+  }
+  if (variables.requiredTags?.length) {
+    if (!variables.requiredTags.every((tag) => userTags.includes(tag))) {
+      return false;
+    }
+  }
+  if (variables.users?.length || variables.tags?.length) {
+    const userMatched =
+      variables.users?.length && variables.users.includes(userId);
+    const tagMatched =
+      variables.tags?.length &&
+      variables.tags.some((tag) => userTags.includes(tag));
+    if (!userMatched && !tagMatched) return false;
+  }
+  return true;
+};
+
+const getSelectedUsers = (users: string[], user?: string) =>
+  users?.length ? users : user ? [user] : undefined;
+
+const getSeatId = (seat) => seat?._id?.toString?.() || seat?.toString?.();
 
 @Resolver('UserToSeats')
 export class UserToSeatsResolver {
@@ -30,9 +59,25 @@ export class UserToSeatsResolver {
     @Args('endDate') endDate: number,
     @Args('seat') seat: string,
     @Args('user') user: string,
+    @Args('users') users: string[],
+    @Args('tags') tags: string[],
+    @Args('requiredTags') requiredTags: string[],
   ): Promise<UserToSeatDocument[]> {
     const start = startDate;
     const end = endDate || startDate;
+    const hasUserFilters =
+      !!user || !!users?.length || !!tags?.length || !!requiredTags?.length;
+    const userQuery = hasUserFilters
+      ? await this.userService.query({
+          tags,
+          requiredTags,
+          users: getSelectedUsers(users, user),
+          limit: 1000,
+        })
+      : [];
+    const userIds = userQuery.map((item) => item._id);
+
+    if (hasUserFilters && !userIds.length) return [];
 
     const query = removeEmptyValue({
       $and: [
@@ -40,7 +85,7 @@ export class UserToSeatsResolver {
         { date: { $lte: dayjs(end).endOf('day') }.valueOf() },
       ],
       seat,
-      user,
+      user: hasUserFilters ? { $in: userIds } : undefined,
     });
 
     const data = await this.userToSeatsService.findAll(query);
@@ -153,12 +198,9 @@ export class UserToSeatsResolver {
     const update = { status: 'Office' };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    const createdSchedule =
-      await this.schedulesService.schedulesModel.findOneAndUpdate(
-        query,
-        update,
-        options,
-      );
+    const createdSchedule = await this.schedulesService.schedulesModel
+      .findOneAndUpdate(query, update, options)
+      .populate('user');
 
     pubSub.publish('scheduleCreated', {
       scheduleCreated: createdSchedule,
@@ -248,10 +290,13 @@ export class UserToSeatsResolver {
       const start = startDate;
       const end = endDate || startDate;
       const date = dayjs(payload.userToSeatCreated.date).valueOf();
-      if (variables.seat && payload.userToSeatCreated.seat !== variables.seat) {
+      if (
+        variables.seat &&
+        getSeatId(payload.userToSeatCreated.seat) !== variables.seat
+      ) {
         return false;
       }
-      if (variables.user && payload.userToSeatCreated.user !== variables.user) {
+      if (!matchesUserFilters(payload.userToSeatCreated, variables)) {
         return false;
       }
       if (start > date || end < date) {
@@ -272,10 +317,13 @@ export class UserToSeatsResolver {
       const start = startDate;
       const end = endDate || startDate;
       const date = dayjs(payload.userToSeatDeleted.date).valueOf();
-      if (variables.seat && payload.userToSeatDeleted.seat !== variables.seat) {
+      if (
+        variables.seat &&
+        getSeatId(payload.userToSeatDeleted.seat) !== variables.seat
+      ) {
         return false;
       }
-      if (variables.user && payload.userToSeatDeleted.user !== variables.user) {
+      if (!matchesUserFilters(payload.userToSeatDeleted, variables)) {
         return false;
       }
       if (start > date || end < date) {

@@ -13,6 +13,33 @@ import { UsersService } from '@/service/users/users.service';
 import { UserToSeatsService } from '@/service/usertoseats/usertoseats.service';
 import { pubSub } from '@/utils/subscription';
 
+const matchesUserFilters = (record, variables) => {
+  const user = record?.user;
+  const userId = user?._id?.toString?.() || user?.toString?.();
+  const userTags = user?.tags || [];
+
+  if (variables.user && userId !== variables.user) {
+    return false;
+  }
+  if (variables.requiredTags?.length) {
+    if (!variables.requiredTags.every((tag) => userTags.includes(tag))) {
+      return false;
+    }
+  }
+  if (variables.users?.length || variables.tags?.length) {
+    const userMatched =
+      variables.users?.length && variables.users.includes(userId);
+    const tagMatched =
+      variables.tags?.length &&
+      variables.tags.some((tag) => userTags.includes(tag));
+    if (!userMatched && !tagMatched) return false;
+  }
+  return true;
+};
+
+const getSelectedUsers = (users: string[], user?: string) =>
+  users?.length ? users : user ? [user] : undefined;
+
 @Resolver('Schedules')
 export class SchedulesResolver {
   constructor(
@@ -27,16 +54,32 @@ export class SchedulesResolver {
     @Args('startDate') startDate: number,
     @Args('endDate') endDate: number,
     @Args('user') user: string,
+    @Args('users') users: string[],
+    @Args('tags') tags: string[],
+    @Args('requiredTags') requiredTags: string[],
   ): Promise<Schedule[]> {
     const start = startDate;
     const end = endDate || startDate;
+    const hasUserFilters =
+      !!user || !!users?.length || !!tags?.length || !!requiredTags?.length;
+    const userQuery = hasUserFilters
+      ? await this.userService.query({
+          tags,
+          requiredTags,
+          users: getSelectedUsers(users, user),
+          limit: 1000,
+        })
+      : [];
+    const userIds = userQuery.map((item) => item._id);
+
+    if (hasUserFilters && !userIds.length) return [];
 
     const query = removeEmptyValue({
       $and: [
         { date: { $gte: start } },
         { date: { $lte: dayjs(end).endOf('day') }.valueOf() },
       ],
-      user,
+      user: hasUserFilters ? { $in: userIds } : undefined,
     });
 
     const data = await this.schedulesService.query(query);
@@ -115,9 +158,7 @@ export class SchedulesResolver {
       const end = endDate || startDate;
       const date = dayjs(payload.scheduleCreated.date).valueOf();
 
-      if (variables.user && payload.scheduleCreated.user !== variables.user) {
-        return false;
-      }
+      if (!matchesUserFilters(payload.scheduleCreated, variables)) return false;
       if (start > date || end < date) {
         return false;
       }

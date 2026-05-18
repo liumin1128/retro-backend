@@ -22,6 +22,8 @@ export class UsersResolver {
     @Args('skip') skip?: number,
     @Args('search') search?: string,
     @Args('tags') tags?: string[],
+    @Args('requiredTags') requiredTags?: string[],
+    @Args('users') users?: string[],
     @Args('sortKey') sortKey?: string,
     @Args('sortOrder') sortOrder?: number,
   ): Promise<User[]> {
@@ -30,6 +32,8 @@ export class UsersResolver {
       skip,
       search,
       tags,
+      requiredTags,
+      users,
       sortKey,
       sortOrder,
     });
